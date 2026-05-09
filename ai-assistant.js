@@ -13,7 +13,7 @@
 (function () {
   'use strict';
 
-  const API_URL  = 'https://api.anthropic.com/v1/messages';
+  https://greeting-system.onrender.com
   const AI_MODEL = 'claude-sonnet-4-20250514';
 
   /* ── Detect current page context ── */
