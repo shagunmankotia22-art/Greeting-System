@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
+  <title>Card View | Greetings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #ff4d6d;
+      --purple:  #7c3aed;
+      --green:   #10b981;
+      --blue:    #3b82f6;
+      --dark:    #0a0c10;
+      --panel:   #0f1320;
+      --border:  rgba(255,255,255,0.09);
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --radius:  18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── BACK NAV ── */
+    .back-nav {
+      position: fixed;
+      top: 24px; left: 24px;
+      z-index: 200;
+    }
+    .btn-back {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all 0.25s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.1); color: #fff; transform: translateX(-4px); }
+    .btn-back svg { width: 14px; height: 14px; }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrap {
+      display: flex;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* ── LEFT: CARD VIEWER ── */
+    .card-viewer {
+      flex: 1.1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px 40px;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(124,58,237,0.12), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(255,77,109,0.10), transparent 55%),
+        var(--dark);
+      position: relative;
+    }
+
+    .stack-wrap {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .card-shadow {
+      position: absolute;
+      inset: 0;
+      background: #f0f0f0;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    .layer-back { transform: rotate(-4deg) translate(-8px, 14px); z-index: 1; opacity: 0.5; }
+    .layer-mid  { transform: rotate(2deg) translate(6px, 8px);   z-index: 2; opacity: 0.7; }
+
+    .main-card {
+      position: relative; z-index: 10;
+      background: #fff;
+      padding: 10px;
+      border-radius: 22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+    }
+    .main-card img {
+      width: 100%; border-radius: 14px; display: block;
+      max-height: 520px; object-fit: cover;
+    }
+
+    /* Action buttons below card */
+    .card-actions {
+      display: flex; gap: 10px; margin-top: 20px;
+    }
+    .card-btn {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 10px;
+      border-radius: 100px;
+      font-size: 0.75rem; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: all 0.25s;
+    }
+    .card-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .card-btn.download {
+      background: #fff; color: #0a0c10;
+    }
+    .card-btn.download:hover {
+      background: var(--pink); color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(255,77,109,0.35);
+    }
+    .card-btn.share {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+    }
+    .card-btn.share:hover { background: rgba(255,255,255,0.12); color: #fff; transform: translateY(-3px); }
+    .card-btn.fav {
+      flex: 0 0 auto; width: 52px; padding: 0;
+      background: rgba(255,77,109,0.08);
+      color: rgba(255,77,109,0.6);
+      border: 1px solid rgba(255,77,109,0.2);
+      font-size: 1.1rem;
+    }
+    .card-btn.fav.active { background: rgba(255,77,109,0.2); color: var(--pink); border-color: var(--pink); }
+    .card-btn.fav:hover  { transform: scale(1.08); }
+
+    /* Share dropdown */
+    .share-drop {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 0; right: 0;
+      background: #161b2e;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 6px;
+      display: none; flex-direction: column; gap: 3px;
+      z-index: 50;
+    }
+    .share-drop.open { display: flex; }
+    .share-opt {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      border-radius: 10px; border: none;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; text-align: left;
+      transition: all 0.18s;
+    }
+    .share-opt svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .share-opt:hover { transform: translateX(3px); }
+    .share-opt.wa { background: rgba(37,211,102,0.08); color: #25d366; }
+    .share-opt.wa:hover { background: rgba(37,211,102,0.16); }
+    .share-opt.cp { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.65); }
+    .share-opt.cp:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* Download toast */
+    .dl-toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: #161b2e;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 12px 22px;
+      display: flex; align-items: center; gap: 9px;
+      font-size: 0.85rem; font-weight: 700; color: #fff;
+      opacity: 0; pointer-events: none; z-index: 9999;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      transition: opacity 0.3s, transform 0.3s;
+      white-space: nowrap;
+    }
+    .dl-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .dl-toast-dot { width: 20px; height: 20px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+    .dl-toast.loading .dl-toast-dot { background: var(--pink); animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RIGHT: AI PANEL ── */
+    .ai-panel {
+      width: 420px; flex-shrink: 0;
+      background: var(--panel);
+      border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .ai-panel-header {
+      padding: 28px 28px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .ai-logo-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 6px;
+    }
+    .ai-orb {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+      flex-shrink: 0;
+    }
+    .ai-panel-title { font-size: 1.1rem; font-weight: 800; }
+    .ai-panel-sub   { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* Tabs */
+    .ai-tabs {
+      display: flex; gap: 4px;
+      margin-top: 16px;
+    }
+    .ai-tab {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 8px; border: none;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .ai-tab.active { background: rgba(124,58,237,0.18); color: #a78bfa; }
+    .ai-tab:hover:not(.active) { background: rgba(255,255,255,0.05); color: var(--text); }
+
+    /* ── CHAT AREA ── */
+    .ai-chat-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px 0;
+      display: flex; flex-direction: column; gap: 14px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(124,58,237,0.3) transparent;
+    }
+    .ai-chat-wrap::-webkit-scrollbar { width: 4px; }
+    .ai-chat-wrap::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.35); border-radius: 4px; }
+
+    /* Messages */
+    .msg {
+      display: flex; gap: 10px; align-items: flex-start;
+      animation: msgIn 0.3s ease;
+    }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .msg.user { flex-direction: row-reverse; }
+
+    .msg-avatar {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800;
+    }
+    .msg-avatar.ai { background: linear-gradient(135deg, var(--purple), var(--pink)); }
+    .msg-avatar.user { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 0.65rem; }
+
+    .msg-bubble {
+      max-width: 82%;
+      padding: 11px 15px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+    .msg.ai .msg-bubble {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+      color: var(--text);
+    }
+    .msg.user .msg-bubble {
+      background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(255,77,109,0.15));
+      border: 1px solid rgba(124,58,237,0.25);
+      border-top-right-radius: 4px;
+      color: #e0d4ff;
+    }
+
+    /* Typing indicator */
+    .typing-dots { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing-dots span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--purple);
+      animation: bounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+    /* Quick action chips */
+    .quick-chips {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      padding: 14px 20px 0;
+      flex-shrink: 0;
+    }
+    .chip {
+      padding: 7px 13px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.73rem; font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: rgba(124,58,237,0.15); border-color: rgba(124,58,237,0.4); color: #c4b5fd; }
+
+    /* Input area */
+    .ai-input-wrap {
+      padding: 16px 20px 24px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .ai-input-row {
+      display: flex; gap: 10px; align-items: flex-end;
+    }
+    .ai-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      resize: none;
+      min-height: 46px; max-height: 130px;
+      overflow-y: auto;
+      transition: border-color 0.2s;
+      line-height: 1.5;
+    }
+    .ai-input:focus { outline: none; border-color: rgba(124,58,237,0.5); }
+    .ai-input::placeholder { color: var(--muted); }
+    .ai-send {
+      width: 46px; height: 46px; flex-shrink: 0;
+      border-radius: 12px; border: none;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s;
+      box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+    }
+    .ai-send:hover { transform: scale(1.07); box-shadow: 0 6px 20px rgba(124,58,237,0.5); }
+    .ai-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .ai-send svg { width: 18px; height: 18px; }
+
+    .ai-footer-note {
+      text-align: center; font-size: 0.68rem; color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ── GENERATOR TAB ── */
+    .generator-wrap {
+      flex: 1; overflow-y: auto;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(124,58,237,0.3) transparent;
+    }
+
+    .gen-section { display: none; }
+    .gen-section.active { display: flex; flex-direction: column; gap: 12px; }
+
+    .gen-label {
+      font-size: 0.72rem; font-weight: 800;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .gen-select, .gen-textarea, .gen-input-field {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 11px 14px;
+      transition: border-color 0.2s;
+    }
+    .gen-select { cursor: pointer; }
+    .gen-select option { background: #1a1f2e; }
+    .gen-textarea { resize: none; height: 90px; line-height: 1.6; }
+    .gen-select:focus, .gen-textarea:focus, .gen-input-field:focus {
+      outline: none; border-color: rgba(124,58,237,0.5);
+    }
+
+    .gen-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px; border: none;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff; font-family: inherit; font-weight: 800;
+      font-size: 0.85rem; letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+    }
+    .gen-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.45); }
+    .gen-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .gen-output-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 0.85rem; line-height: 1.7;
+      color: var(--text); white-space: pre-wrap;
+      min-height: 80px;
+      position: relative;
+    }
+    .gen-output-box .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      padding: 5px 12px; border-radius: 8px; border: none;
+      background: rgba(124,58,237,0.2); color: #a78bfa;
+      font-size: 0.7rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .gen-output-box .copy-btn:hover { background: rgba(124,58,237,0.35); }
+    .gen-output-box.empty { color: var(--muted); font-style: italic; }
+
+    .gen-loading {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--muted); font-size: 0.82rem;
+    }
+    .gen-spinner {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(124,58,237,0.3);
+      border-top-color: var(--purple);
+      animation: spin 0.7s linear infinite; flex-shrink: 0;
+    }
+
+    /* Info stats */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-tile {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px;
+    }
+    .info-tile-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 5px; }
+    .info-tile-val   { font-size: 0.88rem; font-weight: 700; }
+    .verified { color: var(--green); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .page-wrap { flex-direction: column; }
+      .card-viewer { padding: 90px 20px 24px; }
+      .ai-panel { width: 100%; min-height: 560px; border-left: none; border-top: 1px solid var(--border); }
+    }
+    @media (max-width: 500px) {
+      .stack-wrap { max-width: 320px; }
+      .ai-panel-header { padding: 20px 16px 14px; }
+      .ai-chat-wrap, .generator-wrap { padding: 14px; }
+      .ai-input-wrap { padding: 12px 16px 20px; }
+      .quick-chips { padding: 10px 16px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACK BUTTON -->
+  <div class="back-nav">
+    <a href="javascript:history.back()" class="btn-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+  </div>
+
+  <div class="page-wrap">
+
+    <!-- ═══════════════ LEFT: CARD VIEWER ═══════════════ -->
+    <div class="card-viewer">
+      <div class="stack-wrap">
+        <div class="card-shadow layer-back"></div>
+        <div class="card-shadow layer-mid"></div>
+        <div class="main-card">
+          <img id="displayImg" src="" alt="Selected Greeting Card">
+        </div>
+
+        <div class="card-actions" style="position:relative;">
+          <button class="card-btn download" id="downloadBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </button>
+
+          <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+            <button class="card-btn share" id="shareBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              Share
+            </button>
+            <div class="share-drop" id="shareDrop">
+              <button class="share-opt wa" id="shareWa">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                Share on WhatsApp
+              </button>
+              <button class="share-opt cp" id="shareCopy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+
+          <button class="card-btn fav" id="favBtn" title="Save to Favourites">♡</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download toast -->
+    <div class="dl-toast" id="dlToast">
+      <span class="dl-toast-dot">✓</span>
+      <span id="dlToastMsg">Downloaded!</span>
+    </div>
+
+    <!-- ═══════════════ RIGHT: AI PANEL ═══════════════ -->
+    <div class="ai-panel">
+
+      <div class="ai-panel-header">
+        <div class="ai-logo-row">
+          <div class="ai-orb">✦</div>
+          <div>
+            <div class="ai-panel-title">Greetings AI</div>
+            <div class="ai-panel-sub">Powered by Claude</div>
+          </div>
+        </div>
+        <div class="ai-tabs">
+          <button class="ai-tab active" data-tab="chat">💬 Chat</button>
+          <button class="ai-tab" data-tab="generate">✍️ Generate</button>
+          <button class="ai-tab" data-tab="info">📋 Details</button>
+        </div>
+      </div>
+
+      <!-- ── CHAT TAB ── -->
+      <div id="tabChat" class="ai-chat-wrap">
+        <!-- Messages injected here -->
+      </div>
+
+      <div class="quick-chips" id="quickChips">
+        <button class="chip" data-prompt="Describe this card in detail">Describe this card</button>
+        <button class="chip" data-prompt="What occasion is this card best for?">Best occasions</button>
+        <button class="chip" data-prompt="Write a heartfelt message to go with this card">Write a message</button>
+        <button class="chip" data-prompt="Suggest 3 ways to personalize this card for someone special">Personalize tips</button>
+        <button class="chip" data-prompt="What colors and design style does this card use?">Design style</button>
+      </div>
+
+      <div class="ai-input-wrap" id="chatInputArea">
+        <div class="ai-input-row">
+          <textarea class="ai-input" id="chatInput" placeholder="Ask anything about this card…" rows="1"></textarea>
+          <button class="ai-send" id="sendBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <div class="ai-footer-note">AI responses are generated — always review before sending</div>
+      </div>
+
+      <!-- ── GENERATE TAB ── -->
+      <div id="tabGenerate" class="generator-wrap" style="display:none;">
+
+        <div class="gen-section active" id="genPanelMain">
+          <div>
+            <div class="gen-label">Occasion Type</div>
+            <select class="gen-select" id="genOccasion">
+              <option value="">Select occasion…</option>
+              <option value="birthday">🎂 Birthday</option>
+              <option value="wedding">💍 Wedding</option>
+              <option value="anniversary">💕 Anniversary</option>
+              <option value="graduation">🎓 Graduation</option>
+              <option value="holiday party">🎉 Holiday Party</option>
+              <option value="get well">🌸 Get Well</option>
+              <option value="thank you">🙏 Thank You</option>
+              <option value="sympathy">🕊️ Sympathy</option>
+              <option value="congratulations">🌟 Congratulations</option>
+              <option value="new home">🏡 New Home</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="gen-label">Recipient Name</div>
+            <input class="gen-input-field" id="genRecipient" type="text" placeholder="e.g. Sarah, Grandma, Team…">
+          </div>
+
+          <div>
+            <div class="gen-label">Tone / Style</div>
+            <select class="gen-select" id="genTone">
+              <option value="warm and heartfelt">Warm & Heartfelt</option>
+              <option value="funny and playful">Funny & Playful</option>
+              <option value="formal and professional">Formal & Professional</option>
+              <option value="short and sweet">Short & Sweet</option>
+              <option value="poetic and romantic">Poetic & Romantic</option>
+              <option value="inspirational">Inspirational</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="gen-label">Any extra details? (optional)</div>
+            <textarea class="gen-textarea" id="genDetails" placeholder="e.g. She loves cats, they've been married 25 years, turning 30…"></textarea>
+          </div>
+
+          <button class="gen-btn" id="genMsgBtn">✨ Generate Message</button>
+
+          <div class="gen-output-box empty" id="genOutput">Your generated message will appear here…</div>
+        </div>
+
+      </div>
+
+      <!-- ── INFO TAB ── -->
+      <div id="tabInfo" style="display:none; flex-direction:column; gap:16px; padding:20px; overflow-y:auto; flex:1;">
+        <div class="info-grid">
+          <div class="info-tile">
+            <div class="info-tile-label">Integrity</div>
+            <div class="info-tile-val verified">VERIFIED ✓</div>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-label">Resolution</div>
+            <div class="info-tile-val">HIGH RES</div>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-label">Format</div>
+            <div class="info-tile-val" id="infoFormat">—</div>
+          </div>
+          <div class="info-tile">
+            <div class="info-tile-label">Source</div>
+            <div class="info-tile-val">Greetings</div>
+          </div>
+        </div>
+        <div class="info-tile" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="info-tile-label">AI-Generated Description</div>
+          <div id="infoDesc" style="font-size:0.85rem;line-height:1.7;color:var(--muted);">Click "Describe this card" in the Chat tab to get an AI description of this card.</div>
+        </div>
+        <div class="info-tile" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="info-tile-label">Image URL</div>
+          <div id="infoUrl" style="font-size:0.72rem;word-break:break-all;color:var(--muted);line-height:1.5;"></div>
+        </div>
+      </div>
+
+    </div><!-- /ai-panel -->
+  </div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════════
+   GREETINGS AI — view.html integration script
+   ═══════════════════════════════════════════════════ */
+
+const API_URL   = 'https://api.anthropic.com/v1/messages';
+const AI_MODEL  = 'claude-sonnet-4-20250514';
+const FAV_KEY   = 'greetings_favourites';
+
+/* ── URL param ── */
+const params  = new URLSearchParams(window.location.search);
+const imgSrc  = params.get('img') || '';
+const imgEl   = document.getElementById('displayImg');
+if (imgSrc) imgEl.src = imgSrc;
+
+/* ── Card name helper ── */
+function cardName(url) {
+  try {
+    const base = decodeURIComponent(url).split('?')[0].split('/').pop()
+      .replace(/\.(gif|jpe?g|png|avif|webp)$/i, '')
+      .replace(/[-_]+/g, ' ').trim();
+    return base.charAt(0).toUpperCase() + base.slice(1) || 'this card';
+  } catch { return 'this card'; }
+}
+const CARD_NAME = cardName(imgSrc);
+
+/* ── Format ── */
+const ext = (imgSrc.split('?')[0].split('.').pop() || 'jpg').toUpperCase();
+document.getElementById('infoFormat').textContent = ext;
+document.getElementById('infoUrl').textContent    = imgSrc || '(no image URL)';
+
+/* ══════════════════════════════════
+   FAVOURITES
+══════════════════════════════════ */
+const favBtn = document.getElementById('favBtn');
+function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch { return []; } }
+function isFav(s) { return getFavs().includes(s); }
+function toggleFav(s) {
+  const favs = getFavs();
+  const idx  = favs.indexOf(s);
+  if (idx === -1) favs.push(s); else favs.splice(idx, 1);
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+  return idx === -1;
+}
+function syncFavBtn() {
+  const active = isFav(imgSrc);
+  favBtn.textContent = active ? '♥' : '♡';
+  favBtn.classList.toggle('active', active);
+}
+if (imgSrc) {
+  syncFavBtn();
+  favBtn.addEventListener('click', () => { toggleFav(imgSrc); syncFavBtn(); });
+}
+
+/* ══════════════════════════════════
+   DOWNLOAD
+══════════════════════════════════ */
+const toast    = document.getElementById('dlToast');
+const toastMsg = document.getElementById('dlToastMsg');
+
+function showToast(msg, loading = false) {
+  toastMsg.textContent = msg;
+  toast.classList.toggle('loading', loading);
+  toast.classList.add('show');
+}
+function hideToast(delay = 2800) { setTimeout(() => toast.classList.remove('show'), delay); }
+
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+  if (!imgSrc) return;
+  showToast('Preparing download…', true);
+  try {
+    const res  = await fetch(imgSrc, { mode: 'cors' });
+    const blob = await res.blob();
+    const url  = URL.createObjectURL(blob);
+    const ext2  = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
+    const fname = imgSrc.split('?')[0].split('/').pop().replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') + ext2;
+    const a    = Object.assign(document.createElement('a'), { href: url, download: fname });
+    a.click(); URL.revokeObjectURL(url);
+    showToast('Downloaded!', false); hideToast();
+  } catch {
+    window.open(imgSrc, '_blank');
+    showToast('Opened in new tab — right-click to save!', false); hideToast(3500);
+  }
+});
+
+/* ══════════════════════════════════
+   SHARE DROPDOWN
+══════════════════════════════════ */
+const shareBtn  = document.getElementById('shareBtn');
+const shareDrop = document.getElementById('shareDrop');
+shareBtn.addEventListener('click', e => { e.stopPropagation(); shareDrop.classList.toggle('open'); });
+document.addEventListener('click', () => shareDrop.classList.remove('open'));
+shareDrop.addEventListener('click', e => e.stopPropagation());
+
+document.getElementById('shareWa').addEventListener('click', () => {
+  window.open(`https://wa.me/?text=${encodeURIComponent('Check out this beautiful card! 🎉\n' + location.href)}`, '_blank');
+  shareDrop.classList.remove('open');
+});
+document.getElementById('shareCopy').addEventListener('click', () => {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const b = document.getElementById('shareCopy');
+    b.innerHTML = '✓ &nbsp; Link Copied!'; b.style.color = '#10b981';
+    setTimeout(() => { b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link'; b.style.color = ''; }, 2200);
+  });
+  shareDrop.classList.remove('open');
+});
+
+/* ══════════════════════════════════
+   TABS
+══════════════════════════════════ */
+const tabMap = {
+  chat:     { btn: null, panel: document.getElementById('tabChat')     },
+  generate: { btn: null, panel: document.getElementById('tabGenerate') },
+  info:     { btn: null, panel: document.getElementById('tabInfo')     },
+};
+const quickChips    = document.getElementById('quickChips');
+const chatInputArea = document.getElementById('chatInputArea');
+
+document.querySelectorAll('.ai-tab').forEach(btn => {
+  const tab = btn.dataset.tab;
+  tabMap[tab].btn = btn;
+  btn.addEventListener('click', () => switchTab(tab));
+});
+
+function switchTab(name) {
+  Object.entries(tabMap).forEach(([k, v]) => {
+    v.btn.classList.toggle('active', k === name);
+    v.panel.style.display = k === name ? (k === 'chat' ? 'flex' : (k === 'generate' ? 'flex' : 'flex')) : 'none';
+    if (k === 'info') v.panel.style.flexDirection = 'column';
+  });
+  quickChips.style.display    = name === 'chat' ? '' : 'none';
+  chatInputArea.style.display = name === 'chat' ? '' : 'none';
+}
+switchTab('chat');
+
+/* ══════════════════════════════════
+   CHAT — Claude API
+══════════════════════════════════ */
+const chatWrap = document.getElementById('tabChat');
+const chatInput = document.getElementById('chatInput');
+const sendBtn   = document.getElementById('sendBtn');
+
+const systemPrompt = `You are "Greetings AI", a friendly and creative assistant built into the Greetings digital card platform. You help users with everything related to greeting cards, invitations, and heartfelt messages.
+
+The user is currently viewing a card called "${CARD_NAME}"${imgSrc ? ` (image URL: ${imgSrc})` : ''}.
+
+Your capabilities:
+- Describe the card's visual style, colors, mood, and occasion suitability
+- Write personalized greeting messages for any occasion
+- Suggest ways to customize or use the card
+- Answer questions about design, occasions, gifting etiquette, and more
+- Provide warm, creative message ideas
+
+Keep responses conversational, warm, and concise (2-4 sentences unless more detail is requested). Use occasional emojis to feel friendly but not excessive. Never mention that you're Claude — you are Greetings AI.`;
+
+let chatHistory = [];
+let isLoading   = false;
+
+function addMsg(role, text, isTyping = false) {
+  const div   = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = `msg-avatar ${role}`;
+  avatar.textContent = role === 'ai' ? '✦' : '👤';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  if (isTyping) {
+    bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+    div.id = 'typingIndicator';
+  } else {
+    bubble.textContent = text;
+  }
+  div.appendChild(avatar); div.appendChild(bubble);
+  chatWrap.appendChild(div);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
+  return div;
+}
+
+function removeTyping() {
+  document.getElementById('typingIndicator')?.remove();
+}
+
+async function sendMessage(text) {
+  if (!text.trim() || isLoading) return;
+  isLoading = true;
+  sendBtn.disabled = true;
+
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  const typingEl = addMsg('ai', '', true);
+  chatInput.value = '';
+  chatInput.style.height = 'auto';
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: chatHistory,
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t generate a response. Please try again.';
+
+    removeTyping();
+    addMsg('ai', reply);
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    // Update info tab description if it was a describe request
+    if (text.toLowerCase().includes('descri')) {
+      document.getElementById('infoDesc').textContent = reply;
+    }
+
+  } catch (err) {
+    removeTyping();
+    addMsg('ai', '⚠️ Connection error. Please check your internet and try again.');
+    console.error('Greetings AI error:', err);
+  }
+
+  isLoading = false;
+  sendBtn.disabled = false;
+}
+
+// Send on button click
+sendBtn.addEventListener('click', () => sendMessage(chatInput.value));
+
+// Send on Enter (Shift+Enter = newline)
+chatInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault(); sendMessage(chatInput.value);
+  }
+});
+
+// Auto-resize textarea
+chatInput.addEventListener('input', function () {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 130) + 'px';
+});
+
+// Quick chips
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => sendMessage(chip.dataset.prompt));
+});
+
+// Welcome message on load
+setTimeout(() => {
+  addMsg('ai', `Hi! 👋 I'm Greetings AI. I can describe this card, help you write a personal message, or answer any questions about it. What would you like to know?`);
+}, 400);
+
+/* ══════════════════════════════════
+   GENERATOR TAB — Claude API
+══════════════════════════════════ */
+const genBtn    = document.getElementById('genMsgBtn');
+const genOutput = document.getElementById('genOutput');
+
+genBtn.addEventListener('click', async () => {
+  const occasion  = document.getElementById('genOccasion').value;
+  const recipient = document.getElementById('genRecipient').value.trim();
+  const tone      = document.getElementById('genTone').value;
+  const details   = document.getElementById('genDetails').value.trim();
+
+  if (!occasion) {
+    genOutput.textContent = '⚠️ Please select an occasion first.';
+    genOutput.classList.remove('empty');
+    return;
+  }
+
+  genBtn.disabled  = true;
+  genOutput.innerHTML = '<div class="gen-loading"><div class="gen-spinner"></div> Crafting your message…</div>';
+  genOutput.classList.remove('empty');
+
+  const prompt = `Write a ${tone} greeting card message for a ${occasion}${recipient ? ` addressed to ${recipient}` : ''}. 
+${details ? `Extra context: ${details}` : ''}
+The card design is: "${CARD_NAME}".
+
+Write 2-3 beautiful, heartfelt sentences suitable for a greeting card. Make it memorable and personal. Output only the message text itself — no quotes, no labels, no explanation.`;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        max_tokens: 400,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data  = await res.json();
+    const reply = data.content?.[0]?.text?.trim() || 'Could not generate a message. Please try again.';
+
+    genOutput.innerHTML = `<button class="copy-btn" id="copyGenBtn">Copy</button><span id="genText"></span>`;
+    document.getElementById('genText').textContent = reply;
+    document.getElementById('copyGenBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(reply).then(() => {
+        const b = document.getElementById('copyGenBtn');
+        b.textContent = 'Copied ✓'; b.style.color = '#10b981';
+        setTimeout(() => { b.textContent = 'Copy'; b.style.color = ''; }, 2000);
+      });
+    });
+
+  } catch (err) {
+    genOutput.textContent = '⚠️ Error generating message. Please try again.';
+    console.error('Generator error:', err);
+  }
+
+  genBtn.disabled = false;
+});
+</script>
+</body>
+</html>

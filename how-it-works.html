@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
+  <title>How It Works | Greetings</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-home">
+
+<!-- NAVBAR — matches all other pages -->
+<header class="navbar">
+  <div class="container nav">
+
+    <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height:100px; width:auto;"></a>
+
+    <input type="checkbox" id="menu-toggle" style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
+    <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
+
+    <nav class="menu">
+      <!-- LEFT SIDE -->
+      <div class="nav-left">
+        <a href="index.html">Home</a>
+        <a href="wedding.html">Wedding</a>
+        <a href="birthday.html">Birthday</a>
+        <a href="party.html">Party</a>
+        <a href="cards.html">Cards</a>
+        <a href="events.html">Events</a>
+        <a href="about.html">About</a>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="nav-right" id="navRight">
+
+        <!-- Buttons -->
+        <div id="authButtons">
+          <a href="login.html" class="btn login-btn">Login</a>
+          <a href="signup.html" class="btn signup-btn">Sign Up</a>
+        </div>
+
+        <!-- Avatar -->
+        <div id="userProfile" class="hidden">
+          <div class="avatar" id="avatar"></div>
+          <div class="dropdown" id="dropdown">
+            <p id="userEmail"></p>
+            <a href="profile.html" id="profileLink">My Profile</a>
+            <button id="logoutBtn">Logout</button>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="container section">
+
+  <div class="page-title-wrap">
+    <div class="page-tag">✦ Simple & Easy</div>
+    <h2 class="page-title">How It <span>Works</span></h2>
+    <p class="page-subtitle">Creating magic in three simple steps</p>
+  </div>
+
+  <div class="how-grid">
+
+  <div class="how-card-wow">
+    <div class="card-top">
+      <span class="step-num-visible">01</span>
+      <div class="icon-box pink-neon"><i class="fas fa-th-large"></i></div>
+    </div>
+    <div class="card-content">
+      <h3>Choose Template</h3>
+      <p>Explore our high-end gallery of artistically curated digital greeting designs.</p>
+    </div>
+    <div class="card-glow-bar pink-bg"></div>
+  </div>
+
+  <div class="how-card-wow">
+    <div class="card-top">
+      <span class="step-num-visible">02</span>
+      <div class="icon-box blue-neon"><i class="fas fa-edit"></i></div>
+    </div>
+    <div class="card-content">
+      <h3>Personalize</h3>
+      <p>Add your text and special touches. Our system ensures perfect layout every time.</p>
+    </div>
+    <div class="card-glow-bar blue-bg"></div>
+  </div>
+
+  <div class="how-card-wow">
+    <div class="card-top">
+      <span class="step-num-visible">03</span>
+      <div class="icon-box gold-neon"><i class="fas fa-paper-plane"></i></div>
+    </div>
+    <div class="card-content">
+      <h3>Send Joy</h3>
+      <p>Deliver your premium greeting instantly through a secure high-definition digital link.</p>
+    </div>
+    <div class="card-glow-bar gold-bg"></div>
+  </div>
+
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <div class="footer-badge"><span class="footer-badge-dot"></span></div>
+        <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
+        <p>Craft stunning digital invitations and greeting cards for every occasion. Neon-lit design meets heartfelt moments — all in one place.</p>
+        <div class="footer-social-row">
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"><i class="fab fa-instagram"></i></a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"><i class="fab fa-github"></i></a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="wedding.html">Wedding</a></li>
+          <li><a href="birthday.html">Birthday</a></li>
+          <li><a href="party.html">Party</a></li>
+          <li><a href="cards.html">Cards</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="mailto:support@greetings.com">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Report an Issue</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        &copy; 2025 <span>Greetings</span>. Crafted with &#9829; by Shagun &amp; Tanvee &mdash; B.E. CSE (AI-FT), Chitkara University.
+      </p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="back-to-top.js"></script>
+<script src="hamburger.js"></script>
+<script src="script.js"></script>
+<script src="ai-assistant.js"></script>
+</body>
+</html>

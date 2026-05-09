@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+  <div class="auth-card">
+
+    <!-- HEADER -->
+    <div class="auth-header">
+      <a href="index.html">
+  <img src="logo.svg" alt="Greetings Logo"
+   style="height: 100px; width:auto;
+   display:block; margin:0 auto 8px;">
+</a>
+      <h2>Create Account</h2>
+      <p>Join the experience</p>
+    </div>
+
+     <!-- NAME -->
+    <div class="input-group">
+      <label>Full Name <span style="color:#ff4d6d">*</span></label>
+      <input type="text" id="signupName" placeholder="Your full name" required>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="input-group">
+      <label>Email <span style="color:#ff4d6d">*</span></label>
+      <input type="email" id="signupEmail" placeholder="name@example.com" required>
+    </div>
+
+    <!-- PHONE -->
+    <div class="input-group">
+      <label>Phone Number <span style="color:#ff4d6d">*</span></label>
+      <input type="tel" id="signupPhone" placeholder="10-digit number" required>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="input-group" style="position:relative;">
+      <label>Password <span style="color:#ff4d6d">*</span></label>
+      <input type="password" id="signupPassword" placeholder="Min. 6 characters" required style="padding-right:45px;">
+      <span id="toggleSignupPass" style="
+        position:absolute;
+        right:14px;
+        bottom:13px;
+        cursor:pointer;
+        font-size:1.2rem;
+        color:#aaa;">👁️</span>
+    </div>
+
+    <!-- PASSWORD STRENGTH -->
+    <div class="pwd-strength-wrap">
+      <div class="pwd-bars">
+        <span class="pwd-bar" id="pwdBar1"></span>
+        <span class="pwd-bar" id="pwdBar2"></span>
+        <span class="pwd-bar" id="pwdBar3"></span>
+        <span class="pwd-bar" id="pwdBar4"></span>
+      </div>
+      <span class="pwd-label" id="pwdLabel">Enter a password</span>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <ul class="pwd-rules">
+      <li id="ruleLen">  At least 6 characters</li>
+      <li id="ruleUpper">At least one uppercase letter</li>
+      <li id="ruleDig">  At least one number</li>
+      <li id="ruleSym">  At least one symbol (!@#…)</li>
+    </ul>
+
+    <!-- SIGNUP BUTTON -->
+    <button id="signupBtn" class="auth-btn">Sign Up</button>
+
+    <!-- LOGIN LINK -->
+    <div class="auth-footer">
+      <p>Already have an account?
+        <a href="login.html" style="color:#7c3aed; font-weight:700;">Log in</a>
+      </p>
+    </div>
+
+    <!-- TERMS -->
+    <div style="text-align:center; margin-top:15px; font-size:0.78rem; color:#666; line-height:1.6;">
+      By signing up, I accept Greetings'<br>
+      <a href="#" style="color:#aaa; text-decoration:underline;">Terms of Use</a>
+      &amp;
+      <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+  /* ── Eye icon toggle ── */
+  const toggleSignupPass = document.getElementById('toggleSignupPass');
+  const signupPassword   = document.getElementById('signupPassword');
+
+  toggleSignupPass.addEventListener('click', () => {
+    if (signupPassword.type === 'password') {
+      signupPassword.type = 'text';
+      toggleSignupPass.textContent = '🙈';
+    } else {
+      signupPassword.type = 'password';
+      toggleSignupPass.textContent = '👁️';
+    }
+  });
+
+  /* ── Password strength checker ── */
+  const bars     = [1,2,3,4].map(i => document.getElementById('pwdBar' + i));
+  const pwdLabel = document.getElementById('pwdLabel');
+
+  const rules = {
+    ruleLen:   v => v.length >= 6,
+    ruleUpper: v => /[A-Z]/.test(v),
+    ruleDig:   v => /[0-9]/.test(v),
+    ruleSym:   v => /[^A-Za-z0-9]/.test(v),
+  };
+
+  const levels = [
+    { score: 0, label: 'Enter a password',  color: '',          cls: ''         },
+    { score: 1, label: 'Too weak',           color: '#ef4444',   cls: 'weak'     },
+    { score: 2, label: 'Could be stronger',  color: '#f97316',   cls: 'fair'     },
+    { score: 3, label: 'Almost there!',      color: '#eab308',   cls: 'good'     },
+    { score: 4, label: 'Strong password ✓',  color: '#22c55e',   cls: 'strong'   },
+  ];
+
+  function updateStrength(val) {
+    /* score each rule */
+    let score = 0;
+    for (const [id, test] of Object.entries(rules)) {
+      const el  = document.getElementById(id);
+      const met = val.length > 0 && test(val);
+      el.classList.toggle('met', met);
+      if (met) score++;
+    }
+
+    /* if password is empty, reset */
+    if (!val.length) score = 0;
+
+    const level = levels[score] || levels[4];
+
+    /* colour bars */
+    bars.forEach((bar, i) => {
+      bar.style.background   = i < score ? level.color : '';
+      bar.style.opacity      = i < score ? '1' : '0.15';
+      bar.style.transform    = i < score ? 'scaleY(1)' : 'scaleY(0.5)';
+    });
+
+    pwdLabel.textContent  = level.label;
+    pwdLabel.style.color  = level.color || '#666';
+  }
+
+  signupPassword.addEventListener('input', e => updateStrength(e.target.value));
+</script>
+</body>
+
+</body>
+</html>
