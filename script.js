@@ -243,3 +243,17 @@ document.querySelectorAll('.card').forEach(card => {
     card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
   });
 });
+
+
+// Target specifically the links inside the dropdown
+const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+
+dropdownLinks.forEach(link => {
+  link.addEventListener('click', function() {
+    // Remove the effect from all dropdown siblings
+    dropdownLinks.forEach(el => el.classList.remove('active-category'));
+    
+    // Add the effect to the clicked one
+    this.classList.add('active-category');
+  });
+});

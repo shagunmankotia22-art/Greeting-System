@@ -18,36 +18,28 @@
       <span class="bar"></span>
     </label>
     <nav class="menu">
-      <!-- LEFT SIDE -->
   <div class="nav-left nav-inner">
-    <a href="index.html" class="nav-item">Home</a>
-    <a href="wedding.html" class="nav-item">Wedding</a>
-    <a href="birthday.html" class="nav-item">Birthday</a>
-    <a href="party.html" class="nav-item">Party</a>
-    <a href="cards.html" class="nav-item">Cards</a>
-    <a href="events.html" class="active nav-item">Events</a>
+    <a href="index.html" class="active nav-item">Home</a>
+    
+    <div class="nav-dropdown">
+      <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 4px;"></i></a>
+      <div class="dropdown-content glass-dropdown">
+        <a href="wedding.html">Wedding</a>
+        <a href="birthday.html">Birthday</a>
+        <a href="party.html">Party</a>
+        <a href="cards.html">Cards</a>
+        <a href="events.html">Events</a>
+      </div>
+    </div>
+
     <a href="about.html" class="nav-item">About</a>
   </div>
-    <!-- RIGHT SIDE -->
-  <div class="nav-right" id="navRight">
 
-    <!-- Buttons -->
+  <div class="nav-right" id="navRight">
     <div id="authButtons">
       <a href="login.html" class="btn login-btn">Login</a>
       <a href="signup.html" class="btn signup-btn">Sign Up</a>
     </div>
-
-    <!-- Avatar -->
-    <div id="userProfile" class="hidden">
-      <div class="avatar" id="avatar"></div>
-
-      <div class="dropdown" id="dropdown">
-        <p id="userEmail"></p>
-        <a href="profile.html" id="profileLink">My Profile</a>
-        <button id="logoutBtn">Logout</button>
-      </div>
-    </div>
-
   </div>
 </nav>
   </div>
