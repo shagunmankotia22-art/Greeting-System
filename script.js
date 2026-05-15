@@ -1,5 +1,8 @@
 /* ================= GREETINGS - MAIN SCRIPT ================= */
 
+
+
+
 /* ================= 1. FAQ ACCORDION ================= */
 document.querySelectorAll('.faq-item').forEach(item => {
   item.addEventListener('click', () => {

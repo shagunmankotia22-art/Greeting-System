@@ -2923,3 +2923,173 @@ section.py-32 .absolute {
 @media (max-width: 768px) {
   .how-grid { grid-template-columns: 1fr; }
 }
+
+.card {
+  position: relative;
+  overflow: visible !important; /* Forces the pink glow to be visible outside */
+  z-index: 1;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px; /* Keep your "aesthetic" rounded corners here */
+  overflow: hidden;    /* Clips the IMAGE, but not the CARD'S shadow */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  /* Ensure initial state doesn't push it off-canvas if not intended */
+  transform: translateY(100%); 
+  transition: all 0.5s ease-in-out;
+}
+
+
+/* --- THE CARD (The Outer Layer) --- */
+.card {
+  position: relative;
+  background: transparent;
+  /* This MUST be visible to show the pink glow outside */
+  overflow: visible !important; 
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* --- THE IMAGE CONTAINER (The "Clipper") --- */
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* This restores the look from image_799f5a.jpg */
+  border-radius: 20px; 
+  overflow: hidden; 
+  z-index: 1;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- THE PINK GLOW & OVERLAY --- */
+.card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+  /* This creates the 'outside' effect without clipping */
+  box-shadow: 0 0 30px rgba(255, 77, 109, 0.7); 
+}
+
+/* CATEGORY OVERLAYS (Keep these inside the image-container) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.overlay.wedding { 
+  background: linear-gradient(to top, rgba(225,29,72,0.8), transparent) !important; 
+}
+
+/* 1. THE OUTER CARD: Keep this visible so the pink glow can leak out */
+.card {
+  position: relative;
+  overflow: visible !important; 
+  background: transparent;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+/* 2. THE INNER WRAPPER: This is the secret to fixing those sharp corners */
+.card-inner {
+  position: relative;
+  width: 100%;
+  border-radius: 25px; /* Adjust this to get the exact roundness you want */
+  overflow: hidden;    /* This clips the image and the overlay inside the card */
+  line-height: 0;      /* Removes any tiny gaps at the bottom of the image */
+}
+
+/* 3. THE IMAGE: Ensure it fills the rounded wrapper */
+.card-inner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 4. THE PINK PART / HOVER GLOW */
+.card:hover .card-inner {
+  /* This shadow creates the pink effect outside the rounded corners */
+  box-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
+  transform: translateY(-5px);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+/* 1. Force the image itself to have rounded corners */
+.card img {
+  border-radius: 20px; /* This fixes the sharp corners you circled */
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* 2. Ensure the overlay also follows the rounded corners */
+.overlay {
+  border-radius: 20px; /* This ensures the pink gradient doesn't go outside the corners */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* 3. Keep the card visible so the glow can "leak" out */
+.card {
+  position: relative;
+  overflow: visible !important; 
+  display: block;
+  text-decoration: none;
+}
+
+/* 4. Apply the glow to the card on hover */
+.card:hover {
+  /* This creates the pink glow outside the rounded corners */
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); 
+  border-radius: 20px; /* Keeps the shadow shape consistent with the image */
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+:root {
+  /* Muted, elegant versions of your pink theme */
+  --primary: #e63946;         /* Slightly deeper, less "neon" pink */
+  --primary-soft: #ffb3c1;    /* Very soft pink for backgrounds */
+  --text-main: #f8f9fa;       /* Off-white for better readability on dark */
+  --glass-bg: rgba(15, 15, 20, 0.6); /* Darker glass for better contrast */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-glow: rgba(230, 57, 70, 0.3);
+}

@@ -13,8 +13,10 @@
 (function () {
   'use strict';
 
-  https://greeting-system.onrender.com
-  const AI_MODEL = 'claude-sonnet-4-20250514';
+  // https://greeting-system.onrender.com
+  // const AI_MODEL = 'claude-sonnet-4-20250514';
+  const API_URL = 'https://greeting-system.onrender.com/api/chat'; // Ensure the /api/chat path is correct for your backend
+const AI_MODEL = 'claude-sonnet-4-20250514';
 
   /* ── Detect current page context ── */
   const PAGE = window.location.pathname.split('/').pop().replace('.html', '') || 'home';
@@ -374,3 +376,53 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
   });
 
 })();
+
+
+// ai-assistant.js
+
+const chatContainer = document.querySelector('.chat-messages'); // Adjust selector as needed
+const generateBtn = document.querySelector('.generate-btn');
+
+async function generateGreeting() {
+    const occasion = document.getElementById('occasion')?.value;
+    const recipient = document.getElementById('recipient')?.value;
+    const style = document.getElementById('style')?.value;
+
+    
+
+    try {
+        // Show loading state
+        if(generateBtn) generateBtn.innerText = "Generating...";
+
+        const response = await fetch('https://greeting-system.onrender.com/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Important: Never put your API Key directly in frontend JS!
+            },
+            body: JSON.stringify({
+                prompt: `Create a ${style} ${occasion} greeting for ${recipient}.`
+            })
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const data = await response.json();
+        displayMessage(data.message); // Helper to show in UI
+
+    } catch (error) {
+        console.error('Error:', error);
+        // This triggers the warning seen in image_84f15e.jpg
+        showError("Error generating message. Please try again.");
+    } finally {
+        if(generateBtn) generateBtn.innerText = "Generate Message";
+    }
+}
+
+function showError(msg) {
+    const errorDiv = document.querySelector('.error-message');
+    if(errorDiv) {
+        errorDiv.textContent = msg;
+        errorDiv.style.display = 'block';
+    }
+}

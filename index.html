@@ -103,6 +103,16 @@
   
   
 </head>
+<script>
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove glow from others
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-glow'));
+      // Add glow to this one
+      this.classList.add('active-glow');
+    });
+  });
+</script>
 <body class="bg-home">
 
 <!-- NAVBAR -->
@@ -120,14 +130,14 @@
 <nav class="menu">
 
   <!-- LEFT SIDE -->
-  <div class="nav-left">
-    <a href="index.html" class="active">Home</a>
-    <a href="wedding.html">Wedding</a>
-    <a href="birthday.html">Birthday</a>
-    <a href="party.html">Party</a>
-    <a href="cards.html">Cards</a>
-    <a href="events.html">Events</a>
-    <a href="about.html">About</a>
+  <div class="nav-left nav-inner">
+    <a href="index.html" class="active nav-item">Home</a>
+    <a href="wedding.html" class="nav-item">Wedding</a>
+    <a href="birthday.html" class="nav-item">Birthday</a>
+    <a href="party.html" class="nav-item">Party</a>
+    <a href="cards.html" class="nav-item">Cards</a>
+    <a href="events.html" class="nav-item">Events</a>
+    <a href="about.html" class="nav-item">About</a>
   </div>
 
   <!-- RIGHT SIDE -->
@@ -256,25 +266,25 @@
     <div class="card-grid">
       <a href="view.html?img=https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326" class="card trending-card">
         <div class="trending-tag">#1 Popular</div>
-        <img src="https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326">
+        <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326">
         <div class="card-footer"></div>
       </a>
 
       <a href="view.html?img=https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326" class="card trending-card">
         <div class="trending-tag">Most Shared</div>
-        <img src="https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326">
+        <img src="https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326">
         <div class="card-footer"></div>
       </a>
 
       <a href="view.html?img=https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326" class="card trending-card">
         <div class="trending-tag">Editors Choice</div>
-        <img src="https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326">
+        <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699">
         <div class="card-footer"></div>
       </a>
 
       <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699" class="card trending-card">
         <div class="trending-tag">Featured</div>
-        <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699">
+        <img src="https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326">
         <div class="card-footer"></div>
       </a>
 
