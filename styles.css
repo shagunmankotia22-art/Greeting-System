@@ -2922,3 +2922,448 @@ section.py-32 .absolute {
 @media (max-width: 768px) {
   .how-grid { grid-template-columns: 1fr; }
 }
+
+.card {
+  position: relative;
+  overflow: visible !important; /* Forces the pink glow to be visible outside */
+  z-index: 1;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px; /* Keep your "aesthetic" rounded corners here */
+  overflow: hidden;    /* Clips the IMAGE, but not the CARD'S shadow */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  /* Ensure initial state doesn't push it off-canvas if not intended */
+  transform: translateY(100%); 
+  transition: all 0.5s ease-in-out;
+}
+
+
+/* --- THE CARD (The Outer Layer) --- */
+.card {
+  position: relative;
+  background: transparent;
+  /* This MUST be visible to show the pink glow outside */
+  overflow: visible !important; 
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* --- THE IMAGE CONTAINER (The "Clipper") --- */
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* This restores the look from image_799f5a.jpg */
+  border-radius: 20px; 
+  overflow: hidden; 
+  z-index: 1;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- THE PINK GLOW & OVERLAY --- */
+.card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+  /* This creates the 'outside' effect without clipping */
+  box-shadow: 0 0 30px rgba(255, 77, 109, 0.7); 
+}
+
+/* CATEGORY OVERLAYS (Keep these inside the image-container) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.overlay.wedding { 
+  background: linear-gradient(to top, rgba(225,29,72,0.8), transparent) !important; 
+}
+
+/* 1. THE OUTER CARD: Keep this visible so the pink glow can leak out */
+.card {
+  position: relative;
+  overflow: visible !important; 
+  background: transparent;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+/* 2. THE INNER WRAPPER: This is the secret to fixing those sharp corners */
+.card-inner {
+  position: relative;
+  width: 100%;
+  border-radius: 25px; /* Adjust this to get the exact roundness you want */
+  overflow: hidden;    /* This clips the image and the overlay inside the card */
+  line-height: 0;      /* Removes any tiny gaps at the bottom of the image */
+}
+
+/* 3. THE IMAGE: Ensure it fills the rounded wrapper */
+.card-inner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 4. THE PINK PART / HOVER GLOW */
+.card:hover .card-inner {
+  /* This shadow creates the pink effect outside the rounded corners */
+  box-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
+  transform: translateY(-5px);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+/* 1. Force the image itself to have rounded corners */
+.card img {
+  border-radius: 20px; /* This fixes the sharp corners you circled */
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* 2. Ensure the overlay also follows the rounded corners */
+.overlay {
+  border-radius: 20px; /* This ensures the pink gradient doesn't go outside the corners */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* 3. Keep the card visible so the glow can "leak" out */
+.card {
+  position: relative;
+  overflow: visible !important; 
+  display: block;
+  text-decoration: none;
+}
+
+/* 4. Apply the glow to the card on hover */
+.card:hover {
+  /* This creates the pink glow outside the rounded corners */
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); 
+  border-radius: 20px; /* Keeps the shadow shape consistent with the image */
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+:root {
+  /* Muted, elegant versions of your pink theme */
+  --primary: #e63946;         /* Slightly deeper, less "neon" pink */
+  --primary-soft: #ffb3c1;    /* Very soft pink for backgrounds */
+  --text-main: #f8f9fa;       /* Off-white for better readability on dark */
+  --glass-bg: rgba(15, 15, 20, 0.6); /* Darker glass for better contrast */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-glow: rgba(230, 57, 70, 0.3);
+}
+
+/* ================= CATEGORIES DROPDOWN ================= */
+
+/* Position the container */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* The Glassmorphic Menu */
+.glass-dropdown {
+  display: block;
+  position: absolute;
+  top: 120%; /* Space from the navbar */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  min-width: 180px;
+  
+  /* Glassmorphism Effect */
+  background: rgba(15, 23, 42, 0.75); /* Dark base to match your theme */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  
+  /* Shadow and Animation */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  padding: 12px 0;
+  z-index: 3000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Show on Hover */
+.nav-dropdown:hover .glass-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Dropdown Links */
+.glass-dropdown a {
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Remove the default underline effect from nav-item for dropdown links */
+.glass-dropdown a::after {
+  display: none;
+}
+
+/* Hover effect for individual menu items */
+.glass-dropdown a:hover {
+  background: rgba(255, 77, 109, 0.15); /* Primary tint */
+  color: var(--primary) !important;
+  padding-left: 25px; /* Subtle slide effect */
+}
+
+/* Indicator arrow rotation */
+.nav-dropdown:hover i {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+/* Update your existing .glass-dropdown block */
+.glass-dropdown {
+  position: absolute;
+  top: 110%; 
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95); /* Start lower and smaller */
+  min-width: 200px;
+  
+  background: rgba(15, 23, 42, 0.85); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  z-index: 3000;
+  
+  /* Smooth exit state */
+  opacity: 0;
+  visibility: hidden;
+  transition: 
+    opacity 0.3s ease, 
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), /* Bouncy entrance */
+    visibility 0.3s;
+}
+
+/* Show state */
+.nav-dropdown:hover .glass-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Individual Link Hover Animation */
+.glass-dropdown a {
+  display: block;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 25px; /* Subtle slide-in effect on text */
+  color: var(--primary);
+}
+
+/* Optional: Add a subtle indicator line on hover */
+.glass-dropdown a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--primary);
+  transition: height 0.3s ease;
+}
+
+.glass-dropdown a:hover::before {
+  height: 60%;
+}
+
+
+/* ================= SHINY ELECTRIC GLOW DROPDOWN ================= */
+.glass-dropdown {
+  position: absolute;
+  top: 115%; 
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95);
+  min-width: 220px;
+  background: rgba(10, 15, 28, 0.98); /* Deepest dark to make the "Light" glow pop */
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+  padding: 12px;
+  z-index: 3000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-dropdown:hover .glass-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.glass-dropdown a {
+  display: block;
+  padding: 12px 20px;
+  margin: 6px 0;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden; /* Clips the shine animation */
+  transition: all 0.3s ease;
+}
+
+/* THE UNIFIED GLOW (Same on all elements) */
+.glass-dropdown a:hover {
+  color: #fff !important;
+  /* Using a bright, light-filled gradient for that "Shiny" look */
+  background: linear-gradient(135deg, #ff0055, #ff4d6d);
+  
+  /* Intense Glow effect from your image */
+  box-shadow: 
+    0 0 20px rgba(255, 0, 85, 0.8), 
+    0 0 40px rgba(255, 0, 85, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.3); /* Adds inner shine */
+    
+  transform: translateY(-2px);
+}
+
+/* The "White Light" Shine Swipe */
+.glass-dropdown a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.5), /* Bright white reflection */
+    transparent
+  );
+  transition: 0.6s;
+}
+
+.glass-dropdown a:hover::after {
+  left: 140%;
+}
+
+/* ================= SHINY GRADIENT NEON DROPDOWN ================= */
+
+/* Base Link Style */
+.glass-dropdown a {
+  display: block;
+  padding: 14px 22px;
+  margin: 8px 12px;
+  color: rgba(255, 255, 255, 0.7) !important;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* THE GRADIENT GLOW (Unified for all elements) */
+.glass-dropdown a:hover {
+  color: #ffffff !important;
+  
+  /* High-end linear gradient: Deep Pink to Vibrant Rose */
+  background: linear-gradient(135deg, #ff0055 0%, #ff4d6d 50%, #ff8fa3 100%);
+  
+  /* Matching Gradient Glow */
+  box-shadow: 
+    0 0 15px rgba(255, 0, 85, 0.8),   /* Core glow */
+    0 0 30px rgba(255, 77, 109, 0.5),  /* Mid bloom */
+    inset 0 0 12px rgba(255, 255, 255, 0.3); /* Inner shine */
+    
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.02);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* The "Glossy" Swipe Animation */
+.glass-dropdown a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.6), /* Intense light streak */
+    transparent
+  );
+  transition: 0.8s;
+}
+
+.glass-dropdown a:hover::after {
+  left: 150%;
+}
+
+
