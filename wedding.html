@@ -18,28 +18,36 @@
       <span class="bar"></span>
     </label>
     <nav class="menu">
-  <div class="nav-left nav-inner">
-    <a href="index.html" class="active nav-item">Home</a>
-    
-    <div class="nav-dropdown">
-      <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 4px;"></i></a>
-      <div class="dropdown-content glass-dropdown">
-        <a href="wedding.html">Wedding</a>
-        <a href="birthday.html">Birthday</a>
-        <a href="party.html">Party</a>
-        <a href="cards.html">Cards</a>
-        <a href="events.html">Events</a>
-      </div>
-    </div>
-
-    <a href="about.html" class="nav-item">About</a>
+      <!-- LEFT SIDE -->
+  <div class="nav-left">
+  <a href="index.html">Home</a>
+  <a href="wedding.html" class="active">Wedding</a>
+  <a href="birthday.html">Birthday</a>
+  <a href="party.html">Party</a>
+  <a href="cards.html">Cards</a>
+  <a href="events.html">Events</a>
+  <a href="about.html">About</a>
   </div>
-
+    <!-- RIGHT SIDE -->
   <div class="nav-right" id="navRight">
+
+    <!-- Buttons -->
     <div id="authButtons">
       <a href="login.html" class="btn login-btn">Login</a>
       <a href="signup.html" class="btn signup-btn">Sign Up</a>
     </div>
+
+    <!-- Avatar -->
+    <div id="userProfile" class="hidden">
+      <div class="avatar" id="avatar"></div>
+
+      <div class="dropdown" id="dropdown">
+        <p id="userEmail"></p>
+        <a href="profile.html" id="profileLink">My Profile</a>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
   </div>
 </nav>
   </div>
@@ -60,7 +68,7 @@
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/coppery-ink-40740.gif?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/coppery-ink-40740.gif?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/coppery-ink-40740.gif?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
@@ -70,22 +78,22 @@
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/blue-and-gold-blooms-39659.gif?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/blue-and-gold-blooms-39659.gif?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/blue-and-gold-blooms-39659.gif?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/spring-warming-flowers-26111.gif?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/spring-warming-flowers-26111.gif?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/spring-warming-flowers-26111.gif?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/pink-purple-flowers-24958.gif?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/pink-purple-flowers-24958.gif?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/pink-purple-flowers-24958.gif?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
@@ -95,12 +103,12 @@
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/wild-roses-14837.jpeg?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/wild-roses-14837.jpeg?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/wild-roses-14837.jpeg?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
 
-  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/tropical-boho-frame-21401.jpeg?auto=format,compress%26w=326" class="card">
+  <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/tropical-boho-frame-21401.jpeg?auto=format,compress&w=326" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/tropical-boho-frame-21401.jpeg?auto=format,compress&w=326">
     <div class="card-footer"></div>
   </a>
@@ -115,27 +123,27 @@
     <div class="card-footer"></div>
   </a>
 
-   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/peacock-feather-14066.jpeg?auto=format,compress%26w=699" class="card">
+   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/peacock-feather-14066.jpeg?auto=format,compress&w=699" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/peacock-feather-14066.jpeg?auto=format,compress&w=699">
     <div class="card-footer"></div>
   </a>
 
-   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress%26w=699" class="card">
+   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress&w=699" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/union-time-53144.gif?auto=format,compress&w=699">
     <div class="card-footer"></div>
   </a>
 
-   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/dance-of-two-souls-53200.jpeg?auto=format,compress%26w=699" class="card">
+   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/dance-of-two-souls-53200.jpeg?auto=format,compress&w=699" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/dance-of-two-souls-53200.jpeg?auto=format,compress&w=699">
     <div class="card-footer"></div>
   </a>
 
-   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/foiled-photo-28726.jpeg?auto=format,compress%26w=699" class="card">
+   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/foiled-photo-28726.jpeg?auto=format,compress&w=699" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/foiled-photo-28726.jpeg?auto=format,compress&w=699">
     <div class="card-footer"></div>
   </a>
 
-   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/peacocks-in-love-14063.jpeg?auto=format,compress%26w=699" class="card">
+   <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/peacocks-in-love-14063.jpeg?auto=format,compress&w=699" class="card">
     <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/peacocks-in-love-14063.jpeg?auto=format,compress&w=699">
     <div class="card-footer"></div>
   </a>
