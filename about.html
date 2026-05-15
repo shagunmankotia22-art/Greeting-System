@@ -6,6 +6,7 @@
   <title>About | Studio Systems</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-about">
@@ -19,38 +20,55 @@
       <span class="bar"></span>
       <span class="bar"></span>
     </label>
-    <nav class="menu">
-      <!-- LEFT SIDE -->
-      <div class="nav-left">
-        <a href="index.html">Home</a>
+     <nav class="menu">
+  <div class="nav-left nav-inner">
+    <!-- <a href="index.html" class="active nav-item">Home</a> -->
+
+    <li>
+    <a href="#home">
+        Home
+        <div class="hover-shape-container">
+            <div class="float-element shape-1" style="width: 15px; height: 15px;"></div>
+            <div class="float-element shape-2" style="width: 10px; height: 10px;"></div>
+            <div class="float-element shape-3" style="width: 12px; height: 12px;"></div>
+        </div>
+    </a>
+</li>
+    
+    <div class="nav-dropdown">
+      <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 4px;"></i></a>
+      <div class="dropdown-content glass-dropdown">
         <a href="wedding.html">Wedding</a>
         <a href="birthday.html">Birthday</a>
         <a href="party.html">Party</a>
         <a href="cards.html">Cards</a>
         <a href="events.html">Events</a>
-        <a href="about.html">About</a>
       </div>
-      <!-- RIGHT SIDE -->
-      <div class="nav-right" id="navRight">
+    </div>
 
-        <!-- Buttons -->
-        <div id="authButtons">
-          <a href="login.html" class="btn login-btn">Login</a>
-          <a href="signup.html" class="btn signup-btn">Sign Up</a>
-        </div>
+    <a href="about.html" class="nav-item">About</a>
+  </div>
 
-        <!-- Avatar -->
-        <div id="userProfile" class="hidden">
-          <div class="avatar" id="avatar"></div>
-          <div class="dropdown" id="dropdown">
-            <p id="userEmail"></p>
-            <a href="profile.html" id="profileLink">My Profile</a>
-            <button id="logoutBtn">Logout</button>
-          </div>
-        </div>
+  <a href="saved.html" class="btn saved-btn nav-item">
+  ❤️ Saved
+</a>
 
-      </div>
-    </nav>
+<a href="login.html" class="btn login-btn nav-item">
+  Login
+</a>
+
+<!-- <a href="signup.html" class="btn signup-btn nav-item">
+  Sign Up
+</a> -->
+
+<button class="signup-btn">
+    Sign Up
+    <div class="hover-shape-container">
+        <div class="float-element shape-1" style="width: 20px; height: 20px; background: #ff7eb3;"></div>
+        <div class="float-element shape-2" style="width: 12px; height: 12px;"></div>
+    </div>
+</button>
+</nav>
   </div>
 </header>
 

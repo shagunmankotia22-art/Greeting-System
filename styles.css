@@ -75,7 +75,7 @@ p {
 
 /* ================= NAVBAR ================= */
 .navbar {
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 2000;
   background: rgba(15, 23, 42, 0.8);
@@ -169,17 +169,11 @@ p {
   transition: 0.3s;
 }
 
-.nav-left a:hover::after,
+/* .nav-left a:hover::after,
 .menu a:hover::after {
   width: 100%;
-}
+} */
 
-.nav-left a:hover,
-.nav-left a.active,
-.menu a:hover,
-.menu a.active {
-  color: var(--primary) !important;
-}
 
 /* ================= NAV RIGHT ================= */
 .nav-right {
@@ -3366,5 +3360,4 @@ section.py-32 .absolute {
 .glass-dropdown a:hover::after {
   left: 150%;
 }
-
 

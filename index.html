@@ -101,9 +101,8 @@
         }
     </style>
   
-  
-</head>
-<script>
+
+  <script>
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function() {
       // Remove glow from others
@@ -114,6 +113,10 @@
   });
 
 </script>
+<script src="script.js"></script>
+  
+</head>
+
 <body class="bg-home">
 
 <!-- NAVBAR -->
@@ -146,12 +149,17 @@
     <a href="about.html" class="nav-item">About</a>
   </div>
 
-  <div class="nav-right" id="navRight">
-    <div id="authButtons">
-      <a href="login.html" class="btn login-btn">Login</a>
-      <a href="signup.html" class="btn signup-btn">Sign Up</a>
-    </div>
-  </div>
+  <a href="saved.html" class="btn saved-btn nav-item">
+  ❤️ Saved
+</a>
+
+<a href="login.html" class="btn login-btn nav-item">
+  Login
+</a>
+
+<a href="signup.html" class="btn signup-btn nav-item">
+  Sign Up
+</a>
 </nav>
   </div>
 </header>
