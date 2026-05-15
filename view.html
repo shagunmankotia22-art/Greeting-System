@@ -163,6 +163,10 @@
     .share-opt:hover { transform: translateX(3px); }
     .share-opt.wa { background: rgba(37,211,102,0.08); color: #25d366; }
     .share-opt.wa:hover { background: rgba(37,211,102,0.16); }
+    .share-opt.em { background: rgba(59,130,246,0.08); color: #60a5fa; }
+    .share-opt.em:hover { background: rgba(59,130,246,0.16); }
+    .share-opt.native { background: rgba(124,58,237,0.1); color: #a78bfa; }
+    .share-opt.native:hover { background: rgba(124,58,237,0.2); }
     .share-opt.cp { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.65); }
     .share-opt.cp:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
@@ -504,9 +508,18 @@
               Share
             </button>
             <div class="share-drop" id="shareDrop">
+              <!-- Native share (mobile) -->
+              <button class="share-opt native" id="shareNative" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share via…
+              </button>
               <button class="share-opt wa" id="shareWa">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                Share on WhatsApp
+                WhatsApp
+              </button>
+              <button class="share-opt em" id="shareEmail">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                Email
               </button>
               <button class="share-opt cp" id="shareCopy">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -722,20 +735,106 @@ function hideToast(delay = 2800) { setTimeout(() => toast.classList.remove('show
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   if (!imgSrc) return;
   showToast('Preparing download…', true);
-  try {
-    const res  = await fetch(imgSrc, { mode: 'cors' });
-    const blob = await res.blob();
-    const url  = URL.createObjectURL(blob);
-    const ext2  = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
-    const fname = imgSrc.split('?')[0].split('/').pop().replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') + ext2;
-    const a    = Object.assign(document.createElement('a'), { href: url, download: fname });
-    a.click(); URL.revokeObjectURL(url);
-    showToast('Downloaded!', false); hideToast();
-  } catch {
-    window.open(imgSrc, '_blank');
-    showToast('Opened in new tab — right-click to save!', false); hideToast(3500);
+
+  const rawName = imgSrc.split('?')[0].split('/').pop()
+    .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
+
+  function triggerDownload(href, filename) {
+    const a = Object.assign(document.createElement('a'), { href, download: filename });
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
+
+  /* Method 1: fetch + blob (works if server allows CORS) */
+  try {
+    const res  = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
+    if (!res.ok) throw new Error('fetch failed');
+    const blob = await res.blob();
+    const ext2 = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
+    const blobUrl = URL.createObjectURL(blob);
+    triggerDownload(blobUrl, rawName + ext2);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    showToast('✓ Download started!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* Method 2: canvas draw (works if image has CORS headers) */
+  try {
+    const img2 = new Image();
+    img2.crossOrigin = 'anonymous';
+    await new Promise((res, rej) => {
+      img2.onload = res; img2.onerror = rej;
+      img2.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = img2.naturalWidth; canvas.height = img2.naturalHeight;
+    canvas.getContext('2d').drawImage(img2, 0, 0);
+    const isGif = imgSrc.toLowerCase().includes('.gif');
+    canvas.toBlob(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      triggerDownload(blobUrl, rawName + (isGif ? '.png' : '.jpg'));
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    }, isGif ? 'image/png' : 'image/jpeg', 0.95);
+    showToast('✓ Download started!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* Method 3: Open image in new tab + show save instructions overlay */
+  window.open(imgSrc, '_blank');
+  showSaveInstructions();
 });
+
+/* ── Save Instructions Modal (shown when direct download isn't possible) ── */
+function showSaveInstructions() {
+  // Remove any existing modal
+  document.getElementById('saveModal')?.remove();
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+  let steps = '';
+  if (isIOS) {
+    steps = `<li>Tap and <strong>hold</strong> the image that opened</li><li>Tap <strong>"Save to Photos"</strong> or <strong>"Save Image"</strong></li>`;
+  } else if (isMobile) {
+    steps = `<li>Tap and <strong>hold</strong> the image that opened</li><li>Tap <strong>"Download image"</strong> or <strong>"Save image"</strong></li>`;
+  } else {
+    steps = `<li><strong>Right-click</strong> the image that opened in the new tab</li><li>Select <strong>"Save image as…"</strong></li>`;
+  }
+
+  const modal = document.createElement('div');
+  modal.id = 'saveModal';
+  modal.style.cssText = `
+    position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,0.75); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  `;
+  modal.innerHTML = `
+    <div style="
+      background:#0f1320; border:1px solid rgba(255,255,255,0.1);
+      border-radius:20px; padding:32px 28px; max-width:360px; width:100%;
+      text-align:center; font-family:'Plus Jakarta Sans',sans-serif; color:#e2e8f0;
+      box-shadow:0 30px 80px rgba(0,0,0,0.7);
+    ">
+      <div style="font-size:2.2rem; margin-bottom:12px;">💾</div>
+      <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:8px;">How to Save This Card</h3>
+      <p style="font-size:0.8rem; color:#64748b; margin-bottom:20px; line-height:1.6;">
+        The image opened in a new tab. To save it:
+      </p>
+      <ol style="text-align:left; font-size:0.85rem; line-height:1.9; color:#cbd5e1; padding-left:20px; margin-bottom:24px;">
+        ${steps}
+      </ol>
+      <button id="saveModalClose" style="
+        width:100%; padding:13px; border-radius:12px; border:none;
+        background:linear-gradient(135deg,#7c3aed,#ff4d6d);
+        color:#fff; font-weight:800; font-size:0.85rem; cursor:pointer;
+        font-family:inherit;
+      ">Got it!</button>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.getElementById('saveModalClose').addEventListener('click', () => modal.remove());
+
+  toast.classList.remove('show');
+}
 
 /* ══════════════════════════════════
    SHARE DROPDOWN
@@ -746,15 +845,53 @@ shareBtn.addEventListener('click', e => { e.stopPropagation(); shareDrop.classLi
 document.addEventListener('click', () => shareDrop.classList.remove('open'));
 shareDrop.addEventListener('click', e => e.stopPropagation());
 
+const shareUrl  = location.href;
+const shareText = `Check out this beautiful card on Greetings! 🎉\n${shareUrl}`;
+
+/* Show native share button on supported devices */
+if (navigator.share) {
+  document.getElementById('shareNative').style.display = 'flex';
+  document.getElementById('shareNative').addEventListener('click', async () => {
+    shareDrop.classList.remove('open');
+    try {
+      await navigator.share({ title: `${CARD_NAME} — Greetings`, text: 'Check out this beautiful card! 🎉', url: shareUrl });
+    } catch (e) { /* user cancelled — no-op */ }
+  });
+}
+
+/* WhatsApp */
 document.getElementById('shareWa').addEventListener('click', () => {
-  window.open(`https://wa.me/?text=${encodeURIComponent('Check out this beautiful card! 🎉\n' + location.href)}`, '_blank');
+  window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
   shareDrop.classList.remove('open');
 });
+
+/* Email */
+document.getElementById('shareEmail').addEventListener('click', () => {
+  const subject = encodeURIComponent(`A beautiful card for you — ${CARD_NAME}`);
+  const body    = encodeURIComponent(`Hi!\n\nI found this beautiful card and thought of you. 🎉\n\nView it here: ${shareUrl}\n\n— Sent via Greetings`);
+  window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+  shareDrop.classList.remove('open');
+});
+
+/* Copy link */
 document.getElementById('shareCopy').addEventListener('click', () => {
-  navigator.clipboard.writeText(location.href).then(() => {
+  navigator.clipboard.writeText(shareUrl).then(() => {
     const b = document.getElementById('shareCopy');
-    b.innerHTML = '✓ &nbsp; Link Copied!'; b.style.color = '#10b981';
-    setTimeout(() => { b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link'; b.style.color = ''; }, 2200);
+    const orig = b.innerHTML;
+    b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Link Copied!`;
+    b.style.color = '#10b981';
+    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2200);
+  }).catch(() => {
+    /* Fallback for older browsers */
+    const ta = document.createElement('textarea');
+    ta.value = shareUrl; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const b = document.getElementById('shareCopy');
+    const orig = b.innerHTML;
+    b.innerHTML = '✓ Copied!'; b.style.color = '#10b981';
+    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2200);
   });
   shareDrop.classList.remove('open');
 });
