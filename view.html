@@ -163,6 +163,10 @@
     .share-opt:hover { transform: translateX(3px); }
     .share-opt.wa { background: rgba(37,211,102,0.08); color: #25d366; }
     .share-opt.wa:hover { background: rgba(37,211,102,0.16); }
+    .share-opt.em { background: rgba(59,130,246,0.08); color: #60a5fa; }
+    .share-opt.em:hover { background: rgba(59,130,246,0.16); }
+    .share-opt.native { background: rgba(124,58,237,0.1); color: #a78bfa; }
+    .share-opt.native:hover { background: rgba(124,58,237,0.2); }
     .share-opt.cp { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.65); }
     .share-opt.cp:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
@@ -504,9 +508,18 @@
               Share
             </button>
             <div class="share-drop" id="shareDrop">
+              <!-- Native share (mobile) -->
+              <button class="share-opt native" id="shareNative" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share via…
+              </button>
               <button class="share-opt wa" id="shareWa">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                Share on WhatsApp
+                WhatsApp
+              </button>
+              <button class="share-opt em" id="shareEmail">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                Email
               </button>
               <button class="share-opt cp" id="shareCopy">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -721,20 +734,82 @@ function hideToast(delay = 2800) { setTimeout(() => toast.classList.remove('show
 
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   if (!imgSrc) return;
-  showToast('Preparing download…', true);
-  try {
-    const res  = await fetch(imgSrc, { mode: 'cors' });
-    const blob = await res.blob();
-    const url  = URL.createObjectURL(blob);
-    const ext2  = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
-    const fname = imgSrc.split('?')[0].split('/').pop().replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') + ext2;
-    const a    = Object.assign(document.createElement('a'), { href: url, download: fname });
-    a.click(); URL.revokeObjectURL(url);
-    showToast('Downloaded!', false); hideToast();
-  } catch {
-    window.open(imgSrc, '_blank');
-    showToast('Opened in new tab — right-click to save!', false); hideToast(3500);
+
+  const rawName = imgSrc.split('?')[0].split('/').pop()
+    .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
+  const isGif = imgSrc.toLowerCase().includes('.gif');
+
+  function triggerDownload(href, filename) {
+    const a = Object.assign(document.createElement('a'), { href, download: filename });
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
+
+  showToast('Preparing download…', true);
+
+  /* ── Method 1: allorigins.win CORS proxy (works for most image hosts) ── */
+  try {
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(imgSrc);
+    const res = await fetch(proxyUrl);
+    if (!res.ok) throw new Error('proxy failed');
+    const blob = await res.blob();
+    const ext2 = isGif ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
+    const blobUrl = URL.createObjectURL(blob);
+    triggerDownload(blobUrl, rawName + ext2);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+    showToast('✓ Downloaded successfully!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* ── Method 2: corsproxy.io fallback ── */
+  try {
+    const proxyUrl2 = 'https://corsproxy.io/?' + encodeURIComponent(imgSrc);
+    const res2 = await fetch(proxyUrl2);
+    if (!res2.ok) throw new Error('proxy2 failed');
+    const blob2 = await res2.blob();
+    const ext3 = isGif ? '.gif' : blob2.type.includes('png') ? '.png' : '.jpg';
+    const blobUrl2 = URL.createObjectURL(blob2);
+    triggerDownload(blobUrl2, rawName + ext3);
+    setTimeout(() => URL.revokeObjectURL(blobUrl2), 8000);
+    showToast('✓ Downloaded successfully!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* ── Method 3: direct fetch (works if server allows CORS) ── */
+  try {
+    const res3 = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
+    if (!res3.ok) throw new Error('direct failed');
+    const blob3 = await res3.blob();
+    const ext4 = isGif ? '.gif' : blob3.type.includes('png') ? '.png' : '.jpg';
+    const blobUrl3 = URL.createObjectURL(blob3);
+    triggerDownload(blobUrl3, rawName + ext4);
+    setTimeout(() => URL.revokeObjectURL(blobUrl3), 8000);
+    showToast('✓ Downloaded successfully!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* ── Method 4: canvas (same-origin or permissive CORS images) ── */
+  try {
+    const imgEl2 = new Image();
+    imgEl2.crossOrigin = 'anonymous';
+    await new Promise((res, rej) => {
+      imgEl2.onload = res; imgEl2.onerror = rej;
+      imgEl2.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = imgEl2.naturalWidth; canvas.height = imgEl2.naturalHeight;
+    canvas.getContext('2d').drawImage(imgEl2, 0, 0);
+    canvas.toBlob(blob4 => {
+      const blobUrl4 = URL.createObjectURL(blob4);
+      triggerDownload(blobUrl4, rawName + (isGif ? '.png' : '.jpg'));
+      setTimeout(() => URL.revokeObjectURL(blobUrl4), 8000);
+    }, isGif ? 'image/png' : 'image/jpeg', 0.95);
+    showToast('✓ Downloaded successfully!', false); hideToast();
+    return;
+  } catch (_) {}
+
+  /* ── Final fallback: open image in new tab with save instruction ── */
+  showToast('Opening image — right-click → Save image as…', false); hideToast(5000);
+  window.open(imgSrc, '_blank');
 });
 
 /* ══════════════════════════════════
@@ -742,21 +817,82 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 ══════════════════════════════════ */
 const shareBtn  = document.getElementById('shareBtn');
 const shareDrop = document.getElementById('shareDrop');
-shareBtn.addEventListener('click', e => { e.stopPropagation(); shareDrop.classList.toggle('open'); });
+
+shareBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  shareDrop.classList.toggle('open');
+});
 document.addEventListener('click', () => shareDrop.classList.remove('open'));
 shareDrop.addEventListener('click', e => e.stopPropagation());
 
-document.getElementById('shareWa').addEventListener('click', () => {
-  window.open(`https://wa.me/?text=${encodeURIComponent('Check out this beautiful card! 🎉\n' + location.href)}`, '_blank');
-  shareDrop.classList.remove('open');
-});
-document.getElementById('shareCopy').addEventListener('click', () => {
-  navigator.clipboard.writeText(location.href).then(() => {
-    const b = document.getElementById('shareCopy');
-    b.innerHTML = '✓ &nbsp; Link Copied!'; b.style.color = '#10b981';
-    setTimeout(() => { b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link'; b.style.color = ''; }, 2200);
+/* Share the view page URL (contains the image param) */
+const shareUrl  = location.href;
+const shareText = `✨ Check out this beautiful card on Greetings!\n${shareUrl}`;
+
+/* Native share (mobile devices — iOS/Android) */
+if (navigator.share) {
+  document.getElementById('shareNative').style.display = 'flex';
+  document.getElementById('shareNative').addEventListener('click', async () => {
+    shareDrop.classList.remove('open');
+    try {
+      await navigator.share({
+        title: CARD_NAME + ' — Greetings',
+        text: '✨ Check out this beautiful greeting card!',
+        url: shareUrl
+      });
+    } catch (e) { /* user cancelled */ }
   });
+}
+
+/* WhatsApp */
+document.getElementById('shareWa').addEventListener('click', () => {
   shareDrop.classList.remove('open');
+  const waText = '✨ Check out this beautiful greeting card!\n\n' + shareUrl;
+  window.open('https://wa.me/?text=' + encodeURIComponent(waText), '_blank');
+});
+
+/* Email */
+document.getElementById('shareEmail').addEventListener('click', () => {
+  shareDrop.classList.remove('open');
+  const subject = encodeURIComponent('A beautiful card for you — ' + CARD_NAME);
+  const body    = encodeURIComponent(
+    'Hi!\n\nI found this beautiful greeting card and thought of you. ✨\n\n'
+    + 'View it here: ' + shareUrl
+    + '\n\n— Sent via Greetings'
+  );
+  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+});
+
+/* Copy link */
+document.getElementById('shareCopy').addEventListener('click', () => {
+  shareDrop.classList.remove('open');
+  const b = document.getElementById('shareCopy');
+  const orig = b.innerHTML;
+
+  function markCopied() {
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    b.style.color = '#10b981';
+    showToast('\u2713 Link copied to clipboard!', false); hideToast();
+    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2500);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareUrl).then(markCopied).catch(() => {
+      fallbackCopy();
+    });
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = shareUrl;
+    Object.assign(ta.style, { position: 'fixed', top: '0', left: '0', opacity: '0' });
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); markCopied(); } catch(e) {}
+    document.body.removeChild(ta);
+  }
 });
 
 /* ══════════════════════════════════

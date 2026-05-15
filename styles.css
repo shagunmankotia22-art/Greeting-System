@@ -2599,11 +2599,11 @@ section.py-32 .absolute {
 /* ================= BACK TO TOP BUTTON ================= */
 .back-to-top {
   position: fixed;
-  bottom: 36px;
-  right: 32px;
+  bottom: 120px;   /* higher up on the right */
+  right: 28px;
   z-index: 8000;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -2627,7 +2627,7 @@ section.py-32 .absolute {
 }
 
 .back-to-top:hover {
-  transform: translateY(-4px) scale(1.08);
+  transform: translateY(-3px) scale(1.08);
   box-shadow: 0 8px 28px rgba(255, 77, 109, 0.6);
 }
 
@@ -2636,8 +2636,8 @@ section.py-32 .absolute {
 }
 
 .back-to-top svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   stroke: #fff;
   fill: none;
   stroke-width: 2.8;
@@ -2645,13 +2645,12 @@ section.py-32 .absolute {
   stroke-linejoin: round;
 }
 
-/* Nudge up on pages that have a floating fav button nearby */
 @media (max-width: 600px) {
   .back-to-top {
-    bottom: 24px;
+    bottom: 100px;
     right: 20px;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
 }
 
