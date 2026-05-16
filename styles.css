@@ -3941,3 +3941,547 @@ section.py-32 .absolute {
 }
 
 /* ---------------------------------------------------------------------------------- */
+
+/* ===================================
+   3 FLOWERS AROUND ACTIVE NAV
+=================================== */
+
+.active.nav-item {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* ===================================
+   FLOWER 1 — TOP LEFT
+   + FLOWER 3 — RIGHT CENTER
+=================================== */
+
+.active.nav-item::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: -12px;
+  top: -12px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 190, 235, .95);
+
+  z-index: 100;
+
+  opacity: .92;
+
+  box-shadow:
+
+    /* =========================
+       FLOWER 1
+    ========================= */
+
+    0 -9px 0 3px rgba(168, 85, 247, .72),
+    -9px 0 0 2.8px rgba(192, 132, 252, .68),
+    9px 0 0 2.8px rgba(192, 132, 252, .68),
+    0 9px 0 3px rgba(255, 120, 220, .65),
+
+    /* =========================
+       FLOWER 3 CORE
+    ========================= */
+
+    105px 22px 0 0 rgba(255, 190, 235, .92),
+
+    /* TOP */
+    105px 13px 0 3px rgba(255, 120, 220, .68),
+
+    /* LEFT */
+    96px 22px 0 2.8px rgba(216, 180, 254, .62),
+
+    /* RIGHT */
+    114px 22px 0 2.8px rgba(216, 180, 254, .62),
+
+    /* BOTTOM */
+    105px 31px 0 3px rgba(168, 85, 247, .62);
+
+  filter:
+    blur(.8px);
+
+  animation:
+    flowerPulse1 2.5s ease-in-out infinite;
+}
+
+/* ===================================
+   FLOWER 2 — BOTTOM RIGHT
+=================================== */
+
+.active.nav-item::after {
+
+  content: "";
+
+  position: absolute;
+
+  right: -12px;
+  bottom: -12px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 190, 235, .92);
+
+  z-index: 99;
+
+  opacity: .88;
+
+  box-shadow:
+
+    0 -9px 0 3px rgba(255, 120, 220, .68),
+    -9px 0 0 2.8px rgba(216, 180, 254, .62),
+    9px 0 0 2.8px rgba(216, 180, 254, .62),
+    0 9px 0 3px rgba(168, 85, 247, .62);
+
+  filter:
+    blur(.8px);
+
+  animation:
+    flowerPulse2 2.5s ease-in-out infinite .4s;
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+
+@keyframes flowerPulse1 {
+
+  0% {
+    opacity: 0;
+    transform: scale(.85);
+  }
+
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  60% {
+    opacity: .92;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(.9);
+  }
+}
+
+@keyframes flowerPulse2 {
+
+  0% {
+    opacity: 0;
+    transform: scale(.85);
+  }
+
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  60% {
+    opacity: .88;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(.9);
+  }
+}
+
+/* ===================================
+   FLOWER POSITION ADJUSTMENTS
+=================================== */
+
+/* TOP LEFT FLOWER */
+
+.active.nav-item::before {
+
+  left: -6px;
+  top: -6px;
+}
+
+/* BOTTOM RIGHT FLOWER */
+
+.active.nav-item::after {
+
+  right: -6px;
+  bottom: -6px;
+}
+
+/* ===================================
+   MOVE RIGHT-CENTER FLOWER INSIDE
+=================================== */
+
+.active.nav-item::before {
+
+  box-shadow:
+
+    /* =========================
+       FLOWER 1
+    ========================= */
+
+    0 -9px 0 3px rgba(168, 85, 247, .72),
+    -9px 0 0 2.8px rgba(192, 132, 252, .68),
+    9px 0 0 2.8px rgba(192, 132, 252, .68),
+    0 9px 0 3px rgba(255, 120, 220, .65),
+
+    /* =========================
+       FLOWER 3 — MOVED INSIDE
+    ========================= */
+
+    92px 22px 0 0 rgba(255, 190, 235, .92),
+
+    /* TOP */
+    92px 13px 0 3px rgba(255, 120, 220, .68),
+
+    /* LEFT */
+    83px 22px 0 2.8px rgba(216, 180, 254, .62),
+
+    /* RIGHT */
+    101px 22px 0 2.8px rgba(216, 180, 254, .62),
+
+    /* BOTTOM */
+    92px 31px 0 3px rgba(168, 85, 247, .62);
+
+
+}
+
+
+
+
+/* ===================================
+   COMPACT NAV BORDERS
+=================================== */
+
+.nav-item {
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.10);
+
+  background:
+  /* ===================================
+   TRIPLE FLOWERS AROUND ACTIVE NAV
+=================================== */
+
+  .active.nav-item {
+    position: relative;
+    overflow: visible !important;
+  }
+
+  /* ===================================
+   FLOWER 1 — TOP LEFT
+=================================== */
+
+  .active.nav-item::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -10px;
+    top: -10px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(255, 190, 235, .95);
+
+    z-index: 100;
+
+    opacity: .9;
+
+    box-shadow:
+
+      0 -9px 0 3px rgba(168, 85, 247, .72),
+      -9px 0 0 2.8px rgba(192, 132, 252, .68),
+      9px 0 0 2.8px rgba(192, 132, 252, .68),
+      0 9px 0 3px rgba(255, 120, 220, .65);
+
+    filter:
+      blur(.8px);
+
+    animation:
+      flowerBreath1 2.4s ease-in-out infinite;
+  }
+
+  /* ===================================
+   FLOWER 2 — BOTTOM RIGHT
+=================================== */
+
+  .active.nav-item::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: -10px;
+    bottom: -10px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(255, 190, 235, .9);
+
+    z-index: 99;
+
+    opacity: .82;
+
+    box-shadow:
+
+      0 -8px 0 2.5px rgba(255, 120, 220, .66),
+      -8px 0 0 2.4px rgba(216, 180, 254, .58),
+      8px 0 0 2.4px rgba(216, 180, 254, .58),
+      0 8px 0 2.5px rgba(168, 85, 247, .58);
+
+    filter:
+      blur(.8px);
+
+    animation:
+      flowerBreath2 2.4s ease-in-out infinite .5s;
+  }
+
+  /* ===================================
+   FLOWER 3 — RIGHT CENTER
+=================================== */
+
+  .active.nav-item {
+
+    background-image:
+      radial-gradient(circle,
+        rgba(255, 190, 235, .92) 0 3px,
+        transparent 4px);
+
+    background-repeat: no-repeat;
+
+    background-position:
+      calc(100% + 12px) center;
+
+    background-size:
+      12px 12px;
+
+    filter:
+      drop-shadow(0 0 6px rgba(192, 132, 252, .55));
+  }
+
+  /* ===================================
+   FLOWER MOTION
+=================================== */
+
+  @keyframes flowerBreath1 {
+
+    0% {
+
+      opacity: 0;
+
+      transform:
+        scale(.6) rotate(-5deg);
+    }
+
+    25% {
+
+      opacity: 1;
+
+      transform:
+        scale(1) rotate(3deg);
+    }
+
+    60% {
+
+      opacity: .9;
+
+      transform:
+        scale(1.05) rotate(-2deg);
+    }
+
+    100% {
+
+      opacity: 0;
+
+      transform:
+        scale(.72) rotate(5deg);
+    }
+  }
+
+  @keyframes flowerBreath2 {
+
+    0% {
+
+      opacity: 0;
+
+      transform:
+        scale(.6) rotate(5deg);
+    }
+
+    25% {
+
+      opacity: 1;
+
+      transform:
+        scale(1) rotate(-3deg);
+    }
+
+    60% {
+
+      opacity: .85;
+
+      transform:
+        scale(1.03) rotate(2deg);
+    }
+
+    100% {
+
+      opacity: 0;
+
+      transform:
+        scale(.72) rotate(-5deg);
+    }
+  }
+
+
+  /* ===================================
+   FLOWER 3 — RIGHT CENTER
+=================================== */
+
+  .active.nav-item .right-flower {
+
+    position: absolute;
+
+    right: -14px;
+    top: 50%;
+
+    width: 6px;
+    height: 6px;
+
+    transform:
+      translateY(-50%);
+
+    border-radius: 50%;
+
+    background:
+      rgba(255, 190, 235, .92);
+
+    z-index: 120;
+
+    opacity: .88;
+
+    box-shadow:
+
+      0 -8px 0 2.5px rgba(255, 120, 220, .66),
+      -8px 0 0 2.4px rgba(216, 180, 254, .58),
+      8px 0 0 2.4px rgba(216, 180, 254, .58),
+      0 8px 0 2.5px rgba(168, 85, 247, .58);
+
+    filter:
+      blur(.8px);
+
+    animation:
+      flowerBreath3 2.4s ease-in-out infinite .8s;
+  }
+
+  /* ===================================
+   FLOWER 3 MOTION
+=================================== */
+
+  @keyframes flowerBreath3 {
+
+    0% {
+
+      opacity: 0;
+
+      transform:
+        translateY(-50%) scale(.6) rotate(-5deg);
+    }
+
+    25% {
+
+      opacity: 1;
+
+      transform:
+        translateY(-50%) scale(1) rotate(3deg);
+    }
+
+    60% {
+
+      opacity: .88;
+
+      transform:
+        translateY(-50%) scale(1.04) rotate(-2deg);
+    }
+
+    100% {
+
+      opacity: 0;
+
+      transform:
+        translateY(-50%) scale(.72) rotate(5deg);
+    }
+  }
+
+  rgba(255, 255, 255, 0.02),
+
+  backdrop-filter: blur(10px),
+
+  width: auto,
+  min-width: unset,
+
+  transition: all .3s ease
+}
+
+/* HOVER */
+
+.nav-item:hover {
+
+  border-color:
+    rgba(255, 120, 220, .32);
+
+  background:
+    rgba(255, 255, 255, .04);
+
+  box-shadow:
+    0 0 10px rgba(255, 120, 220, .10);
+
+  transform:
+    translateY(-2px);
+}
+
+/* ACTIVE */
+
+.active.nav-item {
+
+  border-color:
+    rgba(255, 120, 220, .42);
+
+  background:
+    rgba(255, 255, 255, .05);
+
+  box-shadow:
+    0 0 12px rgba(255, 120, 220, .14);
+}
