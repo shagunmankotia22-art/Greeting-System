@@ -1,521 +1,571 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
   <title>Greetings Clone</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script> 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-surface-variant": "#ababab",
-                    "surface-container": "#191919",
-                    "on-tertiary-fixed-variant": "#43208b",
-                    "surface-variant": "#262626",
-                    "primary-fixed-dim": "#ff5676",
-                    "inverse-on-surface": "#555555",
-                    "on-secondary": "#4c0068",
-                    "on-tertiary-container": "#2e0075",
-                    "outline-variant": "#484848",
-                    "tertiary-fixed-dim": "#b091ff",
-                    "secondary-fixed": "#f2c1ff",
-                    "primary": "#ff8b9a",
-                    "tertiary-dim": "#ab8bf9",
-                    "on-primary-fixed": "#000000",
-                    "surface-container-lowest": "#000000",
-                    "secondary-container": "#6e208c",
-                    "primary-dim": "#ff6e85",
-                    "surface-bright": "#2c2c2c",
-                    "surface-tint": "#ff8b9a",
-                    "on-error-container": "#ffa8a3",
-                    "on-primary-fixed-variant": "#5f001d",
-                    "tertiary": "#bca2ff",
-                    "surface-container-highest": "#262626",
-                    "on-secondary-fixed-variant": "#792c97",
-                    "secondary-dim": "#ce7eec",
-                    "outline": "#757575",
-                    "primary-container": "#ff7388",
-                    "surface-container-high": "#1f1f1f",
-                    "on-primary-container": "#4d0016",
-                    "surface": "#0e0e0e",
-                    "inverse-primary": "#bb1043",
-                    "error": "#ff716c",
-                    "surface-dim": "#0e0e0e",
-                    "on-error": "#490006",
-                    "on-background": "#ffffff",
-                    "on-tertiary": "#3a1482",
-                    "background": "#0e0e0e",
-                    "inverse-surface": "#f9f9f9",
-                    "on-surface": "#ffffff",
-                    "secondary-fixed-dim": "#ebadff",
-                    "tertiary-container": "#b091ff",
-                    "on-secondary-container": "#f1bfff",
-                    "surface-container-low": "#131313",
-                    "on-primary": "#63001e",
-                    "primary-fixed": "#ff7388",
-                    "secondary": "#dd8bfb",
-                    "error-container": "#9f0519",
-                    "on-tertiary-fixed": "#1e0053",
-                    "tertiary-fixed": "#bca2ff",
-                    "error-dim": "#d7383b",
-                    "on-secondary-fixed": "#580078"
-            },
-            "borderRadius": {
-                    "DEFAULT": "1rem",
-                    "lg": "2rem",
-                    "xl": "3rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Plus Jakarta Sans"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#ababab",
+            "surface-container": "#191919",
+            "on-tertiary-fixed-variant": "#43208b",
+            "surface-variant": "#262626",
+            "primary-fixed-dim": "#ff5676",
+            "inverse-on-surface": "#555555",
+            "on-secondary": "#4c0068",
+            "on-tertiary-container": "#2e0075",
+            "outline-variant": "#484848",
+            "tertiary-fixed-dim": "#b091ff",
+            "secondary-fixed": "#f2c1ff",
+            "primary": "#ff8b9a",
+            "tertiary-dim": "#ab8bf9",
+            "on-primary-fixed": "#000000",
+            "surface-container-lowest": "#000000",
+            "secondary-container": "#6e208c",
+            "primary-dim": "#ff6e85",
+            "surface-bright": "#2c2c2c",
+            "surface-tint": "#ff8b9a",
+            "on-error-container": "#ffa8a3",
+            "on-primary-fixed-variant": "#5f001d",
+            "tertiary": "#bca2ff",
+            "surface-container-highest": "#262626",
+            "on-secondary-fixed-variant": "#792c97",
+            "secondary-dim": "#ce7eec",
+            "outline": "#757575",
+            "primary-container": "#ff7388",
+            "surface-container-high": "#1f1f1f",
+            "on-primary-container": "#4d0016",
+            "surface": "#0e0e0e",
+            "inverse-primary": "#bb1043",
+            "error": "#ff716c",
+            "surface-dim": "#0e0e0e",
+            "on-error": "#490006",
+            "on-background": "#ffffff",
+            "on-tertiary": "#3a1482",
+            "background": "#0e0e0e",
+            "inverse-surface": "#f9f9f9",
+            "on-surface": "#ffffff",
+            "secondary-fixed-dim": "#ebadff",
+            "tertiary-container": "#b091ff",
+            "on-secondary-container": "#f1bfff",
+            "surface-container-low": "#131313",
+            "on-primary": "#63001e",
+            "primary-fixed": "#ff7388",
+            "secondary": "#dd8bfb",
+            "error-container": "#9f0519",
+            "on-tertiary-fixed": "#1e0053",
+            "tertiary-fixed": "#bca2ff",
+            "error-dim": "#d7383b",
+            "on-secondary-fixed": "#580078"
           },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Plus Jakarta Sans"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-card {
-            background: rgba(38, 38, 38, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(72, 72, 72, 0.15);
-        }
-        .neon-glow-pink {
-            box-shadow: 0 0 20px rgba(255, 75, 112, 0.3);
-        }
-        body {
-            background-color: #0e0e0e;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-  
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-card {
+      background: rgba(38, 38, 38, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(72, 72, 72, 0.15);
+    }
+
+    .neon-glow-pink {
+      box-shadow: 0 0 20px rgba(255, 75, 112, 0.3);
+    }
+
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+
 
   <script>
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-      // Remove glow from others
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-glow'));
-      // Add glow to this one
-      this.classList.add('active-glow');
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function () {
+        // Remove glow from others
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-glow'));
+        // Add glow to this one
+        this.classList.add('active-glow');
+      });
     });
-  });
 
-</script>
-<script src="script.js"></script>
-  
+  </script>
+  <script src="script.js"></script>
+
 </head>
 
 <body class="bg-home">
 
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="container nav">
-<img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;">
-    
-    <input type="checkbox" id="menu-toggle" style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
-    <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </label>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav">
+      <img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;">
 
-<nav class="menu">
-  <div class="nav-left nav-inner">
-    <a href="index.html" class="active nav-item">Home</a>
-    
-    <div class="nav-dropdown">
-      <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 4px;"></i></a>
-      <div class="dropdown-content glass-dropdown">
-        <a href="wedding.html">Wedding</a>
-        <a href="birthday.html">Birthday</a>
-        <a href="party.html">Party</a>
-        <a href="cards.html">Cards</a>
-        <a href="events.html">Events</a>
-      </div>
-    </div>
+      <input type="checkbox" id="menu-toggle"
+        style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
+      <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </label>
 
-    <a href="about.html" class="nav-item">About</a>
-  </div>
+      <nav class="menu">
+        <div class="nav-left nav-inner">
+          <a href="index.html" class="active nav-item">Home</a>
 
-  <a href="saved.html" class="btn saved-btn nav-item">
-  ❤️ Saved
-</a>
+          <div class="nav-dropdown">
+            <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down"
+                style="font-size: 0.7rem; margin-left: 4px;"></i></a>
+            <div class="dropdown-content glass-dropdown">
+              <a href="wedding.html">Wedding</a>
+              <a href="birthday.html">Birthday</a>
+              <a href="party.html">Party</a>
+              <a href="cards.html">Cards</a>
+              <a href="events.html">Events</a>
+            </div>
+          </div>
 
-<a href="login.html" class="btn login-btn nav-item">
-  Login
-</a>
-
-<a href="signup.html" class="btn signup-btn nav-item">
-  Sign Up
-</a>
-</nav>
-  </div>
-</header>
-
-
-</head>
-<body class="bg-background text-on-surface selection:bg-primary/30">
-
-<!-- Hero Section -->
-<section class="relative min-h-[921px] flex items-center justify-center overflow-hidden px-8">
-<div class="absolute inset-0 z-0">
-<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
-<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"></div>
-</div>
-<div class="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-<div class="space-y-8">
-<h1 class="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter leading-tight">
-                        Digital <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary to-primary-dim">Greetings</span> Reimagined
-                    </h1>
-<p class="text-on-surface-variant text-xl max-w-lg leading-relaxed font-body">
-                        Elevate your connections with cinematic, immersive digital cards designed for a modern world. Pure emotion, neon-lit excellence.
-                    </p>
-<div class="flex flex-wrap gap-4">
-<button class="bg-gradient-to-r from-secondary to-primary px-8 py-4 rounded-lg font-bold text-on-primary-container neon-glow-pink hover:scale-105 transition-all active:scale-95 flex items-center gap-2">
-                            Explore Designs
-                            <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-<a href="how-it-works.html">
-<button class="border border-outline-variant hover:border-primary/50 px-8 py-4 rounded-lg font-bold text-on-surface transition-all active:scale-95">
-                            How it Works
-                        </button></a>
-</div>
-</div>
-<div class="relative hidden lg:block">
-<div class="glass-card rounded-xl p-4 rotate-3 transform translate-x-12 translate-y-8 shadow-2xl relative z-20">
-<img alt="A vibrant digital birthday card featuring glowing neon typography and celebratory geometric shapes" class="rounded-lg w-full h-80 object-cover" data-alt="vibrant digital birthday card featuring glowing neon pink typography and celebratory 3D geometric shapes on an obsidian background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPdkYp2TmbAA96noD7au-8iVWPjtOmnV1PLqbBPyy1h82zb0aEW8V-QTCsRPdhJZp5eToeiyADS_CowtOwFc1553vzdBuqucG1GL9e8Kjmx6jkdlh3T_VrGa1HyHQs1ZXCM_-A7vIvNeXHjqAbSWhfLfAUhQoZpt4-cHjf-EJU0ies-c5AjUE6yR1990MWtchU231oJ7oknV6J75SJ96-RVEKd9eflWeGywVLjp0G-19X52RbbAjEPvEZ9A3DRaZtwsM4OX8Iyy0Us"/>
-</div>
-<div class="glass-card rounded-xl p-4 -rotate-6 transform -translate-x-4 shadow-2xl relative z-10 opacity-60">
-<img alt="Elegant wedding invitation with shimmering purple gradients and delicate metallic floral patterns" class="rounded-lg w-full h-80 object-cover" data-alt="elegant digital wedding invitation with shimmering purple gradients and delicate neon floral patterns on a dark silk texture background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuez63rbbZzpNmvmLCAKYtZ5dbByLwFnFnA1G2oDJHFWuqvNdT8J0lXTDHhLsxAnSTppNFWJ1q6eYp_3nsWocDDy_IGiNkyipiXePDpR1KaA0YPc-v20CZrL9Fa8U0OpZsrtP3NNULcVJfXAtzNUqsgSjbnkzY5Jky8ZaHT1gYBU06UYwNL471i2AUi5gRKrMsFFTyPTUNaujOSH64RTQqyJNZTTxbBbTH6X_MSAQ_6Qo31S8eySTuIHRRIsEZ7rB5Z4YcZH0c0ch9"/>
-</div>
-</div>
-</div>
-</section>
-<!-- ===== EXPLORE CATEGORIES ===== -->
-<section class="cats-section">
-  <div class="container">
-
-    <div class="cats-header">
-      <h2>Explore our <span>Categories</span></h2>
-      <p>Find the perfect design for every occasion</p>
-    </div>
-
-    <div class="cats-grid">
-
-      <a href="wedding.html" class="cat-card">
-        <div class="cat-icon pink">💍</div>
-        <p class="cat-name">Wedding</p>
-        <p class="cat-count">20 designs</p>
-        <span class="cat-badge badge-pink">Most Popular</span>
-      </a>
-
-      <a href="birthday.html" class="cat-card">
-        <div class="cat-icon purple">🎂</div>
-        <p class="cat-name">Birthday</p>
-        <p class="cat-count">20 designs</p>
-        <span class="cat-badge badge-purple">Trending</span>
-      </a>
-
-      <a href="party.html" class="cat-card">
-        <div class="cat-icon amber">🎉</div>
-        <p class="cat-name">Party</p>
-        <p class="cat-count">20 designs</p>
-        <span class="cat-badge badge-amber">New</span>
-      </a>
-
-      <a href="cards.html" class="cat-card">
-        <div class="cat-icon teal">💌</div>
-        <p class="cat-name">Cards</p>
-        <p class="cat-count">20 designs</p>
-        <span class="cat-badge badge-teal">Featured</span>
-      </a>
-
-      <a href="events.html" class="cat-card">
-        <div class="cat-icon blue">🎟️</div>
-        <p class="cat-name">Events</p>
-        <p class="cat-count">20 designs</p>
-        <span class="cat-badge badge-blue">New</span>
-      </a>
-
-    </div>
-  </div>
-</section>
-<!-- Trending Section -->
-<section class="section trending-section">
-  <div class="container"> 
-    <div class="trending-header">
-      <h2 class="section-title">Trending <span>Now</span></h2>
-      <div class="live-indicator">
-        <span class="dot"></span> LIVE UPDATES
-      </div>
-    </div>
-
-    <div class="card-grid">
-      <a href="view.html?img=https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326" class="card trending-card">
-        <div class="trending-tag">#1 Popular</div>
-        <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326">
-        <div class="card-footer"></div>
-      </a>
-
-      <a href="view.html?img=https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326" class="card trending-card">
-        <div class="trending-tag">Most Shared</div>
-        <img src="https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326">
-        <div class="card-footer"></div>
-      </a>
-
-      <a href="view.html?img=https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326" class="card trending-card">
-        <div class="trending-tag">Editors Choice</div>
-        <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699">
-        <div class="card-footer"></div>
-      </a>
-
-      <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699" class="card trending-card">
-        <div class="trending-tag">Featured</div>
-        <img src="https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326">
-        <div class="card-footer"></div>
-      </a>
-
-
-    </div>
-  </div> 
-</section>
-<!-- ================= FAQ SECTION ================= -->
-<section class="faq-section">
-  <div class="container">
-
-    <h2 class="section-title">Frequently Asked Questions</h2>
-
-    <div class="faq-container">
-
-      <div class="faq-item">
-        <div class="faq-question">
-          Which events are covered by Greetings?
-          <span class="arrow">⌄</span>
+          <a href="about.html" class="nav-item">About</a>
         </div>
-        <div class="faq-answer">
-          We cover weddings, birthdays, parties, corporate events, and more.
-        </div>
-      </div>
 
-      <div class="faq-item">
-        <div class="faq-question">
-          Can I customize invitations?
-          <span class="arrow">⌄</span>
-        </div>
-        <div class="faq-answer">
-          Yes, you can fully customize designs, text, and styles.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          Is this service free?
-          <span class="arrow">⌄</span>
-        </div>
-        <div class="faq-answer">
-          Basic features are free with optional premium upgrades.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          How do I share my invitation?
-          <span class="arrow">⌄</span>
-        </div>
-        <div class="faq-answer">
-          You can share via link, WhatsApp, email, or social media.
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ================= SUBSCRIBE + RATING ================= -->
-<section class="subscribe-section">
-
-  <div class="container">
-
-<!-- Engagement Footer Section -->
-<section class="py-32 px-12 relative overflow-hidden">
-<div class="absolute inset-0 -z-10" style="background: radial-gradient(circle at 30% 50%, rgba(255,77,109,0.08), transparent 60%), radial-gradient(circle at 70% 50%, rgba(124,58,237,0.08), transparent 60%), #0a0a0f;"></div>
-<div class="max-w-5xl mx-auto text-center">
-<h2 class="font-headline text-5xl font-black mb-8 leading-tight">Make Every Occasion <br/><span class="text-primary italic">Count.</span></h2>
-<div class="max-w-md mx-auto mb-16">
-<form class="relative flex items-center p-2 glass-panel rounded-full border border-outline-variant/20">
-<input class="bg-transparent border-none focus:ring-0 text-on-surface flex-grow px-6 font-body" placeholder="Enter your email" type="email"/>
-<button class="bg-primary text-on-primary-container px-8 py-3 rounded-full font-bold hover:scale-105 transition-all">
-                            Subscribe
-                        </button>
-</form>
-<p class="text-xs text-on-surface-variant mt-4 uppercase tracking-widest font-bold">Join the 10k+ Digital Curators</p>
-</div>
-<div class="flex flex-col items-center gap-4">
-<span class="text-on-surface font-headline font-bold">Rate Your Experience</span>
-<div class="flex gap-2">
-<div class="user-stars" id="starRating">
-  <span data-value="1">★</span>
-  <span data-value="2">★</span>
-  <span data-value="3">★</span>
-  <span data-value="4">★</span>
-  <span data-value="5">★</span>
-</div>
-<p id="ratingText" style="color:#aaa; margin-top:10px; font-size:0.9rem;"></p>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer Shared Component -->
-
-
-<!-- ================= SITE FOOTER — paste just before on every page ================= -->
-<!-- Font Awesome CDN — add once inside <head> of each page if not already present -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<footer class="site-footer">
-  <div class="footer-inner">
-
-    <!-- TOP GRID -->
-    <div class="footer-top">
-
-      <!-- BRAND -->
-      <div class="footer-brand">
-        <div class="footer-badge">
-          <span class="footer-badge-dot"></span></div>
-        <a href="index.html">
-          <img src="logo.svg" alt="Greetings Logo">
+        <a href="saved.html" class="saved-btn">
+          ❤️ Saved
         </a>
-        <p>
-          Craft stunning digital invitations and greeting cards for every occasion.
-          Neon-lit design meets heartfelt moments — all in one place.
-        </p>
 
-        <!-- SOCIAL ICONS -->
-        <div class="footer-social-row">
-          <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig" title="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw" title="Twitter / X">
-            <i class="fab fa-x-twitter"></i>
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li" title="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh" title="GitHub">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt" title="YouTube">
-            <i class="fab fa-youtube"></i>
-          </a>
+        <a href="login.html" class="btn login-btn nav-item">
+          Login
+        </a>
+
+        <a href="signup.html" class="btn signup-btn nav-item">
+          Sign Up
+        </a>
+      </nav>
+    </div>
+  </header>
+
+
+
+
+
+  </head>
+
+  <body class="bg-background text-on-surface selection:bg-primary/30">
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[921px] flex items-center justify-center overflow-hidden px-8">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"></div>
+      </div>
+      <div class="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8">
+          <h1 class="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter leading-tight">
+            Digital <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary to-primary-dim">Greetings</span>
+            Reimagined
+          </h1>
+          <p class="text-on-surface-variant text-xl max-w-lg leading-relaxed font-body">
+            Elevate your connections with cinematic, immersive digital cards designed for a modern world. Pure emotion,
+            neon-lit excellence.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button
+              class="bg-gradient-to-r from-secondary to-primary px-8 py-4 rounded-lg font-bold text-on-primary-container neon-glow-pink hover:scale-105 transition-all active:scale-95 flex items-center gap-2">
+              Explore Designs
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+            <a href="how-it-works.html">
+              <button
+                class="border border-outline-variant hover:border-primary/50 px-8 py-4 rounded-lg font-bold text-on-surface transition-all active:scale-95">
+                How it Works
+              </button></a>
+          </div>
+        </div>
+        <div class="relative hidden lg:block">
+          <div
+            class="glass-card rounded-xl p-4 rotate-3 transform translate-x-12 translate-y-8 shadow-2xl relative z-20">
+            <img
+              alt="A vibrant digital birthday card featuring glowing neon typography and celebratory geometric shapes"
+              class="rounded-lg w-full h-80 object-cover"
+              data-alt="vibrant digital birthday card featuring glowing neon pink typography and celebratory 3D geometric shapes on an obsidian background"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPdkYp2TmbAA96noD7au-8iVWPjtOmnV1PLqbBPyy1h82zb0aEW8V-QTCsRPdhJZp5eToeiyADS_CowtOwFc1553vzdBuqucG1GL9e8Kjmx6jkdlh3T_VrGa1HyHQs1ZXCM_-A7vIvNeXHjqAbSWhfLfAUhQoZpt4-cHjf-EJU0ies-c5AjUE6yR1990MWtchU231oJ7oknV6J75SJ96-RVEKd9eflWeGywVLjp0G-19X52RbbAjEPvEZ9A3DRaZtwsM4OX8Iyy0Us" />
+          </div>
+          <div class="glass-card rounded-xl p-4 -rotate-6 transform -translate-x-4 shadow-2xl relative z-10 opacity-60">
+            <img alt="Elegant wedding invitation with shimmering purple gradients and delicate metallic floral patterns"
+              class="rounded-lg w-full h-80 object-cover"
+              data-alt="elegant digital wedding invitation with shimmering purple gradients and delicate neon floral patterns on a dark silk texture background"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuez63rbbZzpNmvmLCAKYtZ5dbByLwFnFnA1G2oDJHFWuqvNdT8J0lXTDHhLsxAnSTppNFWJ1q6eYp_3nsWocDDy_IGiNkyipiXePDpR1KaA0YPc-v20CZrL9Fa8U0OpZsrtP3NNULcVJfXAtzNUqsgSjbnkzY5Jky8ZaHT1gYBU06UYwNL471i2AUi5gRKrMsFFTyPTUNaujOSH64RTQqyJNZTTxbBbTH6X_MSAQ_6Qo31S8eySTuIHRRIsEZ7rB5Z4YcZH0c0ch9" />
+          </div>
         </div>
       </div>
+    </section>
+    <!-- ===== EXPLORE CATEGORIES ===== -->
+    <section class="cats-section">
+      <div class="container">
 
-      <!-- EXPLORE -->
-      <div class="footer-col">
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="wedding.html">Wedding</a></li>
-          <li><a href="birthday.html">Birthday</a></li>
-          <li><a href="party.html">Party</a></li>
-          <li><a href="cards.html">Cards</a></li>
-          <li><a href="events.html">Events</a></li>
-        </ul>
+        <div class="cats-header">
+          <h2>Explore our <span>Categories</span></h2>
+          <p>Find the perfect design for every occasion</p>
+        </div>
+
+        <div class="cats-grid">
+
+          <a href="wedding.html" class="cat-card">
+            <div class="cat-icon pink">💍</div>
+            <p class="cat-name">Wedding</p>
+            <p class="cat-count">20 designs</p>
+            <span class="cat-badge badge-pink">Most Popular</span>
+          </a>
+
+          <a href="birthday.html" class="cat-card">
+            <div class="cat-icon purple">🎂</div>
+            <p class="cat-name">Birthday</p>
+            <p class="cat-count">20 designs</p>
+            <span class="cat-badge badge-purple">Trending</span>
+          </a>
+
+          <a href="party.html" class="cat-card">
+            <div class="cat-icon amber">🎉</div>
+            <p class="cat-name">Party</p>
+            <p class="cat-count">20 designs</p>
+            <span class="cat-badge badge-amber">New</span>
+          </a>
+
+          <a href="cards.html" class="cat-card">
+            <div class="cat-icon teal">💌</div>
+            <p class="cat-name">Cards</p>
+            <p class="cat-count">20 designs</p>
+            <span class="cat-badge badge-teal">Featured</span>
+          </a>
+
+          <a href="events.html" class="cat-card">
+            <div class="cat-icon blue">🎟️</div>
+            <p class="cat-name">Events</p>
+            <p class="cat-count">20 designs</p>
+            <span class="cat-badge badge-blue">New</span>
+          </a>
+
+        </div>
       </div>
+    </section>
+    <!-- Trending Section -->
+    <section class="section trending-section">
+      <div class="container">
+        <div class="trending-header">
+          <h2 class="section-title">Trending <span>Now</span></h2>
+          <div class="live-indicator">
+            <span class="dot"></span> LIVE UPDATES
+          </div>
+        </div>
 
-      <!-- COMPANY -->
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="how-it-works.html">How It Works</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="signup.html">Sign Up</a></li>
-        </ul>
+        <div class="card-grid">
+          <a href="view.html?img=https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326"
+            class="card trending-card">
+            <div class="trending-tag">#1 Popular</div>
+            <img
+              src="https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326">
+            <div class="card-footer"></div>
+          </a>
+
+          <a href="view.html?img=https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326"
+            class="card trending-card">
+            <div class="trending-tag">Most Shared</div>
+            <img
+              src="https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326">
+            <div class="card-footer"></div>
+          </a>
+
+          <a href="view.html?img=https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326"
+            class="card trending-card">
+            <div class="trending-tag">Editors Choice</div>
+            <img
+              src="https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699">
+            <div class="card-footer"></div>
+          </a>
+
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699"
+            class="card trending-card">
+            <div class="trending-tag">Featured</div>
+            <img
+              src="https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326">
+            <div class="card-footer"></div>
+          </a>
+
+
+        </div>
       </div>
+    </section>
+    <!-- ================= FAQ SECTION ================= -->
+    <section class="faq-section">
+      <div class="container">
 
-      <!-- SUPPORT -->
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="mailto:support@greetings.com">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Report an Issue</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <div class="faq-container">
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Which events are covered by Greetings?
+              <span class="arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+              We cover weddings, birthdays, parties, corporate events, and more.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Can I customize invitations?
+              <span class="arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+              Yes, you can fully customize designs, text, and styles.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Is this service free?
+              <span class="arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+              Basic features are free with optional premium upgrades.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              How do I share my invitation?
+              <span class="arrow">⌄</span>
+            </div>
+            <div class="faq-answer">
+              You can share via link, WhatsApp, email, or social media.
+            </div>
+          </div>
+
+        </div>
+
       </div>
-
-    </div><!-- /footer-top -->
-
-    <!-- BOTTOM BAR -->
-    <div class="footer-bottom">
-      <p class="footer-copy">
-        &copy; 2025 <span>Greetings</span>. Crafted with &#9829; by Shagun &amp; Tanvee &mdash; B.E. CSE (AI-FT), Chitkara University.
-      </p>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Cookie Settings</a>
-      </div>
-    </div>
-
-  </div>
-</footer>
-<!-- ================= END FOOTER ================= -->
-
-<!-- ================= HELP WIDGET ================= -->
-
-<!-- BUTTON -->
-<div class="help-widget" id="helpBtn">
-  Need Help?
-  <span class="help-dot"></span>
-</div>
-
-<!-- PANEL -->
-<div class="help-panel" id="helpPanel">
-
-  <div class="help-header">
-    <h3>How can we help you?</h3>
-    <span id="closeHelp">&times;</span>
-  </div>
-
-  <p class="help-subtext">Choose an option below</p>
-
-  <div class="help-options">
-    <div class="help-option" id="faqOption">FAQ</div>
-    <div class="help-option" id="contactOption">Contact Support</div>
-    <div class="help-option" id="reportOption">Report Issue</div>
-    <div class="help-option live-chat-option" id="liveChatOption">💬 Live Chat</div>
-  </div>
-
-</div>
+    </section>
 
 
-<script src="js/help.js"></script>
+    <!-- ================= SUBSCRIBE + RATING ================= -->
+    <section class="subscribe-section">
 
-<script src="js/faq.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/protect.js"></script>
-<script src="script.js"></script></SCRipt>
-<script src="favorites.js"></script>
-<script src="back-to-top.js"></script>
-<script src="hamburger.js"></script>
-<script src="ai-assistant.js"></script>
-</body>
+      <div class="container">
+
+        <!-- Engagement Footer Section -->
+        <section class="py-32 px-12 relative overflow-hidden">
+          <div class="absolute inset-0 -z-10"
+            style="background: radial-gradient(circle at 30% 50%, rgba(255,77,109,0.08), transparent 60%), radial-gradient(circle at 70% 50%, rgba(124,58,237,0.08), transparent 60%), #0a0a0f;">
+          </div>
+          <div class="max-w-5xl mx-auto text-center">
+            <h2 class="font-headline text-5xl font-black mb-8 leading-tight">Make Every Occasion <br /><span
+                class="text-primary italic">Count.</span></h2>
+            <div class="max-w-md mx-auto mb-16">
+              <form class="relative flex items-center p-2 glass-panel rounded-full border border-outline-variant/20">
+                <input class="bg-transparent border-none focus:ring-0 text-on-surface flex-grow px-6 font-body"
+                  placeholder="Enter your email" type="email" />
+                <button
+                  class="bg-primary text-on-primary-container px-8 py-3 rounded-full font-bold hover:scale-105 transition-all">
+                  Subscribe
+                </button>
+              </form>
+              <p class="text-xs text-on-surface-variant mt-4 uppercase tracking-widest font-bold">Join the 10k+ Digital
+                Curators</p>
+            </div>
+            <div class="flex flex-col items-center gap-4">
+              <span class="text-on-surface font-headline font-bold">Rate Your Experience</span>
+              <div class="flex gap-2">
+                <div class="user-stars" id="starRating">
+                  <span data-value="1">★</span>
+                  <span data-value="2">★</span>
+                  <span data-value="3">★</span>
+                  <span data-value="4">★</span>
+                  <span data-value="5">★</span>
+                </div>
+                <p id="ratingText" style="color:#aaa; margin-top:10px; font-size:0.9rem;"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+        </main>
+        <!-- Footer Shared Component -->
+
+
+        <!-- ================= SITE FOOTER — paste just before on every page ================= -->
+        <!-- Font Awesome CDN — add once inside <head> of each page if not already present -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        <footer class="site-footer">
+          <div class="footer-inner">
+
+            <!-- TOP GRID -->
+            <div class="footer-top">
+
+              <!-- BRAND -->
+              <div class="footer-brand">
+                <div class="footer-badge">
+                  <span class="footer-badge-dot"></span>
+                </div>
+                <a href="index.html">
+                  <img src="logo.svg" alt="Greetings Logo">
+                </a>
+                <p>
+                  Craft stunning digital invitations and greeting cards for every occasion.
+                  Neon-lit design meets heartfelt moments — all in one place.
+                </p>
+
+                <!-- SOCIAL ICONS -->
+                <div class="footer-social-row">
+                  <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"
+                    title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"
+                    title="Twitter / X">
+                    <i class="fab fa-x-twitter"></i>
+                  </a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"
+                    title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"
+                    title="GitHub">
+                    <i class="fab fa-github"></i>
+                  </a>
+                  <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"
+                    title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- EXPLORE -->
+              <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="wedding.html">Wedding</a></li>
+                  <li><a href="birthday.html">Birthday</a></li>
+                  <li><a href="party.html">Party</a></li>
+                  <li><a href="cards.html">Cards</a></li>
+                  <li><a href="events.html">Events</a></li>
+                </ul>
+              </div>
+
+              <!-- COMPANY -->
+              <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                  <li><a href="about.html">About Us</a></li>
+                  <li><a href="how-it-works.html">How It Works</a></li>
+                  <li><a href="login.html">Login</a></li>
+                  <li><a href="signup.html">Sign Up</a></li>
+                </ul>
+              </div>
+
+              <!-- SUPPORT -->
+              <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="mailto:support@greetings.com">Contact Us</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">Terms of Service</a></li>
+                  <li><a href="#">Report an Issue</a></li>
+                  <li><a href="#">FAQ</a></li>
+                </ul>
+              </div>
+
+            </div><!-- /footer-top -->
+
+            <!-- BOTTOM BAR -->
+            <div class="footer-bottom">
+              <p class="footer-copy">
+                &copy; 2025 <span>Greetings</span>. Crafted with &#9829; by Shagun &amp; Tanvee &mdash; B.E. CSE
+                (AI-FT), Chitkara University.
+              </p>
+              <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Cookie Settings</a>
+              </div>
+            </div>
+
+          </div>
+        </footer>
+        <!-- ================= END FOOTER ================= -->
+
+        <!-- ================= HELP WIDGET ================= -->
+
+        <!-- BUTTON -->
+        <div class="help-widget" id="helpBtn">
+          Need Help?
+          <span class="help-dot"></span>
+        </div>
+
+        <!-- PANEL -->
+        <div class="help-panel" id="helpPanel">
+
+          <div class="help-header">
+            <h3>How can we help you?</h3>
+            <span id="closeHelp">&times;</span>
+          </div>
+
+          <p class="help-subtext">Choose an option below</p>
+
+          <div class="help-options">
+            <div class="help-option" id="faqOption">FAQ</div>
+            <div class="help-option" id="contactOption">Contact Support</div>
+            <div class="help-option" id="reportOption">Report Issue</div>
+            <div class="help-option live-chat-option" id="liveChatOption">💬 Live Chat</div>
+          </div>
+
+        </div>
+
+
+        <script src="js/help.js"></script>
+
+        <script src="js/faq.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/protect.js"></script>
+        <script src="script.js"></script>
+        </SCRipt>
+        <script src="favorites.js"></script>
+        <script src="back-to-top.js"></script>
+        <script src="hamburger.js"></script>
+        <script src="ai-assistant.js"></script>
+  </body>
+
 </html>
