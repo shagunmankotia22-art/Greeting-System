@@ -99,6 +99,7 @@
       // Auto-login
       setCurrentUser({ name, email, phone });
 
+      if (window.updateNavAuth) window.updateNavAuth();
       showSuccess('Account created! Redirecting…', 'index.html');
     });
   }
@@ -125,6 +126,7 @@
       // Set current user (never store password in session)
       setCurrentUser({ name: user.name, email: user.email, phone: user.phone });
 
+      if (window.updateNavAuth) window.updateNavAuth();
       showSuccess('Login successful! Redirecting…', 'index.html');
     });
 
