@@ -3862,3 +3862,82 @@ section.py-32 .absolute {
 
 
 /* ------------------------------------------------------ */
+
+/* ===================================
+   FIX RIGHT NAV BUTTONS
+=================================== */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LOGIN */
+
+.login-btn {
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 24px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.18);
+
+  background:
+    rgba(255, 255, 255, 0.03);
+
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: 0.3s ease;
+}
+
+/* SIGNUP */
+
+.signup-btn {
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 24px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(135deg,
+      #8b5cf6,
+      #ff4fd8);
+
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  border: none;
+
+  transition: 0.3s ease;
+}
+
+/* HOVER */
+
+.login-btn:hover,
+.signup-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 0 12px rgba(255, 120, 220, 0.18);
+}
+
+/* ---------------------------------------------------------------------------------- */
