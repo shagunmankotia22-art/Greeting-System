@@ -11,27 +11,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
     rel="stylesheet">
   <style>
-<<<<<<< HEAD
-    #scene {
+    #about-section {
       min-height: calc(100vh - 120px);
+      background: #0a0812;
+      position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 1400px;
-      perspective-origin: 50% 40%;
-      background: #0a0812;
-      overflow: hidden;
-      position: relative;
-      cursor: default;
       padding: 40px 20px;
     }
 
-    #bg-glow {
+    #about-section::before {
+      content: '';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 30% 50%, rgba(139, 92, 246, .18) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 70% 50%, rgba(236, 72, 153, .14) 0%, transparent 70%);
+        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(139, 92, 246, .18), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(236, 72, 153, .13), transparent);
       pointer-events: none;
     }
 
@@ -39,14 +36,14 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .star {
       position: absolute;
       border-radius: 50%;
       background: #fff;
-      animation: twinkle var(--d, 3s) var(--delay, 0s) infinite alternate
+      animation: twinkle var(--d, 3s) var(--delay, 0s) infinite alternate;
     }
 
     @keyframes twinkle {
@@ -61,629 +58,729 @@
       }
     }
 
-    #book-wrap {
+    .about-inner {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: transform .6s ease;
+      z-index: 1;
+      width: 100%;
+      max-width: 780px;
     }
-
-    #book-wrap.idle-float {
-      animation: floatY 3.5s ease-in-out infinite
-    }
-
-    @keyframes floatY {
-
-      0%,
-      100% {
-        transform: translateY(0) rotateX(2deg)
-      }
-
-      50% {
-        transform: translateY(-14px) rotateX(-2deg)
-      }
-    }
-
-    #book-wrap.opened {
-      animation: none
-    }
-
-    #book {
-      width: 260px;
-      height: 360px;
-      position: relative;
-      transform-style: preserve-3d;
-      transform: rotateY(0deg);
-      transition: none;
-    }
-
-    .cover-face,
-    .back-face {
-      position: absolute;
-      inset: 0;
-      border-radius: 3px 12px 12px 3px;
-      backface-visibility: hidden;
-    }
-
-    .cover-face {
-      background: linear-gradient(135deg, #1e0938 0%, #2d1250 40%, #1a0830 100%);
-      border: 1px solid rgba(168, 85, 247, .4);
-      box-shadow:
-        -6px 0 0 #0f0620,
-        -8px 4px 20px rgba(0, 0, 0, .8),
-        inset 2px 0 8px rgba(168, 85, 247, .15),
-        0 0 40px rgba(139, 92, 246, .25);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      cursor: pointer;
-      user-select: none;
-      overflow: hidden;
-    }
-
-    .cover-face::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 18px;
-      background: linear-gradient(to right, #0f0620, #1e0938);
-      border-right: 1px solid rgba(168, 85, 247, .3);
-    }
-
-    .cover-face::after {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(168, 85, 247, .25);
-      border-radius: 8px;
-      pointer-events: none;
-    }
-
-    .cover-orb {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(216, 180, 254, .9) 0%, rgba(139, 92, 246, .6) 50%, transparent 100%);
-      box-shadow: 0 0 30px rgba(168, 85, 247, .6), 0 0 60px rgba(168, 85, 247, .2);
-      animation: orbPulse 2.5s ease-in-out infinite;
-      position: relative;
-    }
-
-    @keyframes orbPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: .9
-      }
-
-      50% {
-        transform: scale(1.1);
-        opacity: 1
-      }
-    }
-
-    .cover-orb-inner {
-      position: absolute;
-      inset: 12px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, .8), rgba(216, 180, 254, .5));
-    }
-
-    .cover-title {
-      font-family: 'Georgia', serif;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #f3e8ff;
-      text-shadow: 0 0 20px rgba(168, 85, 247, .8), 0 0 40px rgba(168, 85, 247, .4);
-      text-align: center;
-    }
-
-    .cover-sub {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(216, 180, 254, .6);
-      text-align: center;
-    }
-
-    .cover-line {
-      width: 80px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(216, 180, 254, .7), transparent);
-    }
-
-    .click-hint {
-      position: absolute;
-      bottom: 20px;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(216, 180, 254, .4);
-      animation: hintFade 2s ease-in-out infinite;
-    }
-
-    @keyframes hintFade {
-
-      0%,
-      100% {
-        opacity: .3
-      }
-
-      50% {
-        opacity: .8
-      }
-    }
-
-    .back-face {
-      transform: rotateY(180deg);
-      background: #0f0620;
-      border-radius: 12px 3px 3px 12px;
-      border: 1px solid rgba(168, 85, 247, .2);
-    }
-
-    #left-page,
-    #right-page {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      width: 260px;
-      border-radius: 4px;
-      background: #faf7f2;
-      opacity: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    #left-page {
-      right: calc(100% + 4px);
-      border-radius: 8px 2px 2px 8px;
-      transform-origin: right center;
-      box-shadow: -4px 0 20px rgba(0, 0, 0, .5), inset -2px 0 8px rgba(0, 0, 0, .08);
-    }
-
-    #right-page {
-      left: calc(100% + 4px);
-      border-radius: 2px 8px 8px 2px;
-      transform-origin: left center;
-      box-shadow: 4px 0 20px rgba(0, 0, 0, .5), inset 2px 0 8px rgba(0, 0, 0, .08);
-    }
-
-    .page-texture {
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0, 0, 0, .04) 27px, rgba(0, 0, 0, .04) 28px);
-      pointer-events: none;
-    }
-
-    .page-content {
-      position: absolute;
-      inset: 0;
-      padding: 28px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      overflow-y: auto;
-      scrollbar-width: none;
-    }
-
-    .page-content::-webkit-scrollbar {
-      display: none
-    }
-
-    .page-header {
-      font-family: 'Georgia', serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: #1e0938;
-      border-bottom: 2px solid;
-      border-image: linear-gradient(to right, #7c3aed, #ec4899) 1;
-      padding-bottom: 8px;
-      letter-spacing: .5px;
-    }
-
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #7c3aed;
-      margin-top: 4px;
-    }
-
-    .section-body {
-      font-size: 12px;
-      line-height: 1.7;
-      color: #3b2060;
-    }
-
-    .skill-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 2px;
-    }
-
-    .pill {
-      font-size: 10px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(124, 58, 237, .12), rgba(236, 72, 153, .12));
-      border: 1px solid rgba(124, 58, 237, .3);
-      color: #5b21b6;
-      font-weight: 600;
-      letter-spacing: .5px;
-    }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: #3b2060;
-    }
-
-    .contact-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(124, 58, 237, .2), rgba(236, 72, 153, .2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-
-    .page-num {
-      margin-top: auto;
-      font-size: 10px;
-      color: rgba(124, 58, 237, .4);
-      text-align: center;
-      letter-spacing: 2px;
-    }
-
-    .fade-item {
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity .5s ease, transform .5s ease;
-    }
-
-    .fade-item.visible {
-      opacity: 1;
-      transform: translateY(0)
-    }
-
-    #turning-page {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      width: 260px;
-      background: #faf7f2;
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      backface-visibility: hidden;
-      border-radius: 2px 8px 8px 2px;
-      box-shadow: 4px 0 12px rgba(0, 0, 0, .3);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 20;
-    }
-
-    #book-close-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: rgba(124, 58, 237, .2);
-      border: 1px solid rgba(168, 85, 247, .4);
-      color: #d8b4fe;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      font-size: 14px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 50;
-      transition: background .2s;
-    }
-
-    #book-close-btn:hover {
-      background: rgba(124, 58, 237, .4)
-    }
-
-    #book-hint-bar {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(216, 180, 254, .45);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .5s;
-      white-space: nowrap;
-      z-index: 50;
-    }
-
-    .book-nav-dots {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      gap: 8px;
-      z-index: 50;
-      align-items: center;
-    }
-
-    .book-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(168, 85, 247, .3);
-      cursor: pointer;
-      transition: background .2s, transform .2s;
-    }
-
-    .book-dot.active {
-      background: #a855f7;
-      transform: scale(1.3)
-    }
-
-    @media(max-width:640px) {
-      #scene {
-        perspective: 900px;
-        padding: 20px 10px
-      }
-
-      #book {
-        width: 200px;
-        height: 280px
-      }
-
-      #left-page,
-      #right-page {
-        width: 190px
-      }
-
-      #turning-page {
-        width: 190px
-      }
-
-      .cover-title {
-        font-size: 17px
-      }
-
-      .cover-orb {
-        width: 52px;
-        height: 52px
-      }
-=======
-    #about-section {
-      min-height: calc(100vh - 120px);
-      background: #0a0812;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-    #about-section::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(139,92,246,.18), transparent),
-        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(236,72,153,.13), transparent);
-      pointer-events: none;
-    }
-    #particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle var(--d,3s) var(--delay,0s) infinite alternate; }
-    @keyframes twinkle { 0%{opacity:.1;transform:scale(.8)} 100%{opacity:.7;transform:scale(1.2)} }
-    .about-inner { position: relative; z-index: 1; width: 100%; max-width: 780px; }
 
     /* TEAM CARDS */
-    #teamView { display: flex; flex-direction: column; align-items: center; gap: 36px; }
-    .team-heading { text-align: center; }
-    .team-heading h1 {
-      font-size: 32px; font-weight: 800;
-      background: linear-gradient(135deg, #c4b5fd, #f472b6);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 10px; font-family: 'Plus Jakarta Sans', sans-serif;
+    #teamView {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
     }
-    .team-heading p { color: rgba(160,157,192,.7); font-size: 13px; letter-spacing: 3px; text-transform: uppercase; }
-    .cards-row { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
+
+    .team-heading {
+      text-align: center;
+    }
+
+    .team-heading h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c4b5fd, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .team-heading p {
+      color: rgba(160, 157, 192, .7);
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .cards-row {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
     .member-card {
-      width: 240px; background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1); border-radius: 24px;
-      padding: 32px 22px 24px; cursor: pointer; position: relative;
-      overflow: hidden; transition: transform .35s ease, border-color .3s, box-shadow .3s;
+      width: 240px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 24px;
+      padding: 32px 22px 24px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .35s ease, border-color .3s, box-shadow .3s;
       backdrop-filter: blur(12px);
     }
-    .member-card:hover { transform: translateY(-8px); border-color: rgba(167,139,250,.5); box-shadow: 0 20px 60px rgba(139,92,246,.2); }
-    .member-card.tanvee:hover { border-color: rgba(244,114,182,.5); box-shadow: 0 20px 60px rgba(236,72,153,.2); }
-    .member-card::before { content:''; position:absolute;inset:0; background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(236,72,153,.05)); pointer-events:none; }
-    .glow-orb { position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%; background:radial-gradient(circle,rgba(167,139,250,.25),transparent); pointer-events:none; }
-    .tanvee .glow-orb { background:radial-gradient(circle,rgba(244,114,182,.25),transparent); }
-    .m-avatar { width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;margin:0 auto 18px;border:2px solid rgba(255,255,255,.15);font-family:'Plus Jakarta Sans',sans-serif; }
-    .shagun .m-avatar { background:linear-gradient(135deg,#6d28d9,#a78bfa);color:#fff; }
-    .tanvee .m-avatar { background:linear-gradient(135deg,#9d174d,#f472b6);color:#fff; }
-    .m-name { font-size:20px;font-weight:700;color:#f3e8ff;text-align:center;margin-bottom:4px; }
-    .m-role { font-size:11px;color:rgba(160,157,192,.7);text-align:center;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px; }
-    .m-open-btn { width:100%;padding:11px;border-radius:12px;border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.1);color:#c4b5fd;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px; }
-    .tanvee .m-open-btn { border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.1);color:#f9a8d4; }
-    .m-open-btn:hover { background:rgba(167,139,250,.22); }
-    .tanvee .m-open-btn:hover { background:rgba(244,114,182,.22); }
-    .hint-text { color:rgba(160,157,192,.45);font-size:12px;letter-spacing:2px;text-transform:uppercase; }
+
+    .member-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(167, 139, 250, .5);
+      box-shadow: 0 20px 60px rgba(139, 92, 246, .2);
+    }
+
+    .member-card.tanvee:hover {
+      border-color: rgba(244, 114, 182, .5);
+      box-shadow: 0 20px 60px rgba(236, 72, 153, .2);
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(167, 139, 250, .07), rgba(236, 72, 153, .05));
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(167, 139, 250, .25), transparent);
+      pointer-events: none;
+    }
+
+    .tanvee .glow-orb {
+      background: radial-gradient(circle, rgba(244, 114, 182, .25), transparent);
+    }
+
+    .m-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 auto 18px;
+      border: 2px solid rgba(255, 255, 255, .15);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .shagun .m-avatar {
+      background: linear-gradient(135deg, #6d28d9, #a78bfa);
+      color: #fff;
+    }
+
+    .tanvee .m-avatar {
+      background: linear-gradient(135deg, #9d174d, #f472b6);
+      color: #fff;
+    }
+
+    .m-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f3e8ff;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .m-role {
+      font-size: 11px;
+      color: rgba(160, 157, 192, .7);
+      text-align: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .m-open-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
+      border: 1px solid rgba(167, 139, 250, .4);
+      background: rgba(167, 139, 250, .1);
+      color: #c4b5fd;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tanvee .m-open-btn {
+      border-color: rgba(244, 114, 182, .4);
+      background: rgba(244, 114, 182, .1);
+      color: #f9a8d4;
+    }
+
+    .m-open-btn:hover {
+      background: rgba(167, 139, 250, .22);
+    }
+
+    .tanvee .m-open-btn:hover {
+      background: rgba(244, 114, 182, .22);
+    }
+
+    .hint-text {
+      color: rgba(160, 157, 192, .45);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
     /* NOTEBOOK */
-    #notebookView { display: none; width: 100%; }
-    .nb-back { background:none;border:1px solid rgba(255,255,255,.1);color:rgba(160,157,192,.7);padding:8px 18px;border-radius:10px;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;transition:color .2s,border-color .2s;font-family:'Plus Jakarta Sans',sans-serif; }
-    .nb-back:hover { color:#f3e8ff;border-color:rgba(255,255,255,.25); }
-    .notebook { display:flex;border-radius:18px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.06);min-height:430px; }
-    .nb-spine { width:34px;flex-shrink:0;background:linear-gradient(to bottom,#1a0d3d,#2a1560);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:14px;border-right:1px solid rgba(255,255,255,.07); }
-    .ring { width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04); }
-    .nb-sidebar { width:54px;flex-shrink:0;background:#110926;display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:6px;border-right:1px solid rgba(255,255,255,.05); }
-    .nav-tab { width:40px;height:40px;border-radius:10px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:background .2s;position:relative; }
-    .nav-tab.active { background:rgba(167,139,250,.2); }
-    .nav-tab:hover:not(.active) { background:rgba(255,255,255,.05); }
-    .tip { position:absolute;left:48px;background:#1e1040;color:#c4b5fd;font-size:11px;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;border:1px solid rgba(167,139,250,.25);font-family:'Plus Jakarta Sans',sans-serif;z-index:10; }
-    .nav-tab:hover .tip { opacity:1; }
-    .nb-content { flex:1;background:#160f2e;overflow:hidden; }
-    .nb-page { display:none;padding:28px 24px;flex-direction:column;gap:14px;min-height:430px; }
-    .nb-page.active { display:flex; }
+    #notebookView {
+      display: none;
+      width: 100%;
+    }
 
-    .page-hero { display:flex;gap:16px;align-items:flex-start; }
-    .hero-photo { width:82px;height:104px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;color:#fff;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif; }
-    .s-photo { background:linear-gradient(135deg,#5b21b6,#8b5cf6); }
-    .t-photo { background:linear-gradient(135deg,#9d174d,#ec4899); }
-    .hero-greeting { font-size:11px;color:#a78bfa;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px; }
-    .t-greeting { color:#f472b6; }
-    .hero-name { font-size:20px;font-weight:700;color:#f3e8ff;margin-bottom:3px;font-family:'Plus Jakarta Sans',sans-serif; }
-    .hero-role { font-size:11px;color:rgba(160,157,192,.6);margin-bottom:10px; }
-    .hero-bio { font-size:12.5px;color:rgba(160,157,192,.85);line-height:1.65; }
-    .hero-sig { font-size:17px;color:rgba(255,255,255,.22);margin-top:8px;font-style:italic; }
+    .nb-back {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: rgba(160, 157, 192, .7);
+      padding: 8px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      transition: color .2s, border-color .2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
-    .sec-label { font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(160,157,192,.5);display:flex;align-items:center;gap:8px; }
-    .sec-label::after { content:'';flex:1;height:1px;background:rgba(255,255,255,.07); }
-    .detail-grid { display:grid;grid-template-columns:1fr 1fr;gap:7px; }
-    .det-row { display:flex;flex-direction:column;gap:2px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.05); }
-    .det-label { font-size:10px;color:rgba(160,157,192,.5); }
-    .det-val { font-size:12px;color:#f3e8ff;font-weight:600; }
-    .quote-box { background:rgba(124,58,237,.08);border-left:3px solid #7c3aed;border-radius:0 10px 10px 0;padding:12px 14px;font-size:13px;color:#c4b5fd;font-style:italic;line-height:1.6; }
-    .t-quote { background:rgba(190,24,93,.08);border-left-color:#be185d;color:#f9a8d4; }
+    .nb-back:hover {
+      color: #f3e8ff;
+      border-color: rgba(255, 255, 255, .25);
+    }
 
-    .skill-item { display:flex;flex-direction:column;gap:5px; }
-    .skill-top { display:flex;justify-content:space-between;font-size:12px; }
-    .skill-name { color:#f3e8ff;font-weight:500; }
-    .skill-pct { color:rgba(160,157,192,.6); }
-    .skill-track { height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden; }
-    .skill-fill { height:100%;border-radius:3px;background:linear-gradient(to right,#6d28d9,#a78bfa);width:0;transition:width .9s cubic-bezier(.4,0,.2,1); }
-    .t-fill { background:linear-gradient(to right,#9d174d,#f472b6); }
-    .tech-row { display:flex;flex-wrap:wrap;gap:6px; }
-    .tech-tag { font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(167,139,250,.3);color:#c4b5fd;background:rgba(167,139,250,.08); }
-    .t-tag { border-color:rgba(244,114,182,.3);color:#f9a8d4;background:rgba(244,114,182,.08); }
+    .notebook {
+      display: flex;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06);
+      min-height: 430px;
+    }
 
-    .timeline { display:flex;flex-direction:column; }
-    .tl-item { display:flex;gap:12px; }
-    .tl-left { display:flex;flex-direction:column;align-items:center; }
-    .tl-dot { width:10px;height:10px;border-radius:50%;background:#7c3aed;flex-shrink:0;margin-top:5px; }
-    .t-dot { background:#be185d; }
-    .tl-line { width:2px;flex:1;background:rgba(255,255,255,.07);margin:5px 0;min-height:20px; }
-    .tl-right { flex:1;padding-bottom:18px; }
-    .tl-year { font-size:10px;color:rgba(160,157,192,.5);letter-spacing:1px;margin-bottom:3px; }
-    .tl-title { font-size:13px;font-weight:600;color:#f3e8ff;margin-bottom:4px; }
-    .tl-desc { font-size:12px;color:rgba(160,157,192,.75);line-height:1.6; }
+    .nb-spine {
+      width: 34px;
+      flex-shrink: 0;
+      background: linear-gradient(to bottom, #1a0d3d, #2a1560);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 0;
+      gap: 14px;
+      border-right: 1px solid rgba(255, 255, 255, .07);
+    }
 
-    .proj-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
-    .proj-card { background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px; }
-    .proj-icon { font-size:22px;margin-bottom:8px; }
-    .proj-name { font-size:13px;font-weight:600;color:#f3e8ff;margin-bottom:5px; }
-    .proj-desc { font-size:11px;color:rgba(160,157,192,.7);line-height:1.5;margin-bottom:8px; }
-    .proj-tags { display:flex;flex-wrap:wrap;gap:4px; }
-    .proj-tag { font-size:10px;padding:2px 7px;border-radius:6px;background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.2); }
-    .t-ptag { background:rgba(244,114,182,.1);color:#f9a8d4;border-color:rgba(244,114,182,.2); }
+    .ring {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, .18);
+      background: rgba(255, 255, 255, .04);
+    }
 
-    .contact-items { display:flex;flex-direction:column;gap:10px; }
-    .contact-item { display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px; }
-    .c-icon { width:34px;height:34px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(167,139,250,.15); }
-    .t-icon { background:rgba(244,114,182,.15); }
-    .c-label { font-size:10px;color:rgba(160,157,192,.5); }
-    .c-val { font-size:12.5px;color:#f3e8ff;font-weight:500; }
+    .nb-sidebar {
+      width: 54px;
+      flex-shrink: 0;
+      background: #110926;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      gap: 6px;
+      border-right: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .nav-tab {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      transition: background .2s;
+      position: relative;
+    }
+
+    .nav-tab.active {
+      background: rgba(167, 139, 250, .2);
+    }
+
+    .nav-tab:hover:not(.active) {
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .tip {
+      position: absolute;
+      left: 48px;
+      background: #1e1040;
+      color: #c4b5fd;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      border: 1px solid rgba(167, 139, 250, .25);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      z-index: 10;
+    }
+
+    .nav-tab:hover .tip {
+      opacity: 1;
+    }
+
+    .nb-content {
+      flex: 1;
+      background: #160f2e;
+      overflow: hidden;
+    }
+
+    .nb-page {
+      display: none;
+      padding: 28px 24px;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 430px;
+    }
+
+    .nb-page.active {
+      display: flex;
+    }
+
+    .page-hero {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .hero-photo {
+      width: 82px;
+      height: 104px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .s-photo {
+      background: linear-gradient(135deg, #5b21b6, #8b5cf6);
+    }
+
+    .t-photo {
+      background: linear-gradient(135deg, #9d174d, #ec4899);
+    }
+
+    .hero-greeting {
+      font-size: 11px;
+      color: #a78bfa;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .t-greeting {
+      color: #f472b6;
+    }
+
+    .hero-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f3e8ff;
+      margin-bottom: 3px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .hero-role {
+      font-size: 11px;
+      color: rgba(160, 157, 192, .6);
+      margin-bottom: 10px;
+    }
+
+    .hero-bio {
+      font-size: 12.5px;
+      color: rgba(160, 157, 192, .85);
+      line-height: 1.65;
+    }
+
+    .hero-sig {
+      font-size: 17px;
+      color: rgba(255, 255, 255, .22);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .sec-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(160, 157, 192, .5);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, .07);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .det-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, .04);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .det-label {
+      font-size: 10px;
+      color: rgba(160, 157, 192, .5);
+    }
+
+    .det-val {
+      font-size: 12px;
+      color: #f3e8ff;
+      font-weight: 600;
+    }
+
+    .quote-box {
+      background: rgba(124, 58, 237, .08);
+      border-left: 3px solid #7c3aed;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #c4b5fd;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .t-quote {
+      background: rgba(190, 24, 93, .08);
+      border-left-color: #be185d;
+      color: #f9a8d4;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .skill-name {
+      color: #f3e8ff;
+      font-weight: 500;
+    }
+
+    .skill-pct {
+      color: rgba(160, 157, 192, .6);
+    }
+
+    .skill-track {
+      height: 5px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(to right, #6d28d9, #a78bfa);
+      width: 0;
+      transition: width .9s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .t-fill {
+      background: linear-gradient(to right, #9d174d, #f472b6);
+    }
+
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(167, 139, 250, .3);
+      color: #c4b5fd;
+      background: rgba(167, 139, 250, .08);
+    }
+
+    .t-tag {
+      border-color: rgba(244, 114, 182, .3);
+      color: #f9a8d4;
+      background: rgba(244, 114, 182, .08);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .tl-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #7c3aed;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .t-dot {
+      background: #be185d;
+    }
+
+    .tl-line {
+      width: 2px;
+      flex: 1;
+      background: rgba(255, 255, 255, .07);
+      margin: 5px 0;
+      min-height: 20px;
+    }
+
+    .tl-right {
+      flex: 1;
+      padding-bottom: 18px;
+    }
+
+    .tl-year {
+      font-size: 10px;
+      color: rgba(160, 157, 192, .5);
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .tl-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f3e8ff;
+      margin-bottom: 4px;
+    }
+
+    .tl-desc {
+      font-size: 12px;
+      color: rgba(160, 157, 192, .75);
+      line-height: 1.6;
+    }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .proj-card {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .proj-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .proj-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f3e8ff;
+      margin-bottom: 5px;
+    }
+
+    .proj-desc {
+      font-size: 11px;
+      color: rgba(160, 157, 192, .7);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .proj-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(167, 139, 250, .1);
+      color: #c4b5fd;
+      border: 1px solid rgba(167, 139, 250, .2);
+    }
+
+    .t-ptag {
+      background: rgba(244, 114, 182, .1);
+      color: #f9a8d4;
+      border-color: rgba(244, 114, 182, .2);
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 12px;
+    }
+
+    .c-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: rgba(167, 139, 250, .15);
+    }
+
+    .t-icon {
+      background: rgba(244, 114, 182, .15);
+    }
+
+    .c-label {
+      font-size: 10px;
+      color: rgba(160, 157, 192, .5);
+    }
+
+    .c-val {
+      font-size: 12.5px;
+      color: #f3e8ff;
+      font-weight: 500;
+    }
 
     @media (max-width:640px) {
-      .cards-row { flex-direction:column;align-items:center; }
-      .member-card { width:100%;max-width:300px; }
-      .nb-spine { display:none; }
-      .nb-sidebar { width:100%;flex-direction:row;height:50px;justify-content:center;padding:0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05); }
-      .tip { display:none; }
-      .detail-grid { grid-template-columns:1fr; }
-      .proj-grid { grid-template-columns:1fr; }
->>>>>>> 7334aff63ebf99a8d859019d83caa341a32f83b5
+      .cards-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .member-card {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .nb-spine {
+        display: none;
+      }
+
+      .nb-sidebar {
+        width: 100%;
+        flex-direction: row;
+        height: 50px;
+        justify-content: center;
+        padding: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, .05);
+      }
+
+      .tip {
+        display: none;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .proj-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body class="bg-about">
 
-<<<<<<< HEAD
-  <!-- ===== NAVBAR ===== -->
+  <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav">
-      <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;"></a>
+      <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height:100px;width:auto;"></a>
       <input type="checkbox" id="menu-toggle"
         style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
       <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
       </label>
       <nav class="menu">
-        <div class="nav-left nav-inner">
-          <a href="index.html" class="nav-item">Home</a>
-
-          <div class="nav-dropdown">
-            <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down"
-                style="font-size: 0.7rem; margin-left: 4px;"></i></a>
-            <div class="dropdown-content glass-dropdown">
-              <a href="wedding.html">Wedding</a>
-              <a href="birthday.html">Birthday</a>
-              <a href="party.html">Party</a>
-              <a href="cards.html">Cards</a>
-              <a href="events.html">Events</a>
-            </div>
+        <div class="nav-left">
+          <a href="index.html">Home</a>
+          <a href="wedding.html">Wedding</a>
+          <a href="birthday.html">Birthday</a>
+          <a href="party.html">Party</a>
+          <a href="cards.html">Cards</a>
+          <a href="events.html">Events</a>
+          <a href="about.html" class="active">About</a>
+        </div>
+        <div class="nav-right" id="navRight">
+          <div id="authButtons">
+            <a href="login.html" class="btn login-btn">Login</a>
+            <a href="signup.html" class="btn signup-btn">Sign Up</a>
           </div>
 
-          <a href="about.html" class="active nav-item">About</a>
-=======
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="container nav">
-    <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height:100px;width:auto;"></a>
-    <input type="checkbox" id="menu-toggle" style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
-    <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
-      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-    </label>
-    <nav class="menu">
-      <div class="nav-left">
-        <a href="index.html">Home</a>
-        <a href="wedding.html">Wedding</a>
-        <a href="birthday.html">Birthday</a>
-        <a href="party.html">Party</a>
-        <a href="cards.html">Cards</a>
-        <a href="events.html">Events</a>
-        <a href="about.html" class="active">About</a>
-      </div>
-      <div class="nav-right" id="navRight">
-        <div id="authButtons">
-          <a href="login.html" class="btn login-btn">Login</a>
-          <a href="signup.html" class="btn signup-btn">Sign Up</a>
->>>>>>> 7334aff63ebf99a8d859019d83caa341a32f83b5
-        </div>
+          <div class="nav-right">
 
-        <div class="nav-right">
+            <a href="login.html" class="login-btn">
+              Login
+            </a>
 
-          <a href="login.html" class="login-btn">
-            Login
-          </a>
+            <a href="signup.html" class="signup-btn">
+              Sign Up
+            </a>
 
-          <a href="signup.html" class="signup-btn">
-            Sign Up
-          </a>
-
-        </div>
+          </div>
       </nav>
     </div>
   </header>
@@ -786,614 +883,252 @@
         </div>
 
       </div>
-<<<<<<< HEAD
-      <div class="footer-bottom">
-        <p class="footer-copy">
-          &copy; 2025 <span>Greetings</span>. Crafted with &#9829; by Shagun &amp; Tanvee &mdash; B.E. CSE (AI-FT),
-          Chitkara University.
-        </p>
-        <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Cookie Settings</a>
-        </div>
-      </div>
-=======
-    </nav>
-  </div>
-</header>
+      </nav>
+    </div>
+    </header>
 
-<!-- ABOUT SECTION -->
-<div id="about-section">
-  <div id="particles"></div>
-  <div class="about-inner">
+    <!-- ABOUT SECTION -->
+    <div id="about-section">
+      <div id="particles"></div>
+      <div class="about-inner">
 
-    <!-- Team Cards -->
-    <div id="teamView">
-      <div class="team-heading">
-        <h1>The Minds Behind The Magic</h1>
-        <p>Click a card to explore our profiles</p>
-      </div>
-      <div class="cards-row">
-        <div class="member-card shagun" onclick="openNotebook('shagun')">
-          <div class="glow-orb"></div>
-          <div class="m-avatar">S</div>
-          <div class="m-name">Shagun</div>
-          <div class="m-role">Lead Designer</div>
-          <button class="m-open-btn">Open Profile &#8594;</button>
+        <!-- Team Cards -->
+        <div id="teamView">
+          <div class="team-heading">
+            <h1>The Minds Behind The Magic</h1>
+            <p>Click a card to explore our profiles</p>
+          </div>
+          <div class="cards-row">
+            <div class="member-card shagun" onclick="openNotebook('shagun')">
+              <div class="glow-orb"></div>
+              <div class="m-avatar">S</div>
+              <div class="m-name">Shagun</div>
+              <div class="m-role">Lead Designer</div>
+              <button class="m-open-btn">Open Profile &#8594;</button>
+            </div>
+            <div class="member-card tanvee" onclick="openNotebook('tanvee')">
+              <div class="glow-orb"></div>
+              <div class="m-avatar">T</div>
+              <div class="m-name">Tanvee</div>
+              <div class="m-role">Lead Developer</div>
+              <button class="m-open-btn">Open Profile &#8594;</button>
+            </div>
+          </div>
+          <div class="hint-text">&#10022; Click on a card to know more</div>
         </div>
-        <div class="member-card tanvee" onclick="openNotebook('tanvee')">
-          <div class="glow-orb"></div>
-          <div class="m-avatar">T</div>
-          <div class="m-name">Tanvee</div>
-          <div class="m-role">Lead Developer</div>
-          <button class="m-open-btn">Open Profile &#8594;</button>
+
+        <!-- Notebook -->
+        <div id="notebookView">
+          <button class="nb-back" onclick="closeNotebook()">&#8592; Back to Team</button>
+          <div class="notebook">
+            <div class="nb-spine">
+              <div class="ring"></div>
+              <div class="ring"></div>
+              <div class="ring"></div>
+              <div class="ring"></div>
+              <div class="ring"></div>
+              <div class="ring"></div>
+            </div>
+            <div class="nb-sidebar" id="sidebar">
+              <div class="nav-tab active" data-tab="about" onclick="switchTab('about')">&#128100;<span
+                  class="tip">About</span></div>
+              <div class="nav-tab" data-tab="skills" onclick="switchTab('skills')">&#9889;<span
+                  class="tip">Skills</span></div>
+              <div class="nav-tab" data-tab="experience" onclick="switchTab('experience')">&#128197;<span
+                  class="tip">Experience</span></div>
+              <div class="nav-tab" data-tab="projects" onclick="switchTab('projects')">&#128187;<span
+                  class="tip">Projects</span></div>
+              <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">&#9993;<span
+                  class="tip">Contact</span></div>
+            </div>
+            <div class="nb-content" id="nbContent"></div>
+          </div>
         </div>
+
       </div>
-      <div class="hint-text">&#10022; Click on a card to know more</div>
     </div>
 
-    <!-- Notebook -->
-    <div id="notebookView">
-      <button class="nb-back" onclick="closeNotebook()">&#8592; Back to Team</button>
-      <div class="notebook">
-        <div class="nb-spine">
-          <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-          <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <!-- FOOTER -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-badge"><span class="footer-badge-dot"></span></div>
+            <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
+            <p>Craft stunning digital invitations and greeting cards for every occasion. Neon-lit design meets heartfelt
+              moments — all in one place.</p>
+            <div class="footer-social-row">
+              <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"><i
+                  class="fab fa-instagram"></i></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"><i
+                  class="fab fa-x-twitter"></i></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"><i
+                  class="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"><i
+                  class="fab fa-github"></i></a>
+              <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"><i
+                  class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="wedding.html">Wedding</a></li>
+              <li><a href="birthday.html">Birthday</a></li>
+              <li><a href="party.html">Party</a></li>
+              <li><a href="cards.html">Cards</a></li>
+              <li><a href="events.html">Events</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="how-it-works.html">How It Works</a></li>
+              <li><a href="login.html">Login</a></li>
+              <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="mailto:support@greetings.com">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Report an Issue</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="nb-sidebar" id="sidebar">
-          <div class="nav-tab active" data-tab="about" onclick="switchTab('about')">&#128100;<span class="tip">About</span></div>
-          <div class="nav-tab" data-tab="skills" onclick="switchTab('skills')">&#9889;<span class="tip">Skills</span></div>
-          <div class="nav-tab" data-tab="experience" onclick="switchTab('experience')">&#128197;<span class="tip">Experience</span></div>
-          <div class="nav-tab" data-tab="projects" onclick="switchTab('projects')">&#128187;<span class="tip">Projects</span></div>
-          <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">&#9993;<span class="tip">Contact</span></div>
-        </div>
-        <div class="nb-content" id="nbContent"></div>
-      </div>
-    </div>
+    </footer>
 
-  </div>
-</div>
+    <!-- SCRIPTS -->
+    <script src="back-to-top.js"></script>
+    <script src="hamburger.js"></script>
+    <script src="script.js"></script>
+    <script src="ai-assistant.js"></script>
+    <script src="nav-auth.js"></script>
 
-<!-- FOOTER -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-badge"><span class="footer-badge-dot"></span></div>
-        <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
-        <p>Craft stunning digital invitations and greeting cards for every occasion. Neon-lit design meets heartfelt moments — all in one place.</p>
-        <div class="footer-social-row">
-          <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"><i class="fab fa-instagram"></i></a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"><i class="fab fa-github"></i></a>
-          <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="wedding.html">Wedding</a></li>
-          <li><a href="birthday.html">Birthday</a></li>
-          <li><a href="party.html">Party</a></li>
-          <li><a href="cards.html">Cards</a></li>
-          <li><a href="events.html">Events</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="how-it-works.html">How It Works</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="signup.html">Sign Up</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="mailto:support@greetings.com">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Report an Issue</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
->>>>>>> 7334aff63ebf99a8d859019d83caa341a32f83b5
-    </div>
-  </footer>
+    <script>
+      (function () {
+        'use strict';
 
-<<<<<<< HEAD
-  <!-- ===== EXISTING SITE SCRIPTS ===== -->
-  <script src="back-to-top.js"></script>
-  <script src="hamburger.js"></script>
-  <script src="script.js"></script>
-  <script src="ai-assistant.js"></script>
-
-  <!-- ===== 3D BOOK SCRIPT ===== -->
-  <script>
-    (function () {
-      'use strict';
-
-      /* ── Page data — edit here to customise content ── */
-      var pages = [
-        {
-          left: {
-            header: "Who We Are",
-            sections: [
-              {
-                title: "Introduction",
-                body: "We are Greetings — a digital studio born from the belief that every celebration deserves a masterpiece. Founded by two passionate designers, we craft immersive digital invitations and cards that leave lasting impressions."
-              },
-              {
-                title: "Our Story",
-                body: "What began as a university project at Chitkara University in 2024 blossomed into a full creative platform. Shagun & Tanvee combined their love for design and technology to build something truly magical."
-              }
-            ],
-            num: "— 01 —"
-          },
-          right: {
-            header: "Our Purpose",
-            sections: [
-              {
-                title: "Mission",
-                body: "To democratize beautiful design by making premium digital invitations accessible to everyone — from intimate gatherings to grand celebrations. Every card tells a story worth sharing."
-              },
-              {
-                title: "Vision",
-                body: "A world where every milestone, big or small, is celebrated with a beautifully crafted digital experience. We envision design as an act of love and communication."
-              }
-            ],
-            num: "— 02 —"
-          }
-        },
-        {
-          left: {
-            header: "What We Do",
-            sections: [
-              {
-                title: "Services",
-                body: "Digital invitation design, animated greeting cards, event branding, and custom typography layouts."
-              },
-              {
-                title: "Specialties",
-                body: "",
-                skills: ["Wedding Cards", "Birthday Invites", "Party Designs", "Event Posters", "Greeting Cards", "Digital Gifting", "UI/UX Design", "Motion Design"]
-              },
-              {
-                title: "Technology",
-                body: "",
-                skills: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "GSAP", "Figma", "AI Tools"]
-              }
-            ],
-            num: "— 03 —"
-          },
-          right: {
-            header: "Our Journey",
-            sections: [
-              {
-                title: "2024 — Genesis",
-                body: "Greetings was conceived as a final-year CSE project at Chitkara University. The idea: make invitation design effortless yet extraordinary."
-              },
-              {
-                title: "2025 — Launch",
-                body: "Platform goes live with 100+ curated templates spanning weddings, birthdays, parties, and events. Community grows to 500+ users in the first month."
-              },
-              {
-                title: "Tomorrow",
-                body: "AI-powered personalisation, real-time collaboration tools, and a marketplace for independent designers — our roadmap is as exciting as our past."
-              }
-            ],
-            num: "— 04 —"
-          }
-        },
-        {
-          left: {
-            header: "The Team",
-            sections: [
-              {
-                title: "Shagun — Lead Designer",
-                body: "A creative visionary with a passion for neon aesthetics, typography, and immersive UI. Handles all visual design, motion, and brand identity."
-              },
-              {
-                title: "Tanvee — Lead Developer",
-                body: "A full-stack engineer who brings pixel-perfect designs to life. Expert in frontend architecture, animations, and backend systems."
-              },
-              {
-                title: "Together",
-                body: "Combining art and engineering, we believe the best products live at the intersection of beauty and function."
-              }
-            ],
-            num: "— 05 —"
-          },
-          right: {
-            header: "Get In Touch",
-            sections: [
-              {
-                title: "Contact",
-                body: "We'd love to hear from you — whether you're a couple planning a wedding or a company needing event collateral."
-              },
-              {
-                title: "",
-                body: "",
-                contacts: [
-                  { icon: "✉", text: "support@greetings.com" },
-                  { icon: "🔗", text: "linkedin.com/in/shagun-mankotia" },
-                  { icon: "🔗", text: "linkedin.com/in/tanvee" },
-                  { icon: "💻", text: "github.com/shagun8595beaift25" },
-                  { icon: "💻", text: "github.com/TanveeGoyal" },
-                  { icon: "🏫", text: "Chitkara University, Punjab" }
-                ]
-              }
-            ],
-            num: "— 06 —"
-          }
-        }
-      ];
-
-      /* ── DOM refs ── */
-      var bookWrap = document.getElementById('book-wrap');
-      var book = document.getElementById('book');
-      var cover = document.getElementById('cover');
-      var leftPage = document.getElementById('left-page');
-      var rightPage = document.getElementById('right-page');
-      var leftContent = document.getElementById('left-content');
-      var rightContent = document.getElementById('right-content');
-      var closeBtn = document.getElementById('book-close-btn');
-      var hintBar = document.getElementById('book-hint-bar');
-      var navDots = document.getElementById('navDots');
-      var turningPage = document.getElementById('turning-page');
-      var scene = document.getElementById('scene');
-
-      var isOpen = false;
-      var currentPage = 0;
-
-      /* ── Starfield ── */
-      function makeStars() {
+        /* Starfield */
         var p = document.getElementById('particles');
-        for (var i = 0; i < 50; i++) {
-          var s = document.createElement('div');
-          s.className = 'star';
-          var sz = Math.random() * 2 + 1;
-          s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (2 + Math.random() * 4) + 's;--delay:' + (Math.random() * 4) + 's';
-          p.appendChild(s);
-        }
-      }
+        for (var i = 0; i < 50; i++) { var s = document.createElement('div'); s.className = 'star'; var sz = Math.random() * 2 + 1; s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (2 + Math.random() * 4) + 's;--delay:' + (Math.random() * 4) + 's'; p.appendChild(s); }
 
-      /* ── Render page content ── */
-      function renderPageContent(container, data) {
-        container.innerHTML = '';
-
-        var header = document.createElement('div');
-        header.className = 'page-header fade-item';
-        header.textContent = data.header;
-        container.appendChild(header);
-
-        data.sections.forEach(function (sec) {
-          if (sec.title) {
-            var t = document.createElement('div');
-            t.className = 'section-title fade-item';
-            t.textContent = sec.title;
-            container.appendChild(t);
+        var profiles = {
+          shagun: {
+            photoClass: 's-photo', letter: 'S',
+            greeting: "Hi there! I'm Shagun", greetingClass: '',
+            name: 'Shagun Mankotia', role: 'Lead Designer & UI/UX Artist',
+            bio: 'A creative visionary passionate about neon aesthetics, typography, and immersive UI. I transform ideas into pixel-perfect, emotionally resonant digital experiences.',
+            sig: 'Shagun &#9825;', quoteClass: '',
+            quote: '"Design is not just what it looks like — it\'s how it makes you feel."',
+            details: [{ l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Designer' }, { l: 'Location', v: 'Punjab, India' }, { l: 'Email', v: 'shagun8595@...' }, { l: 'Languages', v: 'English, Hindi' }],
+            skills: [{ n: 'UI/UX Design', p: 92, cls: '' }, { n: 'Figma', p: 88, cls: '' }, { n: 'HTML & CSS', p: 85, cls: '' }, { n: 'Motion Design', p: 78, cls: '' }, { n: 'Brand Identity', p: 82, cls: '' }],
+            tech: ['Figma', 'Adobe XD', 'Canva', 'CSS Animations', 'Tailwind', 'GSAP'], techCls: '',
+            exp: [{ y: '2025 — Present', t: 'Lead Designer — Greetings', d: 'Crafting the entire visual identity of the Greetings platform including UI, cards, and brand assets.' }, { y: '2024', t: 'UI Design — University Projects', d: 'Designed multiple web and app interfaces for academic AI projects at Chitkara University.' }, { y: '2023', t: 'Freelance Design', d: 'Created logos, posters, and social media graphics for local businesses and startups.' }],
+            dotCls: '',
+            projects: [{ icon: '&#127912;', n: 'Greetings UI', d: 'Full design system for the Greetings platform.', tags: ['Figma', 'Design System'], tc: '' }, { icon: '&#10024;', n: '3D Book About', d: 'Interactive 3D animated About page concept.', tags: ['CSS', 'Animation'], tc: '' }, { icon: '&#128140;', n: 'Card Gallery', d: 'Curated invitation gallery with 100+ templates.', tags: ['UI Design'], tc: '' }, { icon: '&#127775;', n: 'Neon Portfolio', d: 'Personal portfolio with glassmorphism style.', tags: ['HTML', 'CSS', 'JS'], tc: '' }],
+            contacts: [{ icon: '&#9993;', l: 'Email', v: 'shagun8595.beaift25@chitkara.edu.in', ic: '' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/shagun-mankotia', ic: '' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/shagun8595beaift25', ic: '' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: '' }]
+          },
+          tanvee: {
+            photoClass: 't-photo', letter: 'T',
+            greeting: "Hi there! I'm Tanvee", greetingClass: 't-greeting',
+            name: 'Tanvee Goyal', role: 'Lead Developer & Problem Solver',
+            bio: 'A full-stack engineer who brings pixel-perfect designs to life. I love building scalable, efficient systems and turning complex problems into elegant solutions.',
+            sig: 'Tanvee &#9825;', quoteClass: 't-quote',
+            quote: '"Logic today, solutions tomorrow."',
+            details: [{ l: 'Roll No', v: '2510998605' }, { l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Developer' }, { l: 'Email', v: 'tanvee8605@...' }, { l: 'Languages', v: 'English, Hindi' }],
+            skills: [{ n: 'JavaScript', p: 90, cls: 't-fill' }, { n: 'Node.js / Express', p: 85, cls: 't-fill' }, { n: 'React', p: 80, cls: 't-fill' }, { n: 'HTML & CSS', p: 92, cls: 't-fill' }, { n: 'AI Integration', p: 75, cls: 't-fill' }],
+            tech: ['Node.js', 'Express', 'React', 'MongoDB', 'Python', 'REST APIs'], techCls: 't-tag',
+            exp: [{ y: '2025 — Present', t: 'Lead Developer — Greetings', d: 'Built the complete frontend and backend of the Greetings platform including AI chat integration.' }, { y: '2024', t: 'Full-Stack Dev — University Projects', d: 'Developed multiple AI-powered web applications for academic projects at Chitkara University.' }, { y: '2023', t: 'Freelance Web Development', d: 'Built responsive websites and landing pages for clients using modern web technologies.' }],
+            dotCls: 't-dot',
+            projects: [{ icon: '&#129302;', n: 'Greetings AI', d: 'Gemini-powered AI chat for the card platform.', tags: ['Node.js', 'Gemini API'], tc: 't-ptag' }, { icon: '&#128274;', n: 'Auth System', d: 'Full signup/login with localStorage persistence.', tags: ['JavaScript', 'Auth'], tc: 't-ptag' }, { icon: '&#128230;', n: 'Backend API', d: 'REST API proxy server deployed on Render.', tags: ['Express', 'Render'], tc: 't-ptag' }, { icon: '&#127924;', n: 'Card Search', d: 'Real-time search and filter for the gallery.', tags: ['JS', 'DOM'], tc: 't-ptag' }],
+            contacts: [{ icon: '&#9993;', l: 'Email', v: 'tanvee8605.beaift25@chitkara.edu.in', ic: 't-icon' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/tanvee', ic: 't-icon' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/TanveeGoyal', ic: 't-icon' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: 't-icon' }]
           }
-          if (sec.body) {
-            var b = document.createElement('div');
-            b.className = 'section-body fade-item';
-            b.textContent = sec.body;
-            container.appendChild(b);
-          }
-          if (sec.skills && sec.skills.length) {
-            var pills = document.createElement('div');
-            pills.className = 'skill-pills fade-item';
-            sec.skills.forEach(function (sk) {
-              var p = document.createElement('span');
-              p.className = 'pill';
-              p.textContent = sk;
-              pills.appendChild(p);
-            });
-            container.appendChild(pills);
-          }
-          if (sec.contacts && sec.contacts.length) {
-            sec.contacts.forEach(function (c) {
-              var row = document.createElement('div');
-              row.className = 'contact-row fade-item';
-              row.innerHTML = '<div class="contact-icon">' + c.icon + '</div><span>' + c.text + '</span>';
-              container.appendChild(row);
-            });
-          }
-        });
+        };
 
-        var num = document.createElement('div');
-        num.className = 'page-num fade-item';
-        num.textContent = data.num;
-        container.appendChild(num);
+        function renderNotebook(person) {
+          var d = profiles[person];
+          var h = '';
 
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            var items = container.querySelectorAll('.fade-item');
-            items.forEach(function (el, i) {
-              setTimeout(function () { el.classList.add('visible'); }, i * 60);
-            });
+          /* About */
+          h += '<div class="nb-page active" id="page-about">';
+          h += '<div class="page-hero"><div class="hero-photo ' + d.photoClass + '">' + d.letter + '</div><div class="hero-text">';
+          h += '<div class="hero-greeting ' + d.greetingClass + '">' + d.greeting + '</div>';
+          h += '<div class="hero-name">' + d.name + '</div><div class="hero-role">' + d.role + '</div>';
+          h += '<div class="hero-bio">' + d.bio + '</div><div class="hero-sig">' + d.sig + '</div>';
+          h += '</div></div>';
+          h += '<div class="quote-box ' + d.quoteClass + '">' + d.quote + '</div>';
+          h += '<div class="sec-label">Details</div><div class="detail-grid">';
+          d.details.forEach(function (x) { h += '<div class="det-row"><div class="det-label">' + x.l + '</div><div class="det-val">' + x.v + '</div></div>'; });
+          h += '</div></div>';
+
+          /* Skills */
+          h += '<div class="nb-page" id="page-skills"><div class="sec-label">Technical Skills</div>';
+          d.skills.forEach(function (s) { h += '<div class="skill-item"><div class="skill-top"><span class="skill-name">' + s.n + '</span><span class="skill-pct">' + s.p + '%</span></div><div class="skill-track"><div class="skill-fill ' + s.cls + '" data-w="' + s.p + '"></div></div></div>'; });
+          h += '<div class="sec-label" style="margin-top:6px">Technologies</div><div class="tech-row">';
+          d.tech.forEach(function (t) { h += '<span class="tech-tag ' + d.techCls + '">' + t + '</span>'; });
+          h += '</div></div>';
+
+          /* Experience */
+          h += '<div class="nb-page" id="page-experience"><div class="sec-label">Journey</div><div class="timeline">';
+          d.exp.forEach(function (e, i) {
+            h += '<div class="tl-item"><div class="tl-left"><div class="tl-dot ' + d.dotCls + '"></div>';
+            if (i < d.exp.length - 1) h += '<div class="tl-line"></div>';
+            h += '</div><div class="tl-right"><div class="tl-year">' + e.y + '</div><div class="tl-title">' + e.t + '</div><div class="tl-desc">' + e.d + '</div></div></div>';
           });
-        });
-      }
+          h += '</div></div>';
 
-      /* ── Nav dots ── */
-      function buildDots() {
-        navDots.innerHTML = '';
-        pages.forEach(function (_, i) {
-          var d = document.createElement('div');
-          d.className = 'book-dot' + (i === currentPage ? ' active' : '');
-          (function (idx) { d.addEventListener('click', function () { turnToPage(idx); }); })(i);
-          navDots.appendChild(d);
-        });
-      }
+          /* Projects */
+          h += '<div class="nb-page" id="page-projects"><div class="sec-label">Projects</div><div class="proj-grid">';
+          d.projects.forEach(function (pr) {
+            h += '<div class="proj-card"><div class="proj-icon">' + pr.icon + '</div><div class="proj-name">' + pr.n + '</div><div class="proj-desc">' + pr.d + '</div><div class="proj-tags">';
+            pr.tags.forEach(function (tg) { h += '<span class="proj-tag ' + pr.tc + '">' + tg + '</span>'; });
+            h += '</div></div>';
+          });
+          h += '</div></div>';
 
-      /* ── Page-turn animation ── */
-      function turnToPage(target) {
-        if (target === currentPage || target < 0 || target >= pages.length) return;
-        var dir = target > currentPage ? 1 : -1;
+          /* Contact */
+          h += '<div class="nb-page" id="page-contact"><div class="sec-label">Get In Touch</div><div class="contact-items">';
+          d.contacts.forEach(function (c) { h += '<div class="contact-item"><div class="c-icon ' + c.ic + '">' + c.icon + '</div><div><div class="c-label">' + c.l + '</div><div class="c-val">' + c.v + '</div></div></div>'; });
+          h += '</div><div class="quote-box ' + d.quoteClass + '" style="margin-top:auto">"Let\'s build something amazing together! We\'d love to collaborate with you." &#10024;</div></div>';
 
-        turningPage.style.opacity = '1';
-        turningPage.style.transition = 'none';
-        if (dir > 0) {
-          turningPage.style.left = (book.offsetLeft + book.offsetWidth + 4) + 'px';
-          turningPage.style.right = 'auto';
-          turningPage.style.transformOrigin = 'left center';
-          turningPage.style.borderRadius = '2px 8px 8px 2px';
-        } else {
-          turningPage.style.right = (book.offsetWidth + 4) + 'px';
-          turningPage.style.left = 'auto';
-          turningPage.style.transformOrigin = 'right center';
-          turningPage.style.borderRadius = '8px 2px 2px 8px';
+          document.getElementById('nbContent').innerHTML = h;
         }
-        turningPage.style.transform = 'rotateY(0deg)';
 
-        requestAnimationFrame(function () {
-          turningPage.style.transition = 'transform .45s cubic-bezier(.4,0,.2,1)';
-          turningPage.style.transform = 'rotateY(' + (dir > 0 ? -90 : 90) + 'deg)';
-          setTimeout(function () {
-            currentPage = target;
-            renderPageContent(leftContent, pages[currentPage].left);
-            renderPageContent(rightContent, pages[currentPage].right);
-            buildDots();
-            turningPage.style.opacity = '0';
-          }, 225);
-        });
-      }
+        window.openNotebook = function (person) {
+          renderNotebook(person);
+          document.getElementById('teamView').style.display = 'none';
+          document.getElementById('notebookView').style.display = 'block';
+          document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.remove('active'); });
+          document.querySelector('[data-tab="about"]').classList.add('active');
+          setTimeout(animateBars, 80);
+        };
 
-      /* ── Open book ── */
-      function openBook() {
-        if (isOpen) return;
-        isOpen = true;
+        window.closeNotebook = function () {
+          document.getElementById('notebookView').style.display = 'none';
+          document.getElementById('teamView').style.display = 'flex';
+        };
 
-        bookWrap.classList.remove('idle-float');
-        bookWrap.classList.add('opened');
-        cover.style.cursor = 'default';
-        var hint = document.querySelector('.click-hint');
-        if (hint) hint.style.display = 'none';
+        window.switchTab = function (name) {
+          document.querySelectorAll('.nb-page').forEach(function (pg) { pg.classList.remove('active'); });
+          document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === name); });
+          var pg = document.getElementById('page-' + name);
+          if (pg) { pg.classList.add('active'); if (name === 'skills') setTimeout(animateBars, 60); }
+        };
 
-        book.style.transition = 'transform 1.1s cubic-bezier(.4,0,.2,1)';
-        book.style.transform = 'rotateY(-140deg)';
-
-        setTimeout(function () {
-          leftPage.style.transition = 'opacity .4s ease';
-          leftPage.style.opacity = '1';
-          leftPage.style.pointerEvents = 'auto';
-          rightPage.style.transition = 'opacity .4s ease';
-          rightPage.style.opacity = '1';
-          rightPage.style.pointerEvents = 'auto';
-
-          renderPageContent(leftContent, pages[0].left);
-          renderPageContent(rightContent, pages[0].right);
-
-          closeBtn.style.display = 'flex';
-          hintBar.style.opacity = '1';
-          navDots.style.display = 'flex';
-          buildDots();
-        }, 800);
-      }
-
-      /* ── Close book ── */
-      function closeBook() {
-        if (!isOpen) return;
-
-        leftPage.style.opacity = '0';
-        rightPage.style.opacity = '0';
-        leftPage.style.pointerEvents = 'none';
-        rightPage.style.pointerEvents = 'none';
-
-        book.style.transition = 'transform .9s cubic-bezier(.4,0,.2,1)';
-        book.style.transform = 'rotateY(0deg)';
-
-        closeBtn.style.display = 'none';
-        hintBar.style.opacity = '0';
-        navDots.style.display = 'none';
-
-        setTimeout(function () {
-          isOpen = false;
-          currentPage = 0;
-          bookWrap.classList.add('idle-float');
-          bookWrap.classList.remove('opened');
-          cover.style.cursor = 'pointer';
-          var hint = document.querySelector('.click-hint');
-          if (hint) hint.style.display = 'block';
-        }, 900);
-      }
-
-      /* ── Event listeners ── */
-      cover.addEventListener('click', openBook);
-      closeBtn.addEventListener('click', closeBook);
-      rightPage.addEventListener('click', function () { turnToPage(currentPage + 1); });
-      leftPage.addEventListener('click', function () { turnToPage(currentPage - 1); });
-
-      document.addEventListener('keydown', function (e) {
-        if (!isOpen) return;
-        if (e.key === 'ArrowRight') turnToPage(currentPage + 1);
-        if (e.key === 'ArrowLeft') turnToPage(currentPage - 1);
-        if (e.key === 'Escape') closeBook();
-      });
-
-      /* Touch swipe */
-      var touchStartX = 0;
-      document.addEventListener('touchstart', function (e) { touchStartX = e.touches[0].clientX; }, { passive: true });
-      document.addEventListener('touchend', function (e) {
-        if (!isOpen) return;
-        var dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) {
-          if (dx < 0) turnToPage(currentPage + 1);
-          else turnToPage(currentPage - 1);
+        function animateBars() {
+          document.querySelectorAll('.skill-fill').forEach(function (bar) { bar.style.width = bar.dataset.w + '%'; });
         }
-      }, { passive: true });
 
-      /* Mouse parallax on closed book */
-      scene.addEventListener('mousemove', function (e) {
-        if (isOpen) return;
-        var rect = scene.getBoundingClientRect();
-        var dx = (e.clientX - rect.left - rect.width / 2) / rect.width;
-        var dy = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        bookWrap.style.transform = 'rotateX(' + (-dy * 10) + 'deg) rotateY(' + (dx * 12) + 'deg)';
-      });
-      scene.addEventListener('mouseleave', function () {
-        if (!isOpen) bookWrap.style.transform = '';
-      });
+      })();
+    </script>
 
-      /* Boot */
-      makeStars();
-
-    })();
-  </script>
-  <script src="nav-auth.js"></script>
-=======
-<!-- SCRIPTS -->
-<script src="back-to-top.js"></script>
-<script src="hamburger.js"></script>
-<script src="script.js"></script>
-<script src="ai-assistant.js"></script>
-<script src="nav-auth.js"></script>
-
-<script>
-(function(){
-'use strict';
-
-/* Starfield */
-var p=document.getElementById('particles');
-for(var i=0;i<50;i++){var s=document.createElement('div');s.className='star';var sz=Math.random()*2+1;s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;--d:'+(2+Math.random()*4)+'s;--delay:'+(Math.random()*4)+'s';p.appendChild(s);}
-
-var profiles={
-  shagun:{
-    photoClass:'s-photo',letter:'S',
-    greeting:"Hi there! I'm Shagun",greetingClass:'',
-    name:'Shagun Mankotia',role:'Lead Designer & UI/UX Artist',
-    bio:'A creative visionary passionate about neon aesthetics, typography, and immersive UI. I transform ideas into pixel-perfect, emotionally resonant digital experiences.',
-    sig:'Shagun &#9825;',quoteClass:'',
-    quote:'"Design is not just what it looks like — it\'s how it makes you feel."',
-    details:[{l:'Degree',v:'B.E. CSE (AI-FT)'},{l:'University',v:'Chitkara Univ.'},{l:'Role',v:'Lead Designer'},{l:'Location',v:'Punjab, India'},{l:'Email',v:'shagun8595@...'},{l:'Languages',v:'English, Hindi'}],
-    skills:[{n:'UI/UX Design',p:92,cls:''},{n:'Figma',p:88,cls:''},{n:'HTML & CSS',p:85,cls:''},{n:'Motion Design',p:78,cls:''},{n:'Brand Identity',p:82,cls:''}],
-    tech:['Figma','Adobe XD','Canva','CSS Animations','Tailwind','GSAP'],techCls:'',
-    exp:[{y:'2025 — Present',t:'Lead Designer — Greetings',d:'Crafting the entire visual identity of the Greetings platform including UI, cards, and brand assets.'},{y:'2024',t:'UI Design — University Projects',d:'Designed multiple web and app interfaces for academic AI projects at Chitkara University.'},{y:'2023',t:'Freelance Design',d:'Created logos, posters, and social media graphics for local businesses and startups.'}],
-    dotCls:'',
-    projects:[{icon:'&#127912;',n:'Greetings UI',d:'Full design system for the Greetings platform.',tags:['Figma','Design System'],tc:''},{icon:'&#10024;',n:'3D Book About',d:'Interactive 3D animated About page concept.',tags:['CSS','Animation'],tc:''},{icon:'&#128140;',n:'Card Gallery',d:'Curated invitation gallery with 100+ templates.',tags:['UI Design'],tc:''},{icon:'&#127775;',n:'Neon Portfolio',d:'Personal portfolio with glassmorphism style.',tags:['HTML','CSS','JS'],tc:''}],
-    contacts:[{icon:'&#9993;',l:'Email',v:'shagun8595.beaift25@chitkara.edu.in',ic:''},{icon:'&#128279;',l:'LinkedIn',v:'linkedin.com/in/shagun-mankotia',ic:''},{icon:'&#128187;',l:'GitHub',v:'github.com/shagun8595beaift25',ic:''},{icon:'&#127979;',l:'University',v:'Chitkara University, Punjab',ic:''}]
-  },
-  tanvee:{
-    photoClass:'t-photo',letter:'T',
-    greeting:"Hi there! I'm Tanvee",greetingClass:'t-greeting',
-    name:'Tanvee Goyal',role:'Lead Developer & Problem Solver',
-    bio:'A full-stack engineer who brings pixel-perfect designs to life. I love building scalable, efficient systems and turning complex problems into elegant solutions.',
-    sig:'Tanvee &#9825;',quoteClass:'t-quote',
-    quote:'"Logic today, solutions tomorrow."',
-    details:[{l:'Roll No',v:'2510998605'},{l:'Degree',v:'B.E. CSE (AI-FT)'},{l:'University',v:'Chitkara Univ.'},{l:'Role',v:'Lead Developer'},{l:'Email',v:'tanvee8605@...'},{l:'Languages',v:'English, Hindi'}],
-    skills:[{n:'JavaScript',p:90,cls:'t-fill'},{n:'Node.js / Express',p:85,cls:'t-fill'},{n:'React',p:80,cls:'t-fill'},{n:'HTML & CSS',p:92,cls:'t-fill'},{n:'AI Integration',p:75,cls:'t-fill'}],
-    tech:['Node.js','Express','React','MongoDB','Python','REST APIs'],techCls:'t-tag',
-    exp:[{y:'2025 — Present',t:'Lead Developer — Greetings',d:'Built the complete frontend and backend of the Greetings platform including AI chat integration.'},{y:'2024',t:'Full-Stack Dev — University Projects',d:'Developed multiple AI-powered web applications for academic projects at Chitkara University.'},{y:'2023',t:'Freelance Web Development',d:'Built responsive websites and landing pages for clients using modern web technologies.'}],
-    dotCls:'t-dot',
-    projects:[{icon:'&#129302;',n:'Greetings AI',d:'Gemini-powered AI chat for the card platform.',tags:['Node.js','Gemini API'],tc:'t-ptag'},{icon:'&#128274;',n:'Auth System',d:'Full signup/login with localStorage persistence.',tags:['JavaScript','Auth'],tc:'t-ptag'},{icon:'&#128230;',n:'Backend API',d:'REST API proxy server deployed on Render.',tags:['Express','Render'],tc:'t-ptag'},{icon:'&#127924;',n:'Card Search',d:'Real-time search and filter for the gallery.',tags:['JS','DOM'],tc:'t-ptag'}],
-    contacts:[{icon:'&#9993;',l:'Email',v:'tanvee8605.beaift25@chitkara.edu.in',ic:'t-icon'},{icon:'&#128279;',l:'LinkedIn',v:'linkedin.com/in/tanvee',ic:'t-icon'},{icon:'&#128187;',l:'GitHub',v:'github.com/TanveeGoyal',ic:'t-icon'},{icon:'&#127979;',l:'University',v:'Chitkara University, Punjab',ic:'t-icon'}]
-  }
-};
-
-function renderNotebook(person){
-  var d=profiles[person];
-  var h='';
-
-  /* About */
-  h+='<div class="nb-page active" id="page-about">';
-  h+='<div class="page-hero"><div class="hero-photo '+d.photoClass+'">'+d.letter+'</div><div class="hero-text">';
-  h+='<div class="hero-greeting '+d.greetingClass+'">'+d.greeting+'</div>';
-  h+='<div class="hero-name">'+d.name+'</div><div class="hero-role">'+d.role+'</div>';
-  h+='<div class="hero-bio">'+d.bio+'</div><div class="hero-sig">'+d.sig+'</div>';
-  h+='</div></div>';
-  h+='<div class="quote-box '+d.quoteClass+'">'+d.quote+'</div>';
-  h+='<div class="sec-label">Details</div><div class="detail-grid">';
-  d.details.forEach(function(x){h+='<div class="det-row"><div class="det-label">'+x.l+'</div><div class="det-val">'+x.v+'</div></div>';});
-  h+='</div></div>';
-
-  /* Skills */
-  h+='<div class="nb-page" id="page-skills"><div class="sec-label">Technical Skills</div>';
-  d.skills.forEach(function(s){h+='<div class="skill-item"><div class="skill-top"><span class="skill-name">'+s.n+'</span><span class="skill-pct">'+s.p+'%</span></div><div class="skill-track"><div class="skill-fill '+s.cls+'" data-w="'+s.p+'"></div></div></div>';});
-  h+='<div class="sec-label" style="margin-top:6px">Technologies</div><div class="tech-row">';
-  d.tech.forEach(function(t){h+='<span class="tech-tag '+d.techCls+'">'+t+'</span>';});
-  h+='</div></div>';
-
-  /* Experience */
-  h+='<div class="nb-page" id="page-experience"><div class="sec-label">Journey</div><div class="timeline">';
-  d.exp.forEach(function(e,i){
-    h+='<div class="tl-item"><div class="tl-left"><div class="tl-dot '+d.dotCls+'"></div>';
-    if(i<d.exp.length-1)h+='<div class="tl-line"></div>';
-    h+='</div><div class="tl-right"><div class="tl-year">'+e.y+'</div><div class="tl-title">'+e.t+'</div><div class="tl-desc">'+e.d+'</div></div></div>';
-  });
-  h+='</div></div>';
-
-  /* Projects */
-  h+='<div class="nb-page" id="page-projects"><div class="sec-label">Projects</div><div class="proj-grid">';
-  d.projects.forEach(function(pr){
-    h+='<div class="proj-card"><div class="proj-icon">'+pr.icon+'</div><div class="proj-name">'+pr.n+'</div><div class="proj-desc">'+pr.d+'</div><div class="proj-tags">';
-    pr.tags.forEach(function(tg){h+='<span class="proj-tag '+pr.tc+'">'+tg+'</span>';});
-    h+='</div></div>';
-  });
-  h+='</div></div>';
-
-  /* Contact */
-  h+='<div class="nb-page" id="page-contact"><div class="sec-label">Get In Touch</div><div class="contact-items">';
-  d.contacts.forEach(function(c){h+='<div class="contact-item"><div class="c-icon '+c.ic+'">'+c.icon+'</div><div><div class="c-label">'+c.l+'</div><div class="c-val">'+c.v+'</div></div></div>';});
-  h+='</div><div class="quote-box '+d.quoteClass+'" style="margin-top:auto">"Let\'s build something amazing together! We\'d love to collaborate with you." &#10024;</div></div>';
-
-  document.getElementById('nbContent').innerHTML=h;
-}
-
-window.openNotebook=function(person){
-  renderNotebook(person);
-  document.getElementById('teamView').style.display='none';
-  document.getElementById('notebookView').style.display='block';
-  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelector('[data-tab="about"]').classList.add('active');
-  setTimeout(animateBars,80);
-};
-
-window.closeNotebook=function(){
-  document.getElementById('notebookView').style.display='none';
-  document.getElementById('teamView').style.display='flex';
-};
-
-window.switchTab=function(name){
-  document.querySelectorAll('.nb-page').forEach(function(pg){pg.classList.remove('active');});
-  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===name);});
-  var pg=document.getElementById('page-'+name);
-  if(pg){pg.classList.add('active');if(name==='skills')setTimeout(animateBars,60);}
-};
-
-function animateBars(){
-  document.querySelectorAll('.skill-fill').forEach(function(bar){bar.style.width=bar.dataset.w+'%';});
-}
-
-})();
-</script>
-
->>>>>>> 7334aff63ebf99a8d859019d83caa341a32f83b5
 </body>
 
 </html>
