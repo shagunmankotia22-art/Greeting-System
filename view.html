@@ -75,14 +75,17 @@
       position: relative;
       max-width: 400px;
       width: 100%;
+      overflow: visible;
     }
 
     .card-shadow {
       position: absolute;
       inset: 0;
+      bottom: 60px; /* don't extend over buttons area */
       background: #f0f0f0;
       border-radius: 22px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      pointer-events: none;
     }
     .layer-back { transform: rotate(-4deg) translate(-8px, 14px); z-index: 1; opacity: 0.5; }
     .layer-mid  { transform: rotate(2deg) translate(6px, 8px);   z-index: 2; opacity: 0.7; }
@@ -102,11 +105,14 @@
     /* Action buttons below card */
     .card-actions {
       display: flex; gap: 10px; margin-top: 20px;
+      position: relative;
+      z-index: 20;
+      overflow: visible;
     }
     .card-btn {
       flex: 1;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 10px;
+      padding: 15px 10px;
       border-radius: 100px;
       font-size: 0.75rem; font-weight: 800;
       letter-spacing: 1px; text-transform: uppercase;
@@ -115,40 +121,43 @@
     }
     .card-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
     .card-btn.download {
-      background: #fff; color: #0a0c10;
+      background: #ff4d6d;
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 18px rgba(255,77,109,0.4);
     }
     .card-btn.download:hover {
-      background: var(--pink); color: #fff;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(255,77,109,0.35);
+      background: #ff3358;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,77,109,0.5);
     }
     .card-btn.share {
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.7);
-      border: 1px solid var(--border);
+      flex: 1;
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      box-shadow: none;
     }
-    .card-btn.share:hover { background: rgba(255,255,255,0.12); color: #fff; transform: translateY(-3px); }
-    .card-btn.fav {
-      flex: 0 0 auto; width: 52px; padding: 0;
-      background: rgba(255,77,109,0.08);
-      color: rgba(255,77,109,0.6);
-      border: 1px solid rgba(255,77,109,0.2);
-      font-size: 1.1rem;
+    .card-btn.share:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.8);
+      transform: translateY(-2px);
     }
-    .card-btn.fav.active { background: rgba(255,77,109,0.2); color: var(--pink); border-color: var(--pink); }
-    .card-btn.fav:hover  { transform: scale(1.08); }
 
-    /* Share dropdown */
+
+    /* Share dropdown — fixed so it's never clipped by any parent */
     .share-drop {
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 0; right: 0;
+      position: fixed;
       background: #161b2e;
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 6px;
-      display: none; flex-direction: column; gap: 3px;
-      z-index: 50;
+      display: none;
+      flex-direction: column;
+      gap: 3px;
+      z-index: 9999;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.6);
+      min-width: 200px;
     }
     .share-drop.open { display: flex; }
     .share-opt {
@@ -491,7 +500,7 @@
           <img id="displayImg" src="" alt="Selected Greeting Card">
         </div>
 
-        <div class="card-actions" style="position:relative;">
+        <div class="card-actions">
           <button class="card-btn download" id="downloadBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -499,36 +508,13 @@
             Download
           </button>
 
-          <div style="position:relative; flex:1; display:flex; flex-direction:column;">
-            <button class="card-btn share" id="shareBtn">
+          <button class="card-btn share" id="shareBtn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
                 <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
               </svg>
               Share
             </button>
-            <div class="share-drop" id="shareDrop">
-              <!-- Native share (mobile) -->
-              <button class="share-opt native" id="shareNative" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-                Share via…
-              </button>
-              <button class="share-opt wa" id="shareWa">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                WhatsApp
-              </button>
-              <button class="share-opt em" id="shareEmail">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                Email
-              </button>
-              <button class="share-opt cp" id="shareCopy">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                Copy Link
-              </button>
-            </div>
-          </div>
-
-          <button class="card-btn fav" id="favBtn" title="Save to Favourites">♡</button>
         </div>
       </div>
     </div>
@@ -537,6 +523,26 @@
     <div class="dl-toast" id="dlToast">
       <span class="dl-toast-dot">✓</span>
       <span id="dlToastMsg">Downloaded!</span>
+    </div>
+
+    <!-- Share dropdown — direct body child so it's never clipped -->
+    <div class="share-drop" id="shareDrop">
+      <button class="share-opt native" id="shareNative" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Share via…
+      </button>
+      <button class="share-opt wa" id="shareWa">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        WhatsApp
+      </button>
+      <button class="share-opt em" id="shareEmail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </button>
+      <button class="share-opt cp" id="shareCopy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Copy Link
+      </button>
     </div>
 
     <!-- ═══════════════ RIGHT: AI PANEL ═══════════════ -->
@@ -667,20 +673,24 @@
 
 <script>
 /* ═══════════════════════════════════════════════════
-   GREETINGS AI — view.html integration script
+   GREETINGS AI — view.html  (crash-proof rewrite)
    ═══════════════════════════════════════════════════ */
 
-const API_URL   = 'https://api.anthropic.com/v1/messages';
-const AI_MODEL  = 'claude-sonnet-4-20250514';
-const FAV_KEY   = 'greetings_favourites';
+/* Safe element getter — never throws on missing IDs */
+function el(id) {
+  return document.getElementById(id);
+}
 
-/* ── URL param ── */
+const API_URL = 'https://greetings-system-ai.onrender.com/api/chat';
+const FAV_KEY = 'greetings_favourites';
+
+/* ── URL params ── */
 const params  = new URLSearchParams(window.location.search);
 const imgSrc  = params.get('img') || '';
-const imgEl   = document.getElementById('displayImg');
-if (imgSrc) imgEl.src = imgSrc;
+const imgEl   = el('displayImg');
+if (imgEl && imgSrc) imgEl.src = imgSrc;
 
-/* ── Card name helper ── */
+/* ── Card name ── */
 function cardName(url) {
   try {
     const base = decodeURIComponent(url).split('?')[0].split('/').pop()
@@ -691,15 +701,17 @@ function cardName(url) {
 }
 const CARD_NAME = cardName(imgSrc);
 
-/* ── Format ── */
-const ext = (imgSrc.split('?')[0].split('.').pop() || 'jpg').toUpperCase();
-document.getElementById('infoFormat').textContent = ext;
-document.getElementById('infoUrl').textContent    = imgSrc || '(no image URL)';
+/* ── Format info ── */
+try {
+  const ext = (imgSrc.split('?')[0].split('.').pop() || 'jpg').toUpperCase();
+  if (el('infoFormat')) el('infoFormat').textContent = ext;
+  if (el('infoUrl'))    el('infoUrl').textContent    = imgSrc || '(no image URL)';
+} catch(e) {}
 
 /* ══════════════════════════════════
    FAVOURITES
 ══════════════════════════════════ */
-const favBtn = document.getElementById('favBtn');
+const favBtn = el('favBtn');
 function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch { return []; } }
 function isFav(s) { return getFavs().includes(s); }
 function toggleFav(s) {
@@ -710,11 +722,12 @@ function toggleFav(s) {
   return idx === -1;
 }
 function syncFavBtn() {
+  if (!favBtn) return;
   const active = isFav(imgSrc);
   favBtn.textContent = active ? '♥' : '♡';
   favBtn.classList.toggle('active', active);
 }
-if (imgSrc) {
+if (imgSrc && favBtn) {
   syncFavBtn();
   favBtn.addEventListener('click', () => { toggleFav(imgSrc); syncFavBtn(); });
 }
@@ -722,237 +735,226 @@ if (imgSrc) {
 /* ══════════════════════════════════
    DOWNLOAD
 ══════════════════════════════════ */
-const toast    = document.getElementById('dlToast');
-const toastMsg = document.getElementById('dlToastMsg');
+const toast    = el('dlToast');
+const toastMsg = el('dlToastMsg');
 
-function showToast(msg, loading = false) {
+function showToast(msg, loading) {
+  if (!toast || !toastMsg) return;
   toastMsg.textContent = msg;
-  toast.classList.toggle('loading', loading);
+  toast.classList.toggle('loading', !!loading);
   toast.classList.add('show');
 }
-function hideToast(delay = 2800) { setTimeout(() => toast.classList.remove('show'), delay); }
+function hideToast(delay) {
+  if (!toast) return;
+  setTimeout(() => toast.classList.remove('show'), delay || 2800);
+}
 
-document.getElementById('downloadBtn').addEventListener('click', async () => {
-  if (!imgSrc) return;
+const downloadBtn = el('downloadBtn');
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', async function() {
+    if (!imgSrc) { showToast('No image to download', false); hideToast(3000); return; }
+    showToast('Preparing download…', true);
 
-  const rawName = imgSrc.split('?')[0].split('/').pop()
-    .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
-  const isGif = imgSrc.toLowerCase().includes('.gif');
+    var rawName = imgSrc.split('?')[0].split('/').pop()
+      .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
 
-  function triggerDownload(href, filename) {
-    const a = Object.assign(document.createElement('a'), { href, download: filename });
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  }
+    function triggerDownload(href, filename) {
+      var a = document.createElement('a');
+      a.href = href; a.download = filename;
+      document.body.appendChild(a); a.click();
+      setTimeout(function() { try { document.body.removeChild(a); } catch(e){} }, 200);
+    }
 
-  showToast('Preparing download…', true);
+    /* Method 1: fetch + blob */
+    try {
+      var res = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
+      if (!res.ok) throw new Error('non-ok');
+      var blob = await res.blob();
+      var ext2 = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png'
+               : blob.type.includes('webp') ? '.webp' : '.jpg';
+      var blobUrl = URL.createObjectURL(blob);
+      triggerDownload(blobUrl, rawName + ext2);
+      setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 8000);
+      showToast('Download started!', false); hideToast(); return;
+    } catch(_) {}
 
-  /* ── Method 1: allorigins.win CORS proxy (works for most image hosts) ── */
-  try {
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(imgSrc);
-    const res = await fetch(proxyUrl);
-    if (!res.ok) throw new Error('proxy failed');
-    const blob = await res.blob();
-    const ext2 = isGif ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl = URL.createObjectURL(blob);
-    triggerDownload(blobUrl, rawName + ext2);
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
-    return;
-  } catch (_) {}
+    /* Method 2: canvas */
+    try {
+      await new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+          try {
+            var isGif = imgSrc.toLowerCase().endsWith('.gif');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            canvas.toBlob(function(b) {
+              if (!b) { reject(new Error('toBlob failed')); return; }
+              var u = URL.createObjectURL(b);
+              triggerDownload(u, rawName + (isGif ? '.png' : '.jpg'));
+              setTimeout(function() { URL.revokeObjectURL(u); }, 8000);
+              showToast('Download started!', false); hideToast();
+              resolve();
+            }, isGif ? 'image/png' : 'image/jpeg', 0.95);
+          } catch(e) { reject(e); }
+        };
+        img.onerror = reject;
+        img.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+      });
+      return;
+    } catch(_) {}
 
-  /* ── Method 2: corsproxy.io fallback ── */
-  try {
-    const proxyUrl2 = 'https://corsproxy.io/?' + encodeURIComponent(imgSrc);
-    const res2 = await fetch(proxyUrl2);
-    if (!res2.ok) throw new Error('proxy2 failed');
-    const blob2 = await res2.blob();
-    const ext3 = isGif ? '.gif' : blob2.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl2 = URL.createObjectURL(blob2);
-    triggerDownload(blobUrl2, rawName + ext3);
-    setTimeout(() => URL.revokeObjectURL(blobUrl2), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
-    return;
-  } catch (_) {}
+    /* Method 3: direct anchor */
+    try {
+      var ext3 = imgSrc.split('?')[0].split('.').pop() || 'jpg';
+      triggerDownload(imgSrc, rawName + '.' + ext3);
+      showToast('Download started!', false); hideToast(); return;
+    } catch(_) {}
 
-  /* ── Method 3: direct fetch (works if server allows CORS) ── */
-  try {
-    const res3 = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
-    if (!res3.ok) throw new Error('direct failed');
-    const blob3 = await res3.blob();
-    const ext4 = isGif ? '.gif' : blob3.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl3 = URL.createObjectURL(blob3);
-    triggerDownload(blobUrl3, rawName + ext4);
-    setTimeout(() => URL.revokeObjectURL(blobUrl3), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
-    return;
-  } catch (_) {}
-
-  /* ── Method 4: canvas (same-origin or permissive CORS images) ── */
-  try {
-    const imgEl2 = new Image();
-    imgEl2.crossOrigin = 'anonymous';
-    await new Promise((res, rej) => {
-      imgEl2.onload = res; imgEl2.onerror = rej;
-      imgEl2.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_t=' + Date.now();
-    });
-    const canvas = document.createElement('canvas');
-    canvas.width = imgEl2.naturalWidth; canvas.height = imgEl2.naturalHeight;
-    canvas.getContext('2d').drawImage(imgEl2, 0, 0);
-    canvas.toBlob(blob4 => {
-      const blobUrl4 = URL.createObjectURL(blob4);
-      triggerDownload(blobUrl4, rawName + (isGif ? '.png' : '.jpg'));
-      setTimeout(() => URL.revokeObjectURL(blobUrl4), 8000);
-    }, isGif ? 'image/png' : 'image/jpeg', 0.95);
-    showToast('✓ Downloaded successfully!', false); hideToast();
-    return;
-  } catch (_) {}
-
-  /* ── Final fallback: open image in new tab with save instruction ── */
-  showToast('Opening image — right-click → Save image as…', false); hideToast(5000);
-  window.open(imgSrc, '_blank');
-});
+    /* Method 4: new tab */
+    window.open(imgSrc, '_blank');
+    showToast('Opened in new tab — long-press to save', false); hideToast(5000);
+  });
+}
 
 /* ══════════════════════════════════
    SHARE DROPDOWN
 ══════════════════════════════════ */
-const shareBtn  = document.getElementById('shareBtn');
-const shareDrop = document.getElementById('shareDrop');
+var shareBtn  = el('shareBtn');
+var shareDrop = el('shareDrop');
 
-shareBtn.addEventListener('click', e => {
-  e.stopPropagation();
-  shareDrop.classList.toggle('open');
-});
-document.addEventListener('click', () => shareDrop.classList.remove('open'));
-shareDrop.addEventListener('click', e => e.stopPropagation());
+function positionDrop() {
+  if (!shareBtn || !shareDrop) return;
+  var r = shareBtn.getBoundingClientRect();
+  shareDrop.style.left  = r.left + 'px';
+  shareDrop.style.width = r.width + 'px';
+  var dropH = shareDrop.offsetHeight || 220;
+  if (r.top > dropH + 10) {
+    shareDrop.style.top = (r.top - dropH - 10) + 'px';
+  } else {
+    shareDrop.style.top = (r.bottom + 10) + 'px';
+  }
+}
 
-/* Share the view page URL (contains the image param) */
-const shareUrl  = location.href;
-const shareText = `✨ Check out this beautiful card on Greetings!\n${shareUrl}`;
+if (shareBtn && shareDrop) {
+  shareBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = shareDrop.classList.contains('open');
+    shareDrop.classList.toggle('open', !isOpen);
+    if (!isOpen) { setTimeout(positionDrop, 0); }
+  });
+  document.addEventListener('click', function() { shareDrop.classList.remove('open'); });
+  shareDrop.addEventListener('click', function(e) { e.stopPropagation(); });
+}
 
-/* Native share (mobile devices — iOS/Android) */
-if (navigator.share) {
-  document.getElementById('shareNative').style.display = 'flex';
-  document.getElementById('shareNative').addEventListener('click', async () => {
-    shareDrop.classList.remove('open');
-    try {
-      await navigator.share({
-        title: CARD_NAME + ' — Greetings',
-        text: '✨ Check out this beautiful greeting card!',
-        url: shareUrl
-      });
-    } catch (e) { /* user cancelled */ }
+var shareUrl  = location.href;
+var shareText = 'Check out this beautiful card on Greetings!\n' + shareUrl;
+
+var shareNative = el('shareNative');
+if (navigator.share && shareNative) {
+  shareNative.style.display = 'flex';
+  shareNative.addEventListener('click', async function() {
+    if (shareDrop) shareDrop.classList.remove('open');
+    try { await navigator.share({ title: CARD_NAME + ' — Greetings', text: 'Check out this beautiful card!', url: shareUrl }); }
+    catch(e) {}
   });
 }
 
-/* WhatsApp */
-document.getElementById('shareWa').addEventListener('click', () => {
-  shareDrop.classList.remove('open');
-  const waText = '✨ Check out this beautiful greeting card!\n\n' + shareUrl;
-  window.open('https://wa.me/?text=' + encodeURIComponent(waText), '_blank');
-});
+var shareWaBtn = el('shareWa');
+if (shareWaBtn) {
+  shareWaBtn.addEventListener('click', function() {
+    window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
+    if (shareDrop) shareDrop.classList.remove('open');
+  });
+}
 
-/* Email */
-document.getElementById('shareEmail').addEventListener('click', () => {
-  shareDrop.classList.remove('open');
-  const subject = encodeURIComponent('A beautiful card for you — ' + CARD_NAME);
-  const body    = encodeURIComponent(
-    'Hi!\n\nI found this beautiful greeting card and thought of you. ✨\n\n'
-    + 'View it here: ' + shareUrl
-    + '\n\n— Sent via Greetings'
-  );
-  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
-});
+var shareEmailBtn = el('shareEmail');
+if (shareEmailBtn) {
+  shareEmailBtn.addEventListener('click', function() {
+    var subject = encodeURIComponent('A beautiful card for you — ' + CARD_NAME);
+    var body    = encodeURIComponent('Hi!\n\nI found this beautiful card and thought of you.\n\nView it here: ' + shareUrl + '\n\n— Sent via Greetings');
+    window.open('mailto:?subject=' + subject + '&body=' + body, '_self');
+    if (shareDrop) shareDrop.classList.remove('open');
+  });
+}
 
-/* Copy link */
-document.getElementById('shareCopy').addEventListener('click', () => {
-  shareDrop.classList.remove('open');
-  const b = document.getElementById('shareCopy');
-  const orig = b.innerHTML;
-
-  function markCopied() {
-    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-    b.style.color = '#10b981';
-    showToast('\u2713 Link copied to clipboard!', false); hideToast();
-    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2500);
-  }
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(shareUrl).then(markCopied).catch(() => {
-      fallbackCopy();
-    });
-  } else {
-    fallbackCopy();
-  }
-
-  function fallbackCopy() {
-    const ta = document.createElement('textarea');
-    ta.value = shareUrl;
-    Object.assign(ta.style, { position: 'fixed', top: '0', left: '0', opacity: '0' });
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try { document.execCommand('copy'); markCopied(); } catch(e) {}
-    document.body.removeChild(ta);
-  }
-});
+var shareCopyBtn = el('shareCopy');
+if (shareCopyBtn) {
+  shareCopyBtn.addEventListener('click', function() {
+    var orig = shareCopyBtn.innerHTML;
+    function markCopied() {
+      shareCopyBtn.innerHTML = '✓ Link Copied!';
+      shareCopyBtn.style.color = '#10b981';
+      setTimeout(function() { shareCopyBtn.innerHTML = orig; shareCopyBtn.style.color = ''; }, 2200);
+    }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl).then(markCopied).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = shareUrl; ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        markCopied();
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = shareUrl; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      markCopied();
+    }
+    if (shareDrop) shareDrop.classList.remove('open');
+  });
+}
 
 /* ══════════════════════════════════
    TABS
 ══════════════════════════════════ */
-const tabMap = {
-  chat:     { btn: null, panel: document.getElementById('tabChat')     },
-  generate: { btn: null, panel: document.getElementById('tabGenerate') },
-  info:     { btn: null, panel: document.getElementById('tabInfo')     },
-};
-const quickChips    = document.getElementById('quickChips');
-const chatInputArea = document.getElementById('chatInputArea');
-
-document.querySelectorAll('.ai-tab').forEach(btn => {
-  const tab = btn.dataset.tab;
-  tabMap[tab].btn = btn;
-  btn.addEventListener('click', () => switchTab(tab));
-});
+var tabPanels   = { chat: el('tabChat'), generate: el('tabGenerate'), info: el('tabInfo') };
+var quickChips    = el('quickChips');
+var chatInputArea = el('chatInputArea');
+var tabBtns = {};
+document.querySelectorAll('.ai-tab').forEach(function(btn) { tabBtns[btn.dataset.tab] = btn; });
 
 function switchTab(name) {
-  Object.entries(tabMap).forEach(([k, v]) => {
-    v.btn.classList.toggle('active', k === name);
-    v.panel.style.display = k === name ? (k === 'chat' ? 'flex' : (k === 'generate' ? 'flex' : 'flex')) : 'none';
-    if (k === 'info') v.panel.style.flexDirection = 'column';
+  Object.keys(tabPanels).forEach(function(k) {
+    var panel = tabPanels[k];
+    var btn   = tabBtns[k];
+    if (panel) {
+      panel.style.display = (k === name) ? 'flex' : 'none';
+      if (k === 'info') panel.style.flexDirection = 'column';
+    }
+    if (btn) btn.classList.toggle('active', k === name);
   });
-  quickChips.style.display    = name === 'chat' ? '' : 'none';
-  chatInputArea.style.display = name === 'chat' ? '' : 'none';
+  if (quickChips)    quickChips.style.display    = name === 'chat' ? '' : 'none';
+  if (chatInputArea) chatInputArea.style.display = name === 'chat' ? '' : 'none';
 }
+Object.keys(tabBtns).forEach(function(k) {
+  if (tabBtns[k]) tabBtns[k].addEventListener('click', function() { switchTab(k); });
+});
 switchTab('chat');
 
 /* ══════════════════════════════════
    CHAT — Claude API
 ══════════════════════════════════ */
-const chatWrap = document.getElementById('tabChat');
-const chatInput = document.getElementById('chatInput');
-const sendBtn   = document.getElementById('sendBtn');
+var chatWrap  = el('tabChat');
+var chatInput = el('chatInput');
+var sendBtn   = el('sendBtn');
 
-const systemPrompt = `You are "Greetings AI", a friendly and creative assistant built into the Greetings digital card platform. You help users with everything related to greeting cards, invitations, and heartfelt messages.
+var systemPrompt = 'You are "Greetings AI", a friendly and creative assistant built into the Greetings digital card platform. ' +
+  'The user is viewing a card called "' + CARD_NAME + '". ' +
+  'Help with greeting messages, card descriptions, occasion ideas, and gifting advice. ' +
+  'Keep responses warm, concise (2-4 sentences), with occasional emojis. Never say you are Claude.';
 
-The user is currently viewing a card called "${CARD_NAME}"${imgSrc ? ` (image URL: ${imgSrc})` : ''}.
+var chatHistory = [];
+var isLoading   = false;
 
-Your capabilities:
-- Describe the card's visual style, colors, mood, and occasion suitability
-- Write personalized greeting messages for any occasion
-- Suggest ways to customize or use the card
-- Answer questions about design, occasions, gifting etiquette, and more
-- Provide warm, creative message ideas
-
-Keep responses conversational, warm, and concise (2-4 sentences unless more detail is requested). Use occasional emojis to feel friendly but not excessive. Never mention that you're Claude — you are Greetings AI.`;
-
-let chatHistory = [];
-let isLoading   = false;
-
-function addMsg(role, text, isTyping = false) {
-  const div   = document.createElement('div');
-  div.className = `msg ${role}`;
-  const avatar = document.createElement('div');
-  avatar.className = `msg-avatar ${role}`;
+function addMsg(role, text, isTyping) {
+  if (!chatWrap) return null;
+  var div    = document.createElement('div');
+  div.className = 'msg ' + role;
+  var avatar = document.createElement('div');
+  avatar.className = 'msg-avatar ' + role;
   avatar.textContent = role === 'ai' ? '✦' : '👤';
-  const bubble = document.createElement('div');
+  var bubble = document.createElement('div');
   bubble.className = 'msg-bubble';
   if (isTyping) {
     bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
@@ -965,141 +967,121 @@ function addMsg(role, text, isTyping = false) {
   chatWrap.scrollTop = chatWrap.scrollHeight;
   return div;
 }
-
-function removeTyping() {
-  document.getElementById('typingIndicator')?.remove();
-}
+function removeTyping() { var t = el('typingIndicator'); if (t) t.remove(); }
 
 async function sendMessage(text) {
-  if (!text.trim() || isLoading) return;
+  if (!text || !text.trim() || isLoading) return;
   isLoading = true;
-  sendBtn.disabled = true;
+  if (sendBtn) sendBtn.disabled = true;
 
   addMsg('user', text);
   chatHistory.push({ role: 'user', content: text });
-
-  const typingEl = addMsg('ai', '', true);
-  chatInput.value = '';
-  chatInput.style.height = 'auto';
+  addMsg('ai', '', true);
+  if (chatInput) { chatInput.value = ''; chatInput.style.height = 'auto'; }
 
   try {
-    const res = await fetch(API_URL, {
+    var res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: chatHistory,
-      })
+      body: JSON.stringify({ system: systemPrompt, messages: chatHistory })
     });
-
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t generate a response. Please try again.';
-
+    var data  = await res.json();
+    var reply = (data.content && data.content[0] && data.content[0].text) || 'Sorry, I could not generate a response.';
     removeTyping();
     addMsg('ai', reply);
     chatHistory.push({ role: 'assistant', content: reply });
-
-    // Update info tab description if it was a describe request
-    if (text.toLowerCase().includes('descri')) {
-      document.getElementById('infoDesc').textContent = reply;
-    }
-
-  } catch (err) {
+    if (text.toLowerCase().includes('descri') && el('infoDesc')) el('infoDesc').textContent = reply;
+  } catch(err) {
     removeTyping();
-    addMsg('ai', '⚠️ Connection error. Please check your internet and try again.');
+    addMsg('ai', 'Connection error. Please check your internet and try again.');
     console.error('Greetings AI error:', err);
   }
 
   isLoading = false;
-  sendBtn.disabled = false;
+  if (sendBtn) sendBtn.disabled = false;
 }
 
-// Send on button click
-sendBtn.addEventListener('click', () => sendMessage(chatInput.value));
-
-// Send on Enter (Shift+Enter = newline)
-chatInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault(); sendMessage(chatInput.value);
-  }
+if (sendBtn) sendBtn.addEventListener('click', function() { sendMessage(chatInput ? chatInput.value : ''); });
+if (chatInput) {
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(chatInput.value); }
+  });
+  chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 130) + 'px';
+  });
+}
+document.querySelectorAll('.chip').forEach(function(chip) {
+  chip.addEventListener('click', function() { sendMessage(chip.dataset.prompt); });
 });
-
-// Auto-resize textarea
-chatInput.addEventListener('input', function () {
-  this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 130) + 'px';
-});
-
-// Quick chips
-document.querySelectorAll('.chip').forEach(chip => {
-  chip.addEventListener('click', () => sendMessage(chip.dataset.prompt));
-});
-
-// Welcome message on load
-setTimeout(() => {
-  addMsg('ai', `Hi! 👋 I'm Greetings AI. I can describe this card, help you write a personal message, or answer any questions about it. What would you like to know?`);
+setTimeout(function() {
+  addMsg('ai', "Hi! 👋 I'm Greetings AI. I can describe this card, help you write a personal message, or answer questions. What would you like?");
 }, 400);
 
 /* ══════════════════════════════════
-   GENERATOR TAB — Claude API
+   GENERATOR TAB
 ══════════════════════════════════ */
-const genBtn    = document.getElementById('genMsgBtn');
-const genOutput = document.getElementById('genOutput');
+var genBtn    = el('genMsgBtn');
+var genOutput = el('genOutput');
 
-genBtn.addEventListener('click', async () => {
-  const occasion  = document.getElementById('genOccasion').value;
-  const recipient = document.getElementById('genRecipient').value.trim();
-  const tone      = document.getElementById('genTone').value;
-  const details   = document.getElementById('genDetails').value.trim();
+if (genBtn && genOutput) {
+  genBtn.addEventListener('click', async function() {
+    var occasion  = el('genOccasion')  ? el('genOccasion').value  : '';
+    var recipient = el('genRecipient') ? el('genRecipient').value.trim() : '';
+    var tone      = el('genTone')      ? el('genTone').value      : 'warm and heartfelt';
+    var details   = el('genDetails')   ? el('genDetails').value.trim() : '';
 
-  if (!occasion) {
-    genOutput.textContent = '⚠️ Please select an occasion first.';
+    if (!occasion) {
+      genOutput.textContent = 'Please select an occasion first.';
+      genOutput.classList.remove('empty');
+      return;
+    }
+
+    genBtn.disabled = true;
+    genOutput.innerHTML = '<div class="gen-loading"><div class="gen-spinner"></div> Crafting your message…</div>';
     genOutput.classList.remove('empty');
-    return;
-  }
 
-  genBtn.disabled  = true;
-  genOutput.innerHTML = '<div class="gen-loading"><div class="gen-spinner"></div> Crafting your message…</div>';
-  genOutput.classList.remove('empty');
+    var prompt = 'Write a ' + tone + ' greeting card message for a ' + occasion +
+      (recipient ? ' addressed to ' + recipient : '') + '.\n' +
+      (details ? 'Extra context: ' + details + '\n' : '') +
+      'Card design: "' + CARD_NAME + '".\n' +
+      'Write 2-3 heartfelt sentences. Output only the message text, no quotes or labels.';
 
-  const prompt = `Write a ${tone} greeting card message for a ${occasion}${recipient ? ` addressed to ${recipient}` : ''}. 
-${details ? `Extra context: ${details}` : ''}
-The card design is: "${CARD_NAME}".
-
-Write 2-3 beautiful, heartfelt sentences suitable for a greeting card. Make it memorable and personal. Output only the message text itself — no quotes, no labels, no explanation.`;
-
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        max_tokens: 400,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data  = await res.json();
-    const reply = data.content?.[0]?.text?.trim() || 'Could not generate a message. Please try again.';
-
-    genOutput.innerHTML = `<button class="copy-btn" id="copyGenBtn">Copy</button><span id="genText"></span>`;
-    document.getElementById('genText').textContent = reply;
-    document.getElementById('copyGenBtn').addEventListener('click', () => {
-      navigator.clipboard.writeText(reply).then(() => {
-        const b = document.getElementById('copyGenBtn');
-        b.textContent = 'Copied ✓'; b.style.color = '#10b981';
-        setTimeout(() => { b.textContent = 'Copy'; b.style.color = ''; }, 2000);
+    try {
+      var res  = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
       });
-    });
+      var data  = await res.json();
+      var reply = (data.content && data.content[0] && data.content[0].text && data.content[0].text.trim()) || 'Could not generate. Please try again.';
 
-  } catch (err) {
-    genOutput.textContent = '⚠️ Error generating message. Please try again.';
-    console.error('Generator error:', err);
-  }
+      genOutput.innerHTML = '<button class="copy-btn" id="copyGenBtn">Copy</button><span id="genText"></span>';
+      if (el('genText')) el('genText').textContent = reply;
+      var copyGenBtn = el('copyGenBtn');
+      if (copyGenBtn) {
+        copyGenBtn.addEventListener('click', function() {
+          navigator.clipboard && navigator.clipboard.writeText(reply).then(function() {
+            copyGenBtn.textContent = 'Copied ✓'; copyGenBtn.style.color = '#10b981';
+            setTimeout(function() { copyGenBtn.textContent = 'Copy'; copyGenBtn.style.color = ''; }, 2000);
+          });
+        });
+      }
+    } catch(err) {
+      genOutput.textContent = 'Error generating message. Please try again.';
+    }
 
-  genBtn.disabled = false;
-});
+    genBtn.disabled = false;
+  });
+}
+</script>
+<!-- External scripts (nav-auth.js, back-to-top.js, etc.) loaded only if present -->
+<script>
+  ['nav-auth.js','back-to-top.js','hamburger.js','script.js','ai-assistant.js'].forEach(src => {
+    const s = document.createElement('script');
+    s.src = src; s.onerror = () => {}; // silently skip missing scripts
+    document.body.appendChild(s);
+  });
 </script>
 </body>
 </html>
