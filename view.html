@@ -140,15 +140,18 @@
 
     /* Share dropdown */
     .share-drop {
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 0; right: 0;
+      position: fixed;
+      bottom: 110px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
       background: #161b2e;
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 6px;
       display: none; flex-direction: column; gap: 3px;
-      z-index: 50;
+      z-index: 9000;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
     }
     .share-drop.open { display: flex; }
     .share-opt {
@@ -499,7 +502,7 @@
             Download
           </button>
 
-          <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+          <div style="position:static; flex:1; display:flex; flex-direction:column;">
             <button class="card-btn share" id="shareBtn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
@@ -675,9 +678,11 @@ const AI_MODEL  = 'claude-sonnet-4-20250514';
 const FAV_KEY   = 'greetings_favourites';
 
 /* ── URL param ── */
-const params  = new URLSearchParams(window.location.search);
-const imgSrc  = params.get('img') || '';
-const imgEl   = document.getElementById('displayImg');
+/* Parse full image URL — %26 encoded & preserved correctly */
+const _qs    = window.location.search.slice(1);
+const _im    = _qs.match(/(?:^|&)img=(.+?)(?=&[a-zA-Z_]+=|$)/);
+const imgSrc = _im ? decodeURIComponent(_im[1]) : '';
+const imgEl  = document.getElementById('displayImg');
 if (imgSrc) imgEl.src = imgSrc;
 
 /* ── Card name helper ── */
@@ -734,165 +739,136 @@ function hideToast(delay = 2800) { setTimeout(() => toast.classList.remove('show
 
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   if (!imgSrc) return;
+  showToast('Preparing download…', true);
 
+  const isGif  = /\.gif/i.test(imgSrc.split('?')[0]);
   const rawName = imgSrc.split('?')[0].split('/').pop()
     .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
-  const isGif = imgSrc.toLowerCase().includes('.gif');
 
   function triggerDownload(href, filename) {
     const a = Object.assign(document.createElement('a'), { href, download: filename });
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
 
-  showToast('Preparing download…', true);
+  function dlSuccess(blob, ext) {
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, rawName + ext);
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    showToast('✓ Downloaded!', false); hideToast();
+  }
 
-  /* ── Method 1: allorigins.win CORS proxy (works for most image hosts) ── */
+  /* Method 1: allorigins CORS proxy */
   try {
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(imgSrc);
-    const res = await fetch(proxyUrl);
-    if (!res.ok) throw new Error('proxy failed');
-    const blob = await res.blob();
-    const ext2 = isGif ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl = URL.createObjectURL(blob);
-    triggerDownload(blobUrl, rawName + ext2);
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
+    const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(imgSrc));
+    if (!r.ok) throw 0;
+    const b = await r.blob();
+    dlSuccess(b, isGif ? '.gif' : b.type.includes('png') ? '.png' : '.jpg');
     return;
-  } catch (_) {}
+  } catch(_) {}
 
-  /* ── Method 2: corsproxy.io fallback ── */
+  /* Method 2: corsproxy.io */
   try {
-    const proxyUrl2 = 'https://corsproxy.io/?' + encodeURIComponent(imgSrc);
-    const res2 = await fetch(proxyUrl2);
-    if (!res2.ok) throw new Error('proxy2 failed');
-    const blob2 = await res2.blob();
-    const ext3 = isGif ? '.gif' : blob2.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl2 = URL.createObjectURL(blob2);
-    triggerDownload(blobUrl2, rawName + ext3);
-    setTimeout(() => URL.revokeObjectURL(blobUrl2), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
+    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(imgSrc));
+    if (!r.ok) throw 0;
+    const b = await r.blob();
+    dlSuccess(b, isGif ? '.gif' : b.type.includes('png') ? '.png' : '.jpg');
     return;
-  } catch (_) {}
+  } catch(_) {}
 
-  /* ── Method 3: direct fetch (works if server allows CORS) ── */
+  /* Method 3: direct fetch */
   try {
-    const res3 = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
-    if (!res3.ok) throw new Error('direct failed');
-    const blob3 = await res3.blob();
-    const ext4 = isGif ? '.gif' : blob3.type.includes('png') ? '.png' : '.jpg';
-    const blobUrl3 = URL.createObjectURL(blob3);
-    triggerDownload(blobUrl3, rawName + ext4);
-    setTimeout(() => URL.revokeObjectURL(blobUrl3), 8000);
-    showToast('✓ Downloaded successfully!', false); hideToast();
+    const r = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
+    if (!r.ok) throw 0;
+    const b = await r.blob();
+    dlSuccess(b, isGif ? '.gif' : b.type.includes('png') ? '.png' : '.jpg');
     return;
-  } catch (_) {}
+  } catch(_) {}
 
-  /* ── Method 4: canvas (same-origin or permissive CORS images) ── */
-  try {
-    const imgEl2 = new Image();
-    imgEl2.crossOrigin = 'anonymous';
-    await new Promise((res, rej) => {
-      imgEl2.onload = res; imgEl2.onerror = rej;
-      imgEl2.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_t=' + Date.now();
-    });
-    const canvas = document.createElement('canvas');
-    canvas.width = imgEl2.naturalWidth; canvas.height = imgEl2.naturalHeight;
-    canvas.getContext('2d').drawImage(imgEl2, 0, 0);
-    canvas.toBlob(blob4 => {
-      const blobUrl4 = URL.createObjectURL(blob4);
-      triggerDownload(blobUrl4, rawName + (isGif ? '.png' : '.jpg'));
-      setTimeout(() => URL.revokeObjectURL(blobUrl4), 8000);
-    }, isGif ? 'image/png' : 'image/jpeg', 0.95);
-    showToast('✓ Downloaded successfully!', false); hideToast();
-    return;
-  } catch (_) {}
-
-  /* ── Final fallback: open image in new tab with save instruction ── */
-  showToast('Opening image — right-click → Save image as…', false); hideToast(5000);
+  /* Fallback: open in new tab + instructions */
   window.open(imgSrc, '_blank');
+  _showSaveModal();
 });
+
+function _showSaveModal() {
+  toast.classList.remove('show');
+  const isIOS    = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  const steps = isIOS
+    ? '<li>Tap and <strong>hold</strong> the image</li><li>Tap <strong>"Save to Photos"</strong></li>'
+    : isMobile
+    ? '<li>Tap and <strong>hold</strong> the image</li><li>Tap <strong>"Download image"</strong></li>'
+    : '<li><strong>Right-click</strong> the image that opened</li><li>Click <strong>"Save image as\u2026"</strong></li>';
+  const m = document.createElement('div');
+  m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;';
+  m.innerHTML = `<div style="background:#0f1320;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:32px 28px;max-width:340px;width:100%;text-align:center;font-family:inherit;color:#e2e8f0;box-shadow:0 30px 80px rgba(0,0,0,0.8);">
+    <div style="font-size:2rem;margin-bottom:14px;">💾</div>
+    <h3 style="font-size:1rem;font-weight:800;margin-bottom:8px;">Save This Card</h3>
+    <p style="font-size:0.8rem;color:#64748b;margin-bottom:18px;line-height:1.6;">The image opened in a new tab. To save:</p>
+    <ol style="text-align:left;font-size:0.84rem;line-height:2.1;color:#cbd5e1;padding-left:20px;margin-bottom:24px;">${steps}</ol>
+    <button onclick="this.closest('div').parentElement.remove()" style="width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#ff4d6d);color:#fff;font-weight:800;font-size:0.85rem;cursor:pointer;font-family:inherit;">Got it!</button>
+  </div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click', e => { if(e.target===m) m.remove(); });
+}
 
 /* ══════════════════════════════════
    SHARE DROPDOWN
 ══════════════════════════════════ */
 const shareBtn  = document.getElementById('shareBtn');
 const shareDrop = document.getElementById('shareDrop');
-
-shareBtn.addEventListener('click', e => {
-  e.stopPropagation();
-  shareDrop.classList.toggle('open');
-});
+shareBtn.addEventListener('click', e => { e.stopPropagation(); shareDrop.classList.toggle('open'); });
 document.addEventListener('click', () => shareDrop.classList.remove('open'));
 shareDrop.addEventListener('click', e => e.stopPropagation());
 
-/* Share the view page URL (contains the image param) */
 const shareUrl  = location.href;
-const shareText = `✨ Check out this beautiful card on Greetings!\n${shareUrl}`;
+const shareText = `Check out this beautiful card on Greetings! 🎉\n${shareUrl}`;
 
-/* Native share (mobile devices — iOS/Android) */
+/* Show native share button on supported devices */
 if (navigator.share) {
   document.getElementById('shareNative').style.display = 'flex';
   document.getElementById('shareNative').addEventListener('click', async () => {
     shareDrop.classList.remove('open');
     try {
-      await navigator.share({
-        title: CARD_NAME + ' — Greetings',
-        text: '✨ Check out this beautiful greeting card!',
-        url: shareUrl
-      });
-    } catch (e) { /* user cancelled */ }
+      await navigator.share({ title: `${CARD_NAME} — Greetings`, text: 'Check out this beautiful card! 🎉', url: shareUrl });
+    } catch (e) { /* user cancelled — no-op */ }
   });
 }
 
 /* WhatsApp */
 document.getElementById('shareWa').addEventListener('click', () => {
+  window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
   shareDrop.classList.remove('open');
-  const waText = '✨ Check out this beautiful greeting card!\n\n' + shareUrl;
-  window.open('https://wa.me/?text=' + encodeURIComponent(waText), '_blank');
 });
 
 /* Email */
 document.getElementById('shareEmail').addEventListener('click', () => {
+  const subject = encodeURIComponent(`A beautiful card for you — ${CARD_NAME}`);
+  const body    = encodeURIComponent(`Hi!\n\nI found this beautiful card and thought of you. 🎉\n\nView it here: ${shareUrl}\n\n— Sent via Greetings`);
+  window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
   shareDrop.classList.remove('open');
-  const subject = encodeURIComponent('A beautiful card for you — ' + CARD_NAME);
-  const body    = encodeURIComponent(
-    'Hi!\n\nI found this beautiful greeting card and thought of you. ✨\n\n'
-    + 'View it here: ' + shareUrl
-    + '\n\n— Sent via Greetings'
-  );
-  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
 });
 
 /* Copy link */
 document.getElementById('shareCopy').addEventListener('click', () => {
-  shareDrop.classList.remove('open');
-  const b = document.getElementById('shareCopy');
-  const orig = b.innerHTML;
-
-  function markCopied() {
-    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    const b = document.getElementById('shareCopy');
+    const orig = b.innerHTML;
+    b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Link Copied!`;
     b.style.color = '#10b981';
-    showToast('\u2713 Link copied to clipboard!', false); hideToast();
-    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2500);
-  }
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(shareUrl).then(markCopied).catch(() => {
-      fallbackCopy();
-    });
-  } else {
-    fallbackCopy();
-  }
-
-  function fallbackCopy() {
+    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2200);
+  }).catch(() => {
+    /* Fallback for older browsers */
     const ta = document.createElement('textarea');
-    ta.value = shareUrl;
-    Object.assign(ta.style, { position: 'fixed', top: '0', left: '0', opacity: '0' });
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try { document.execCommand('copy'); markCopied(); } catch(e) {}
+    ta.value = shareUrl; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
     document.body.removeChild(ta);
-  }
+    const b = document.getElementById('shareCopy');
+    const orig = b.innerHTML;
+    b.innerHTML = '✓ Copied!'; b.style.color = '#10b981';
+    setTimeout(() => { b.innerHTML = orig; b.style.color = ''; }, 2200);
+  });
+  shareDrop.classList.remove('open');
 });
 
 /* ══════════════════════════════════
