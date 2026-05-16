@@ -81,6 +81,7 @@
     .card-shadow {
       position: absolute;
       inset: 0;
+      bottom: 60px; /* don't extend over buttons area */
       background: #f0f0f0;
       border-radius: 22px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.4);
@@ -105,12 +106,13 @@
     .card-actions {
       display: flex; gap: 10px; margin-top: 20px;
       position: relative;
+      z-index: 20;
       overflow: visible;
     }
     .card-btn {
       flex: 1;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 10px;
+      padding: 15px 10px;
       border-radius: 100px;
       font-size: 0.75rem; font-weight: 800;
       letter-spacing: 1px; text-transform: uppercase;
@@ -119,29 +121,29 @@
     }
     .card-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
     .card-btn.download {
-      background: #fff; color: #0a0c10;
+      background: #ff4d6d;
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 18px rgba(255,77,109,0.4);
     }
     .card-btn.download:hover {
-      background: var(--pink); color: #fff;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(255,77,109,0.35);
+      background: #ff3358;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,77,109,0.5);
     }
     .card-btn.share {
       flex: 1;
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.7);
-      border: 1px solid var(--border);
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      box-shadow: none;
     }
-    .card-btn.share:hover { background: rgba(255,255,255,0.12); color: #fff; transform: translateY(-3px); }
-    .card-btn.fav {
-      flex: 0 0 auto; width: 52px; padding: 0;
-      background: rgba(255,77,109,0.08);
-      color: rgba(255,77,109,0.6);
-      border: 1px solid rgba(255,77,109,0.2);
-      font-size: 1.1rem;
+    .card-btn.share:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.8);
+      transform: translateY(-2px);
     }
-    .card-btn.fav.active { background: rgba(255,77,109,0.2); color: var(--pink); border-color: var(--pink); }
-    .card-btn.fav:hover  { transform: scale(1.08); }
+
 
     /* Share dropdown — fixed so it's never clipped by any parent */
     .share-drop {
@@ -513,8 +515,6 @@
               </svg>
               Share
             </button>
-
-          <button class="card-btn fav" id="favBtn" title="Save to Favourites">♡</button>
         </div>
       </div>
     </div>
