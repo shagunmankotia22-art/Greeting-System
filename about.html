@@ -748,45 +748,49 @@
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="container nav">
-      <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height:100px;width:auto;"></a>
+      <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;"></a>
       <input type="checkbox" id="menu-toggle"
         style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
       <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
-        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
       </label>
       <nav class="menu">
-        <div class="nav-left">
-          <a href="index.html">Home</a>
-          <a href="wedding.html">Wedding</a>
-          <a href="birthday.html">Birthday</a>
-          <a href="party.html">Party</a>
-          <a href="cards.html">Cards</a>
-          <a href="events.html">Events</a>
-          <a href="about.html" class="active">About</a>
+        <div class="nav-left nav-inner">
+          <a href="index.html" class="nav-item">Home</a>
+
+          <div class="nav-dropdown">
+            <a href="#" class="nav-item">Categories <i class="fas fa-chevron-down"
+                style="font-size: 0.7rem; margin-left: 4px;"></i></a>
+            <div class="dropdown-content glass-dropdown">
+              <a href="wedding.html">Wedding</a>
+              <a href="birthday.html">Birthday</a>
+              <a href="party.html">Party</a>
+              <a href="cards.html">Cards</a>
+              <a href="events.html">Events</a>
+            </div>
+          </div>
+
+          <a href="about.html" class="active nav-item">About</a>
         </div>
-        <div class="nav-right" id="navRight">
-          <div id="authButtons">
-            <a href="login.html" class="btn login-btn">Login</a>
-            <a href="signup.html" class="btn signup-btn">Sign Up</a>
-          </div>
 
-          <div class="nav-right">
+        <div class="nav-right">
 
-            <a href="login.html" class="login-btn">
-              Login
-            </a>
+          <a href="login.html" class="login-btn">
+            Login
+          </a>
 
-            <a href="signup.html" class="signup-btn">
-              Sign Up
-            </a>
+          <a href="signup.html" class="signup-btn">
+            Sign Up
+          </a>
 
-          </div>
+        </div>
       </nav>
     </div>
   </header>
-
   <!-- ===== 3D BOOK SCENE ===== -->
-  <div id="scene">
+  <!-- <div id="scene">
     <div id="bg-glow"></div>
     <div id="particles"></div>
 
@@ -798,9 +802,9 @@
       <div id="left-page">
         <div class="page-texture"></div>
         <div class="page-content" id="left-content"></div>
-      </div>
+      </div> -->
 
-      <div id="book">
+  <!-- <div id="book">
         <div class="cover-face" id="cover">
           <div class="cover-orb">
             <div class="cover-orb-inner"></div>
@@ -811,21 +815,21 @@
           <span class="click-hint">Click to open</span>
         </div>
         <div class="back-face"></div>
-      </div>
+      </div> -->
 
-      <div id="right-page">
+  <!-- <div id="right-page">
         <div class="page-texture"></div>
         <div class="page-content" id="right-content"></div>
-      </div>
+      </div> -->
 
-      <div id="turning-page"></div>
+  <!-- <div id="turning-page"></div>
     </div>
 
     <div class="book-nav-dots" id="navDots"></div>
-  </div>
+  </div> -->
 
   <!-- ===== FOOTER ===== -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -885,249 +889,250 @@
       </div>
       </nav>
     </div>
-    </header>
+    </header> -->
 
-    <!-- ABOUT SECTION -->
-    <div id="about-section">
-      <div id="particles"></div>
-      <div class="about-inner">
+  <!-- ABOUT SECTION -->
+  <div id="about-section">
+    <div id="particles"></div>
+    <div class="about-inner">
 
-        <!-- Team Cards -->
-        <div id="teamView">
-          <div class="team-heading">
-            <h1>The Minds Behind The Magic</h1>
-            <p>Click a card to explore our profiles</p>
-          </div>
-          <div class="cards-row">
-            <div class="member-card shagun" onclick="openNotebook('shagun')">
-              <div class="glow-orb"></div>
-              <div class="m-avatar">S</div>
-              <div class="m-name">Shagun</div>
-              <div class="m-role">Lead Designer</div>
-              <button class="m-open-btn">Open Profile &#8594;</button>
-            </div>
-            <div class="member-card tanvee" onclick="openNotebook('tanvee')">
-              <div class="glow-orb"></div>
-              <div class="m-avatar">T</div>
-              <div class="m-name">Tanvee</div>
-              <div class="m-role">Lead Developer</div>
-              <button class="m-open-btn">Open Profile &#8594;</button>
-            </div>
-          </div>
-          <div class="hint-text">&#10022; Click on a card to know more</div>
+      <!-- Team Cards -->
+      <div id="teamView">
+        <div class="team-heading">
+          <h1>The Minds Behind The Magic</h1>
+          <p>Click a card to explore our profiles</p>
         </div>
-
-        <!-- Notebook -->
-        <div id="notebookView">
-          <button class="nb-back" onclick="closeNotebook()">&#8592; Back to Team</button>
-          <div class="notebook">
-            <div class="nb-spine">
-              <div class="ring"></div>
-              <div class="ring"></div>
-              <div class="ring"></div>
-              <div class="ring"></div>
-              <div class="ring"></div>
-              <div class="ring"></div>
-            </div>
-            <div class="nb-sidebar" id="sidebar">
-              <div class="nav-tab active" data-tab="about" onclick="switchTab('about')">&#128100;<span
-                  class="tip">About</span></div>
-              <div class="nav-tab" data-tab="skills" onclick="switchTab('skills')">&#9889;<span
-                  class="tip">Skills</span></div>
-              <div class="nav-tab" data-tab="experience" onclick="switchTab('experience')">&#128197;<span
-                  class="tip">Experience</span></div>
-              <div class="nav-tab" data-tab="projects" onclick="switchTab('projects')">&#128187;<span
-                  class="tip">Projects</span></div>
-              <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">&#9993;<span
-                  class="tip">Contact</span></div>
-            </div>
-            <div class="nb-content" id="nbContent"></div>
+        <div class="cards-row">
+          <div class="member-card shagun" onclick="openNotebook('shagun')">
+            <div class="glow-orb"></div>
+            <div class="m-avatar">S</div>
+            <div class="m-name">Shagun</div>
+            <div class="m-role">Lead Designer</div>
+            <button class="m-open-btn">Open Profile &#8594;</button>
+          </div>
+          <div class="member-card tanvee" onclick="openNotebook('tanvee')">
+            <div class="glow-orb"></div>
+            <div class="m-avatar">T</div>
+            <div class="m-name">Tanvee</div>
+            <div class="m-role">Lead Developer</div>
+            <button class="m-open-btn">Open Profile &#8594;</button>
           </div>
         </div>
-
+        <div class="hint-text">&#10022; Click on a card to know more</div>
       </div>
-    </div>
 
-    <!-- FOOTER -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-top">
-          <div class="footer-brand">
-            <div class="footer-badge"><span class="footer-badge-dot"></span></div>
-            <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
-            <p>Craft stunning digital invitations and greeting cards for every occasion. Neon-lit design meets heartfelt
-              moments — all in one place.</p>
-            <div class="footer-social-row">
-              <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"><i
-                  class="fab fa-instagram"></i></a>
-              <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"><i
-                  class="fab fa-x-twitter"></i></a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"><i
-                  class="fab fa-linkedin-in"></i></a>
-              <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"><i
-                  class="fab fa-github"></i></a>
-              <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"><i
-                  class="fab fa-youtube"></i></a>
+      <!-- Notebook -->
+      <div id="notebookView">
+        <button class="nb-back" onclick="closeNotebook()">&#8592; Back to Team</button>
+        <div class="notebook">
+          <div class="nb-spine">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+          </div>
+          <div class="nb-sidebar" id="sidebar">
+            <div class="nav-tab active" data-tab="about" onclick="switchTab('about')">&#128100;<span
+                class="tip">About</span></div>
+            <div class="nav-tab" data-tab="skills" onclick="switchTab('skills')">&#9889;<span class="tip">Skills</span>
             </div>
+            <div class="nav-tab" data-tab="experience" onclick="switchTab('experience')">&#128197;<span
+                class="tip">Experience</span></div>
+            <div class="nav-tab" data-tab="projects" onclick="switchTab('projects')">&#128187;<span
+                class="tip">Projects</span></div>
+            <div class="nav-tab" data-tab="contact" onclick="switchTab('contact')">&#9993;<span
+                class="tip">Contact</span></div>
           </div>
-          <div class="footer-col">
-            <h4>Explore</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="wedding.html">Wedding</a></li>
-              <li><a href="birthday.html">Birthday</a></li>
-              <li><a href="party.html">Party</a></li>
-              <li><a href="cards.html">Cards</a></li>
-              <li><a href="events.html">Events</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="how-it-works.html">How It Works</a></li>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="signup.html">Sign Up</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="mailto:support@greetings.com">Contact Us</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Report an Issue</a></li>
-              <li><a href="#">FAQ</a></li>
-            </ul>
+          <div class="nb-content" id="nbContent"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-badge"><span class="footer-badge-dot"></span></div>
+          <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
+          <p>Craft stunning digital invitations and greeting cards for every occasion. Neon-lit design meets
+            heartfelt
+            moments — all in one place.</p>
+          <div class="footer-social-row">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn ig"><i
+                class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-btn tw"><i
+                class="fab fa-x-twitter"></i></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-btn li"><i
+                class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-btn gh"><i
+                class="fab fa-github"></i></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener" class="footer-social-btn yt"><i
+                class="fab fa-youtube"></i></a>
           </div>
         </div>
-    </footer>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="wedding.html">Wedding</a></li>
+            <li><a href="birthday.html">Birthday</a></li>
+            <li><a href="party.html">Party</a></li>
+            <li><a href="cards.html">Cards</a></li>
+            <li><a href="events.html">Events</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="mailto:support@greetings.com">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Report an Issue</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+  </footer>
 
-    <!-- SCRIPTS -->
-    <script src="back-to-top.js"></script>
-    <script src="hamburger.js"></script>
-    <script src="script.js"></script>
-    <script src="ai-assistant.js"></script>
-    <script src="nav-auth.js"></script>
+  <!-- SCRIPTS -->
+  <script src="back-to-top.js"></script>
+  <script src="hamburger.js"></script>
+  <script src="script.js"></script>
+  <script src="ai-assistant.js"></script>
+  <script src="nav-auth.js"></script>
 
-    <script>
-      (function () {
-        'use strict';
+  <script>
+    (function () {
+      'use strict';
 
-        /* Starfield */
-        var p = document.getElementById('particles');
-        for (var i = 0; i < 50; i++) { var s = document.createElement('div'); s.className = 'star'; var sz = Math.random() * 2 + 1; s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (2 + Math.random() * 4) + 's;--delay:' + (Math.random() * 4) + 's'; p.appendChild(s); }
+      /* Starfield */
+      var p = document.getElementById('particles');
+      for (var i = 0; i < 50; i++) { var s = document.createElement('div'); s.className = 'star'; var sz = Math.random() * 2 + 1; s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (2 + Math.random() * 4) + 's;--delay:' + (Math.random() * 4) + 's'; p.appendChild(s); }
 
-        var profiles = {
-          shagun: {
-            photoClass: 's-photo', letter: 'S',
-            greeting: "Hi there! I'm Shagun", greetingClass: '',
-            name: 'Shagun Mankotia', role: 'Lead Designer & UI/UX Artist',
-            bio: 'A creative visionary passionate about neon aesthetics, typography, and immersive UI. I transform ideas into pixel-perfect, emotionally resonant digital experiences.',
-            sig: 'Shagun &#9825;', quoteClass: '',
-            quote: '"Design is not just what it looks like — it\'s how it makes you feel."',
-            details: [{ l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Designer' }, { l: 'Location', v: 'Punjab, India' }, { l: 'Email', v: 'shagun8595@...' }, { l: 'Languages', v: 'English, Hindi' }],
-            skills: [{ n: 'UI/UX Design', p: 92, cls: '' }, { n: 'Figma', p: 88, cls: '' }, { n: 'HTML & CSS', p: 85, cls: '' }, { n: 'Motion Design', p: 78, cls: '' }, { n: 'Brand Identity', p: 82, cls: '' }],
-            tech: ['Figma', 'Adobe XD', 'Canva', 'CSS Animations', 'Tailwind', 'GSAP'], techCls: '',
-            exp: [{ y: '2025 — Present', t: 'Lead Designer — Greetings', d: 'Crafting the entire visual identity of the Greetings platform including UI, cards, and brand assets.' }, { y: '2024', t: 'UI Design — University Projects', d: 'Designed multiple web and app interfaces for academic AI projects at Chitkara University.' }, { y: '2023', t: 'Freelance Design', d: 'Created logos, posters, and social media graphics for local businesses and startups.' }],
-            dotCls: '',
-            projects: [{ icon: '&#127912;', n: 'Greetings UI', d: 'Full design system for the Greetings platform.', tags: ['Figma', 'Design System'], tc: '' }, { icon: '&#10024;', n: '3D Book About', d: 'Interactive 3D animated About page concept.', tags: ['CSS', 'Animation'], tc: '' }, { icon: '&#128140;', n: 'Card Gallery', d: 'Curated invitation gallery with 100+ templates.', tags: ['UI Design'], tc: '' }, { icon: '&#127775;', n: 'Neon Portfolio', d: 'Personal portfolio with glassmorphism style.', tags: ['HTML', 'CSS', 'JS'], tc: '' }],
-            contacts: [{ icon: '&#9993;', l: 'Email', v: 'shagun8595.beaift25@chitkara.edu.in', ic: '' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/shagun-mankotia', ic: '' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/shagun8595beaift25', ic: '' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: '' }]
-          },
-          tanvee: {
-            photoClass: 't-photo', letter: 'T',
-            greeting: "Hi there! I'm Tanvee", greetingClass: 't-greeting',
-            name: 'Tanvee Goyal', role: 'Lead Developer & Problem Solver',
-            bio: 'A full-stack engineer who brings pixel-perfect designs to life. I love building scalable, efficient systems and turning complex problems into elegant solutions.',
-            sig: 'Tanvee &#9825;', quoteClass: 't-quote',
-            quote: '"Logic today, solutions tomorrow."',
-            details: [{ l: 'Roll No', v: '2510998605' }, { l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Developer' }, { l: 'Email', v: 'tanvee8605@...' }, { l: 'Languages', v: 'English, Hindi' }],
-            skills: [{ n: 'JavaScript', p: 90, cls: 't-fill' }, { n: 'Node.js / Express', p: 85, cls: 't-fill' }, { n: 'React', p: 80, cls: 't-fill' }, { n: 'HTML & CSS', p: 92, cls: 't-fill' }, { n: 'AI Integration', p: 75, cls: 't-fill' }],
-            tech: ['Node.js', 'Express', 'React', 'MongoDB', 'Python', 'REST APIs'], techCls: 't-tag',
-            exp: [{ y: '2025 — Present', t: 'Lead Developer — Greetings', d: 'Built the complete frontend and backend of the Greetings platform including AI chat integration.' }, { y: '2024', t: 'Full-Stack Dev — University Projects', d: 'Developed multiple AI-powered web applications for academic projects at Chitkara University.' }, { y: '2023', t: 'Freelance Web Development', d: 'Built responsive websites and landing pages for clients using modern web technologies.' }],
-            dotCls: 't-dot',
-            projects: [{ icon: '&#129302;', n: 'Greetings AI', d: 'Gemini-powered AI chat for the card platform.', tags: ['Node.js', 'Gemini API'], tc: 't-ptag' }, { icon: '&#128274;', n: 'Auth System', d: 'Full signup/login with localStorage persistence.', tags: ['JavaScript', 'Auth'], tc: 't-ptag' }, { icon: '&#128230;', n: 'Backend API', d: 'REST API proxy server deployed on Render.', tags: ['Express', 'Render'], tc: 't-ptag' }, { icon: '&#127924;', n: 'Card Search', d: 'Real-time search and filter for the gallery.', tags: ['JS', 'DOM'], tc: 't-ptag' }],
-            contacts: [{ icon: '&#9993;', l: 'Email', v: 'tanvee8605.beaift25@chitkara.edu.in', ic: 't-icon' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/tanvee', ic: 't-icon' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/TanveeGoyal', ic: 't-icon' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: 't-icon' }]
-          }
-        };
-
-        function renderNotebook(person) {
-          var d = profiles[person];
-          var h = '';
-
-          /* About */
-          h += '<div class="nb-page active" id="page-about">';
-          h += '<div class="page-hero"><div class="hero-photo ' + d.photoClass + '">' + d.letter + '</div><div class="hero-text">';
-          h += '<div class="hero-greeting ' + d.greetingClass + '">' + d.greeting + '</div>';
-          h += '<div class="hero-name">' + d.name + '</div><div class="hero-role">' + d.role + '</div>';
-          h += '<div class="hero-bio">' + d.bio + '</div><div class="hero-sig">' + d.sig + '</div>';
-          h += '</div></div>';
-          h += '<div class="quote-box ' + d.quoteClass + '">' + d.quote + '</div>';
-          h += '<div class="sec-label">Details</div><div class="detail-grid">';
-          d.details.forEach(function (x) { h += '<div class="det-row"><div class="det-label">' + x.l + '</div><div class="det-val">' + x.v + '</div></div>'; });
-          h += '</div></div>';
-
-          /* Skills */
-          h += '<div class="nb-page" id="page-skills"><div class="sec-label">Technical Skills</div>';
-          d.skills.forEach(function (s) { h += '<div class="skill-item"><div class="skill-top"><span class="skill-name">' + s.n + '</span><span class="skill-pct">' + s.p + '%</span></div><div class="skill-track"><div class="skill-fill ' + s.cls + '" data-w="' + s.p + '"></div></div></div>'; });
-          h += '<div class="sec-label" style="margin-top:6px">Technologies</div><div class="tech-row">';
-          d.tech.forEach(function (t) { h += '<span class="tech-tag ' + d.techCls + '">' + t + '</span>'; });
-          h += '</div></div>';
-
-          /* Experience */
-          h += '<div class="nb-page" id="page-experience"><div class="sec-label">Journey</div><div class="timeline">';
-          d.exp.forEach(function (e, i) {
-            h += '<div class="tl-item"><div class="tl-left"><div class="tl-dot ' + d.dotCls + '"></div>';
-            if (i < d.exp.length - 1) h += '<div class="tl-line"></div>';
-            h += '</div><div class="tl-right"><div class="tl-year">' + e.y + '</div><div class="tl-title">' + e.t + '</div><div class="tl-desc">' + e.d + '</div></div></div>';
-          });
-          h += '</div></div>';
-
-          /* Projects */
-          h += '<div class="nb-page" id="page-projects"><div class="sec-label">Projects</div><div class="proj-grid">';
-          d.projects.forEach(function (pr) {
-            h += '<div class="proj-card"><div class="proj-icon">' + pr.icon + '</div><div class="proj-name">' + pr.n + '</div><div class="proj-desc">' + pr.d + '</div><div class="proj-tags">';
-            pr.tags.forEach(function (tg) { h += '<span class="proj-tag ' + pr.tc + '">' + tg + '</span>'; });
-            h += '</div></div>';
-          });
-          h += '</div></div>';
-
-          /* Contact */
-          h += '<div class="nb-page" id="page-contact"><div class="sec-label">Get In Touch</div><div class="contact-items">';
-          d.contacts.forEach(function (c) { h += '<div class="contact-item"><div class="c-icon ' + c.ic + '">' + c.icon + '</div><div><div class="c-label">' + c.l + '</div><div class="c-val">' + c.v + '</div></div></div>'; });
-          h += '</div><div class="quote-box ' + d.quoteClass + '" style="margin-top:auto">"Let\'s build something amazing together! We\'d love to collaborate with you." &#10024;</div></div>';
-
-          document.getElementById('nbContent').innerHTML = h;
+      var profiles = {
+        shagun: {
+          photoClass: 's-photo', letter: 'S',
+          greeting: "Hi there! I'm Shagun", greetingClass: '',
+          name: 'Shagun Mankotia', role: 'Lead Designer & UI/UX Artist',
+          bio: 'A creative visionary passionate about neon aesthetics, typography, and immersive UI. I transform ideas into pixel-perfect, emotionally resonant digital experiences.',
+          sig: 'Shagun &#9825;', quoteClass: '',
+          quote: '"Design is not just what it looks like — it\'s how it makes you feel."',
+          details: [{ l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Designer' }, { l: 'Location', v: 'Punjab, India' }, { l: 'Email', v: 'shagun8595@...' }, { l: 'Languages', v: 'English, Hindi' }],
+          skills: [{ n: 'UI/UX Design', p: 92, cls: '' }, { n: 'Figma', p: 88, cls: '' }, { n: 'HTML & CSS', p: 85, cls: '' }, { n: 'Motion Design', p: 78, cls: '' }, { n: 'Brand Identity', p: 82, cls: '' }],
+          tech: ['Figma', 'Adobe XD', 'Canva', 'CSS Animations', 'Tailwind', 'GSAP'], techCls: '',
+          exp: [{ y: '2025 — Present', t: 'Lead Designer — Greetings', d: 'Crafting the entire visual identity of the Greetings platform including UI, cards, and brand assets.' }, { y: '2024', t: 'UI Design — University Projects', d: 'Designed multiple web and app interfaces for academic AI projects at Chitkara University.' }, { y: '2023', t: 'Freelance Design', d: 'Created logos, posters, and social media graphics for local businesses and startups.' }],
+          dotCls: '',
+          projects: [{ icon: '&#127912;', n: 'Greetings UI', d: 'Full design system for the Greetings platform.', tags: ['Figma', 'Design System'], tc: '' }, { icon: '&#10024;', n: '3D Book About', d: 'Interactive 3D animated About page concept.', tags: ['CSS', 'Animation'], tc: '' }, { icon: '&#128140;', n: 'Card Gallery', d: 'Curated invitation gallery with 100+ templates.', tags: ['UI Design'], tc: '' }, { icon: '&#127775;', n: 'Neon Portfolio', d: 'Personal portfolio with glassmorphism style.', tags: ['HTML', 'CSS', 'JS'], tc: '' }],
+          contacts: [{ icon: '&#9993;', l: 'Email', v: 'shagun8595.beaift25@chitkara.edu.in', ic: '' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/shagun-mankotia', ic: '' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/shagun8595beaift25', ic: '' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: '' }]
+        },
+        tanvee: {
+          photoClass: 't-photo', letter: 'T',
+          greeting: "Hi there! I'm Tanvee", greetingClass: 't-greeting',
+          name: 'Tanvee Goyal', role: 'Lead Developer & Problem Solver',
+          bio: 'A full-stack engineer who brings pixel-perfect designs to life. I love building scalable, efficient systems and turning complex problems into elegant solutions.',
+          sig: 'Tanvee &#9825;', quoteClass: 't-quote',
+          quote: '"Logic today, solutions tomorrow."',
+          details: [{ l: 'Roll No', v: '2510998605' }, { l: 'Degree', v: 'B.E. CSE (AI-FT)' }, { l: 'University', v: 'Chitkara Univ.' }, { l: 'Role', v: 'Lead Developer' }, { l: 'Email', v: 'tanvee8605@...' }, { l: 'Languages', v: 'English, Hindi' }],
+          skills: [{ n: 'JavaScript', p: 90, cls: 't-fill' }, { n: 'Node.js / Express', p: 85, cls: 't-fill' }, { n: 'React', p: 80, cls: 't-fill' }, { n: 'HTML & CSS', p: 92, cls: 't-fill' }, { n: 'AI Integration', p: 75, cls: 't-fill' }],
+          tech: ['Node.js', 'Express', 'React', 'MongoDB', 'Python', 'REST APIs'], techCls: 't-tag',
+          exp: [{ y: '2025 — Present', t: 'Lead Developer — Greetings', d: 'Built the complete frontend and backend of the Greetings platform including AI chat integration.' }, { y: '2024', t: 'Full-Stack Dev — University Projects', d: 'Developed multiple AI-powered web applications for academic projects at Chitkara University.' }, { y: '2023', t: 'Freelance Web Development', d: 'Built responsive websites and landing pages for clients using modern web technologies.' }],
+          dotCls: 't-dot',
+          projects: [{ icon: '&#129302;', n: 'Greetings AI', d: 'Gemini-powered AI chat for the card platform.', tags: ['Node.js', 'Gemini API'], tc: 't-ptag' }, { icon: '&#128274;', n: 'Auth System', d: 'Full signup/login with localStorage persistence.', tags: ['JavaScript', 'Auth'], tc: 't-ptag' }, { icon: '&#128230;', n: 'Backend API', d: 'REST API proxy server deployed on Render.', tags: ['Express', 'Render'], tc: 't-ptag' }, { icon: '&#127924;', n: 'Card Search', d: 'Real-time search and filter for the gallery.', tags: ['JS', 'DOM'], tc: 't-ptag' }],
+          contacts: [{ icon: '&#9993;', l: 'Email', v: 'tanvee8605.beaift25@chitkara.edu.in', ic: 't-icon' }, { icon: '&#128279;', l: 'LinkedIn', v: 'linkedin.com/in/tanvee', ic: 't-icon' }, { icon: '&#128187;', l: 'GitHub', v: 'github.com/TanveeGoyal', ic: 't-icon' }, { icon: '&#127979;', l: 'University', v: 'Chitkara University, Punjab', ic: 't-icon' }]
         }
+      };
 
-        window.openNotebook = function (person) {
-          renderNotebook(person);
-          document.getElementById('teamView').style.display = 'none';
-          document.getElementById('notebookView').style.display = 'block';
-          document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.remove('active'); });
-          document.querySelector('[data-tab="about"]').classList.add('active');
-          setTimeout(animateBars, 80);
-        };
+      function renderNotebook(person) {
+        var d = profiles[person];
+        var h = '';
 
-        window.closeNotebook = function () {
-          document.getElementById('notebookView').style.display = 'none';
-          document.getElementById('teamView').style.display = 'flex';
-        };
+        /* About */
+        h += '<div class="nb-page active" id="page-about">';
+        h += '<div class="page-hero"><div class="hero-photo ' + d.photoClass + '">' + d.letter + '</div><div class="hero-text">';
+        h += '<div class="hero-greeting ' + d.greetingClass + '">' + d.greeting + '</div>';
+        h += '<div class="hero-name">' + d.name + '</div><div class="hero-role">' + d.role + '</div>';
+        h += '<div class="hero-bio">' + d.bio + '</div><div class="hero-sig">' + d.sig + '</div>';
+        h += '</div></div>';
+        h += '<div class="quote-box ' + d.quoteClass + '">' + d.quote + '</div>';
+        h += '<div class="sec-label">Details</div><div class="detail-grid">';
+        d.details.forEach(function (x) { h += '<div class="det-row"><div class="det-label">' + x.l + '</div><div class="det-val">' + x.v + '</div></div>'; });
+        h += '</div></div>';
 
-        window.switchTab = function (name) {
-          document.querySelectorAll('.nb-page').forEach(function (pg) { pg.classList.remove('active'); });
-          document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === name); });
-          var pg = document.getElementById('page-' + name);
-          if (pg) { pg.classList.add('active'); if (name === 'skills') setTimeout(animateBars, 60); }
-        };
+        /* Skills */
+        h += '<div class="nb-page" id="page-skills"><div class="sec-label">Technical Skills</div>';
+        d.skills.forEach(function (s) { h += '<div class="skill-item"><div class="skill-top"><span class="skill-name">' + s.n + '</span><span class="skill-pct">' + s.p + '%</span></div><div class="skill-track"><div class="skill-fill ' + s.cls + '" data-w="' + s.p + '"></div></div></div>'; });
+        h += '<div class="sec-label" style="margin-top:6px">Technologies</div><div class="tech-row">';
+        d.tech.forEach(function (t) { h += '<span class="tech-tag ' + d.techCls + '">' + t + '</span>'; });
+        h += '</div></div>';
 
-        function animateBars() {
-          document.querySelectorAll('.skill-fill').forEach(function (bar) { bar.style.width = bar.dataset.w + '%'; });
-        }
+        /* Experience */
+        h += '<div class="nb-page" id="page-experience"><div class="sec-label">Journey</div><div class="timeline">';
+        d.exp.forEach(function (e, i) {
+          h += '<div class="tl-item"><div class="tl-left"><div class="tl-dot ' + d.dotCls + '"></div>';
+          if (i < d.exp.length - 1) h += '<div class="tl-line"></div>';
+          h += '</div><div class="tl-right"><div class="tl-year">' + e.y + '</div><div class="tl-title">' + e.t + '</div><div class="tl-desc">' + e.d + '</div></div></div>';
+        });
+        h += '</div></div>';
 
-      })();
-    </script>
+        /* Projects */
+        h += '<div class="nb-page" id="page-projects"><div class="sec-label">Projects</div><div class="proj-grid">';
+        d.projects.forEach(function (pr) {
+          h += '<div class="proj-card"><div class="proj-icon">' + pr.icon + '</div><div class="proj-name">' + pr.n + '</div><div class="proj-desc">' + pr.d + '</div><div class="proj-tags">';
+          pr.tags.forEach(function (tg) { h += '<span class="proj-tag ' + pr.tc + '">' + tg + '</span>'; });
+          h += '</div></div>';
+        });
+        h += '</div></div>';
+
+        /* Contact */
+        h += '<div class="nb-page" id="page-contact"><div class="sec-label">Get In Touch</div><div class="contact-items">';
+        d.contacts.forEach(function (c) { h += '<div class="contact-item"><div class="c-icon ' + c.ic + '">' + c.icon + '</div><div><div class="c-label">' + c.l + '</div><div class="c-val">' + c.v + '</div></div></div>'; });
+        h += '</div><div class="quote-box ' + d.quoteClass + '" style="margin-top:auto">"Let\'s build something amazing together! We\'d love to collaborate with you." &#10024;</div></div>';
+
+        document.getElementById('nbContent').innerHTML = h;
+      }
+
+      window.openNotebook = function (person) {
+        renderNotebook(person);
+        document.getElementById('teamView').style.display = 'none';
+        document.getElementById('notebookView').style.display = 'block';
+        document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.remove('active'); });
+        document.querySelector('[data-tab="about"]').classList.add('active');
+        setTimeout(animateBars, 80);
+      };
+
+      window.closeNotebook = function () {
+        document.getElementById('notebookView').style.display = 'none';
+        document.getElementById('teamView').style.display = 'flex';
+      };
+
+      window.switchTab = function (name) {
+        document.querySelectorAll('.nb-page').forEach(function (pg) { pg.classList.remove('active'); });
+        document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === name); });
+        var pg = document.getElementById('page-' + name);
+        if (pg) { pg.classList.add('active'); if (name === 'skills') setTimeout(animateBars, 60); }
+      };
+
+      function animateBars() {
+        document.querySelectorAll('.skill-fill').forEach(function (bar) { bar.style.width = bar.dataset.w + '%'; });
+      }
+
+    })();
+  </script>
 
 </body>
 
