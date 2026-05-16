@@ -140,18 +140,15 @@
 
     /* Share dropdown */
     .share-drop {
-      position: fixed;
-      bottom: 110px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 260px;
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 0; right: 0;
       background: #161b2e;
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 6px;
       display: none; flex-direction: column; gap: 3px;
-      z-index: 9999;
-      box-shadow:0 20px 60px rgba(0,0,0,0.7);
+      z-index: 50;
     }
     .share-drop.open { display: flex; }
     .share-opt {
@@ -502,7 +499,7 @@
             Download
           </button>
 
-          <div style="position:static; flex:1; display:flex; flex-direction:column;">
+          <div style="position:relative; flex:1; display:flex; flex-direction:column;">
             <button class="card-btn share" id="shareBtn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
@@ -673,12 +670,14 @@
    GREETINGS AI — view.html integration script
    ═══════════════════════════════════════════════════ */
 
-const API_URL   = 'https://api.anthropic.com/v1/messages';
-const AI_MODEL  = 'claude-sonnet-4-20250514';
+const API_URL   = 'https://greetings-system-ai.onrender.com/api/chat';
 const FAV_KEY   = 'greetings_favourites';
 
 /* ── URL param ── */
-const _qs=window.location.search.slice(1);const _im=_qs.match(/(?:^|&)img=(.+?)(?=&[a-zA-Z_]+=|$)/);const imgSrc=_im?decodeURIComponent(_im[1]):'';const imgEl=document.getElementById('displayImg');if(imgSrc)imgEl.src=imgSrc;
+const params  = new URLSearchParams(window.location.search);
+const imgSrc  = params.get('img') || '';
+const imgEl   = document.getElementById('displayImg');
+if (imgSrc) imgEl.src = imgSrc;
 
 /* ── Card name helper ── */
 function cardName(url) {
@@ -736,7 +735,6 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
   if (!imgSrc) return;
   showToast('Preparing download…', true);
 
-  const isGif  = /\.gif/i.test(imgSrc.split('?')[0]);
   const rawName = imgSrc.split('?')[0].split('/').pop()
     .replace(/\.(gif|jpe?g|png|webp|avif)$/i, '') || 'greetings-card';
 
@@ -745,18 +743,43 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
 
-  /* Method 1: allorigins proxy */
-  try { const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(imgSrc)); if(!r.ok)throw 0; const b=await r.blob(); const u=URL.createObjectURL(b); const a=Object.assign(document.createElement('a'),{href:u,download:rawName+(isGif?'.gif':b.type.includes('png')?'.png':'.jpg')}); document.body.appendChild(a);a.click();document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(u),10000); showToast('✓ Downloaded!',false);hideToast();return; } catch(_) {}
+  /* Method 1: fetch + blob */
+  try {
+    const res  = await fetch(imgSrc, { mode: 'cors', cache: 'no-cache' });
+    if (!res.ok) throw new Error('fetch failed');
+    const blob = await res.blob();
+    const ext2 = blob.type.includes('gif') ? '.gif' : blob.type.includes('png') ? '.png' : '.jpg';
+    const blobUrl = URL.createObjectURL(blob);
+    triggerDownload(blobUrl, rawName + ext2);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    showToast('✓ Download started!', false); hideToast();
+    return;
+  } catch (_) {}
 
-  /* Method 2: corsproxy.io */
-  try { const r=await fetch('https://corsproxy.io/?'+encodeURIComponent(imgSrc)); if(!r.ok)throw 0; const b=await r.blob(); const u=URL.createObjectURL(b); const a=Object.assign(document.createElement('a'),{href:u,download:rawName+(isGif?'.gif':b.type.includes('png')?'.png':'.jpg')}); document.body.appendChild(a);a.click();document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(u),10000); showToast('✓ Downloaded!',false);hideToast();return; } catch(_) {}
+  /* Method 2: canvas draw */
+  try {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((res, rej) => {
+      img.onload = res; img.onerror = rej;
+      img.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    const isGif = imgSrc.toLowerCase().includes('.gif');
+    canvas.toBlob(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      triggerDownload(blobUrl, rawName + (isGif ? '.png' : '.jpg'));
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    }, isGif ? 'image/png' : 'image/jpeg', 0.95);
+    showToast('✓ Download started!', false); hideToast();
+    return;
+  } catch (_) {}
 
-  /* Method 3: direct */
-  try { const r=await fetch(imgSrc,{mode:'cors',cache:'no-cache'}); if(!r.ok)throw 0; const b=await r.blob(); const u=URL.createObjectURL(b); const a=Object.assign(document.createElement('a'),{href:u,download:rawName+(isGif?'.gif':b.type.includes('png')?'.png':'.jpg')}); document.body.appendChild(a);a.click();document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(u),10000); showToast('✓ Downloaded!',false);hideToast();return; } catch(_) {}
-
-  /* Fallback */
-  window.open(imgSrc,'_blank');
-  (function(){var ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.82);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;';var iOS=/iPhone|iPad|iPod/i.test(navigator.userAgent),mob=/Mobi|Android/i.test(navigator.userAgent);var st=iOS?'<li>Tap & hold the image</li><li>Tap <b>Save to Photos</b></li>':mob?'<li>Tap & hold the image</li><li>Tap <b>Download image</b></li>':'<li><b>Right-click</b> the image that opened</li><li>Select <b>Save image as...</b></li>';ov.innerHTML='<div style="background:#0f1320;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:32px 28px;max-width:340px;width:100%;text-align:center;font-family:inherit;color:#e2e8f0;"><div style=\"font-size:2rem;margin-bottom:14px\">&#x1F4BE;</div><h3 style=\"font-size:1rem;font-weight:800;margin-bottom:8px\">Save This Card</h3><p style=\"font-size:0.8rem;color:#64748b;margin-bottom:18px;line-height:1.6\">Opened in new tab. To save:</p><ol style=\"text-align:left;font-size:0.84rem;line-height:2;color:#cbd5e1;padding-left:20px;margin-bottom:24px\">'+st+'</ol><button onclick=\"this.closest('div').parentElement.remove()\" style=\"width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#ff4d6d);color:#fff;font-weight:800;cursor:pointer;font-family:inherit\">Got it!</button></div>';document.body.appendChild(ov);ov.addEventListener('click',function(e){if(e.target===ov)ov.remove();});toast.classList.remove('show');})();
+  /* Method 3: open new tab fallback */
+  window.open(imgSrc, '_blank');
+  showToast('Opened in new tab — right-click → Save image', false); hideToast(4000);
 });
 
 /* ══════════════════════════════════
@@ -911,8 +934,6 @@ async function sendMessage(text) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: AI_MODEL,
-        max_tokens: 1000,
         system: systemPrompt,
         messages: chatHistory,
       })
@@ -999,8 +1020,6 @@ Write 2-3 beautiful, heartfelt sentences suitable for a greeting card. Make it m
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: AI_MODEL,
-        max_tokens: 400,
         messages: [{ role: 'user', content: prompt }]
       })
     });
