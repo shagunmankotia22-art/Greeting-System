@@ -4737,3 +4737,555 @@ section.py-32 .absolute {
 
   z-index: -1;
 }
+
+/* ================= DREAMY SECTION ================= */
+
+.dreamy-box {
+  position: relative;
+
+  max-width: 780px;
+
+  margin: auto;
+
+  padding: 80px 50px;
+
+  text-align: center;
+
+  border-radius: 40px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* soft glowing border */
+
+.dreamy-box::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: 40px;
+
+  padding: 1px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(255, 77, 109, 0.4),
+      rgba(124, 58, 237, 0.35),
+      rgba(255, 255, 255, 0.08));
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+}
+
+/* floating blur */
+
+.floating-blur {
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  border-radius: 50%;
+
+  filter: blur(90px);
+}
+
+.blur1 {
+  top: -80px;
+  left: -100px;
+
+  background:
+    rgba(255, 77, 109, 0.18);
+}
+
+.blur2 {
+  right: -100px;
+  bottom: -100px;
+
+  background:
+    rgba(124, 58, 237, 0.18);
+}
+
+.dreamy-tag {
+  position: relative;
+
+  z-index: 2;
+
+  display: inline-block;
+
+  padding: 10px 22px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #ff9eb0;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 3px;
+
+  font-weight: 700;
+
+  margin-bottom: 30px;
+}
+
+.dreamy-box h2 {
+  position: relative;
+
+  z-index: 2;
+
+  font-size: 4.5rem;
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  color: white;
+
+  margin-bottom: 25px;
+}
+
+.dreamy-box h2 span {
+
+  background:
+    linear-gradient(to right,
+      #ff4d6d,
+      #a855f7);
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  font-style: italic;
+}
+
+.dreamy-box p {
+  position: relative;
+
+  z-index: 2;
+
+  color:
+    rgba(255, 255, 255, 0.65);
+
+  font-size: 1.05rem;
+
+  line-height: 1.8;
+}
+
+/* INPUT */
+
+.dreamy-input {
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 10px;
+
+  border-radius: 999px;
+}
+
+.dreamy-input input {
+  flex: 1;
+
+  background: none;
+
+  border: none;
+  outline: none;
+
+  color: white;
+
+  padding: 0 20px;
+
+  font-size: 1rem;
+}
+
+.dreamy-input button {
+  height: 58px;
+
+  padding: 0 32px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(135deg,
+      #ff4d6d,
+      #8b5cf6);
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.dreamy-input button:hover {
+  transform:
+    scale(1.05);
+
+  box-shadow:
+    0 0 30px rgba(255, 77, 109, 0.4);
+}
+
+/* RATING */
+
+.dreamy-rating {
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 40px;
+}
+
+.user-stars {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+}
+
+.user-stars span {
+  font-size: 2.3rem;
+
+  color: #555;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.user-stars span:hover {
+  color: #ffd60a;
+
+  transform:
+    translateY(-4px) scale(1.12);
+}
+
+#ratingText {
+  margin-top: 18px;
+
+  color:
+    rgba(255, 255, 255, 0.5);
+
+  font-size: 0.92rem;
+}
+
+/* MOBILE */
+
+@media(max-width:768px) {
+
+  .dreamy-box {
+    padding: 60px 28px;
+  }
+
+  .dreamy-box h2 {
+    font-size: 3rem;
+  }
+
+  .dreamy-input {
+    flex-direction: column;
+    border-radius: 30px;
+  }
+
+  .dreamy-input button {
+    width: 100%;
+  }
+
+}
+
+/* ================= FINAL DREAMY SECTION OVERRIDE ================= */
+
+.dreamy-box {
+
+  max-width: 1120px !important;
+
+  padding:
+    55px 75px !important;
+
+  border-radius: 42px !important;
+
+  min-height: auto !important;
+
+}
+
+/* title */
+
+.dreamy-box h2 {
+
+  font-size: 4rem !important;
+
+  line-height: 1.02 !important;
+
+  margin-bottom: 18px !important;
+
+  letter-spacing: -2px !important;
+
+}
+
+/* subtitle */
+
+.dreamy-box p {
+
+  max-width: 620px !important;
+
+  margin-inline: auto !important;
+
+  line-height: 1.7 !important;
+
+  font-size: 1rem !important;
+
+}
+
+/* input row */
+
+.dreamy-input {
+
+  max-width: 720px !important;
+
+  margin:
+    32px auto 0 !important;
+
+  padding: 8px !important;
+
+}
+
+/* input */
+
+.dreamy-input input {
+
+  height: 60px !important;
+
+  font-size: 0.96rem !important;
+
+}
+
+/* button */
+
+.dreamy-input button {
+
+  height: 60px !important;
+
+  padding: 0 30px !important;
+
+  font-size: 0.95rem !important;
+
+}
+
+/* rating section */
+
+.dreamy-rating {
+
+  margin-top: 24px !important;
+
+}
+
+/* stars */
+
+.user-stars {
+
+  gap: 8px !important;
+
+}
+
+.user-stars span {
+
+  font-size: 2rem !important;
+
+}
+
+/* rating text */
+
+#ratingText {
+
+  margin-top: 12px !important;
+
+  font-size: 0.9rem !important;
+
+}
+
+/* wider cinematic gradient */
+
+.dreamy-box::after {
+
+  content: '' !important;
+
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  background:
+    linear-gradient(90deg,
+      rgba(255, 77, 109, 0.08),
+      transparent 35%,
+      transparent 65%,
+      rgba(124, 58, 237, 0.08)) !important;
+
+  pointer-events: none !important;
+
+}
+
+/* mobile */
+
+@media(max-width:768px) {
+
+  .dreamy-box {
+
+    padding:
+      45px 24px !important;
+
+  }
+
+  .dreamy-box h2 {
+
+    font-size: 3rem !important;
+
+  }
+
+}
+
+/* ------------------------------------------- */
+.dreamy-box button {
+
+  height: 58px;
+
+  padding: 0 34px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(135deg,
+      #ff5f9e 0%,
+      #ff6b8f 35%,
+      #c45bff 100%);
+
+  box-shadow:
+    0 10px 30px rgba(255, 95, 158, 0.35),
+    0 0 40px rgba(196, 91, 255, 0.18);
+
+  transition: 0.35s ease;
+
+}
+
+/* hover */
+
+.dreamy-input button:hover {
+
+  transform:
+    translateY(-3px) scale(1.04);
+
+  box-shadow:
+    0 15px 40px rgba(255, 95, 158, 0.45),
+    0 0 55px rgba(196, 91, 255, 0.28);
+
+}
+
+/* click */
+
+.dreamy-input button:active {
+
+  transform:
+    scale(0.97);
+
+}
+
+/* ================= STAR SECTION FIX ================= */
+
+.dreamy-rating {
+  margin-top: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rating-heading {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+}
+
+.user-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.user-stars span {
+
+  font-size: 2.4rem;
+
+  color: #555;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+
+  display: inline-block;
+}
+
+.user-stars span:hover {
+
+  color: #ffd700;
+
+  transform:
+    translateY(-5px) scale(1.18);
+
+  text-shadow:
+    0 0 12px rgba(255, 215, 0, 0.7),
+    0 0 25px rgba(255, 215, 0, 0.45);
+
+}
+
+#ratingText {
+  margin-top: 16px;
+  color: #aaa;
+  font-size: 0.95rem;
+}

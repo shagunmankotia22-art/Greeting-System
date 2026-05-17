@@ -385,11 +385,18 @@
         <div class="absolute inset-0 -z-10"
           style="background: radial-gradient(circle at 30% 50%, rgba(255,77,109,0.08), transparent 60%), radial-gradient(circle at 70% 50%, rgba(124,58,237,0.08), transparent 60%), #0a0a0f;">
         </div>
-        <div class="max-w-5xl mx-auto text-center">
+
+        <div class="max-w-5xl mx-auto text-center dreamy-box">
+          <div class="floating-blur blur1"></div>
+          <div class="floating-blur blur2"></div>
+
+          <span class="dreamy-tag">
+            ✨ CREATE • CELEBRATE • SHARE
+          </span>
           <h2 class="font-headline text-5xl font-black mb-8 leading-tight">Make Every Occasion <br /><span
               class="text-primary italic">Count.</span></h2>
           <div class="max-w-md mx-auto mb-16">
-            <form class="relative flex items-center p-2 glass-panel rounded-full border border-outline-variant/20">
+            <form class="relative flex items-center p-2 glass-panel rounded-full border border-outline-variant/20 ">
               <input class="bg-transparent border-none focus:ring-0 text-on-surface flex-grow px-6 font-body"
                 placeholder="Enter your email" type="email" />
               <button
@@ -400,21 +407,29 @@
             <p class="text-xs text-on-surface-variant mt-4 uppercase tracking-widest font-bold">Join the 10k+ Digital
               Curators</p>
           </div>
-          <div class="flex flex-col items-center gap-4">
-            <span class="text-on-surface font-headline font-bold">Rate Your Experience</span>
-            <div class="flex gap-2">
-              <div class="user-stars" id="starRating">
-                <span data-value="1">★</span>
-                <span data-value="2">★</span>
-                <span data-value="3">★</span>
-                <span data-value="4">★</span>
-                <span data-value="5">★</span>
-              </div>
-              <p id="ratingText" style="color:#aaa; margin-top:10px; font-size:0.9rem;"></p>
+          <div class="dreamy-rating">
+
+            <span class="rating-heading">
+              Rate Your Experience
+            </span>
+
+            <div class="user-stars" id="starRating">
+
+              <span data-value="1">★</span>
+              <span data-value="2">★</span>
+              <span data-value="3">★</span>
+              <span data-value="4">★</span>
+              <span data-value="5">★</span>
+
             </div>
+
+            <p id="ratingText"></p>
+
           </div>
         </div>
       </section>
+
+
       </main>
       <!-- Footer Shared Component -->
 
