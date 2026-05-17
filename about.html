@@ -855,6 +855,7 @@
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- FOOTER -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <footer class="site-footer">
@@ -911,6 +912,17 @@
         </div>
       </div>
   </footer>
+=======
+<!-- SCRIPTS -->
+ <script src="api.js"></script>
+<script src="auth.js"></script>
+<script src="favorites.js"></script>
+<script src="back-to-top.js"></script>
+<script src="hamburger.js"></script>
+<script src="script.js"></script>
+<script src="ai-assistant.js"></script>
+<script src="nav-auth.js"></script>
+>>>>>>> ec84b140a36f0c4d563a238eb98bbf714dabad73
 
   <!-- SCRIPTS -->
   <script src="favorites.js"></script>
@@ -924,9 +936,44 @@
     (function () {
       'use strict';
 
+<<<<<<< HEAD
       /* Starfield */
       var p = document.getElementById('particles');
       for (var i = 0; i < 50; i++) { var s = document.createElement('div'); s.className = 'star'; var sz = Math.random() * 2 + 1; s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (2 + Math.random() * 4) + 's;--delay:' + (Math.random() * 4) + 's'; p.appendChild(s); }
+=======
+var profiles={
+  shagun:{
+    photoClass:'s-photo',letter:'S',
+    greeting:"Hi there! I'm Shagun",greetingClass:'',
+    name:'Shagun Mankotia',role:'Lead Designer & UI/UX Artist',
+    bio:'A creative visionary passionate about neon aesthetics, typography, and immersive UI. I transform ideas into pixel-perfect, emotionally resonant digital experiences.',
+    sig:'Shagun &#9825;',quoteClass:'',
+    quote:'"Design is not just what it looks like — it\'s how it makes you feel."',
+    details:[{l:'Degree',v:'B.E. CSE (AI-FT)'},{l:'University',v:'Chitkara University'},{l:'Role',v:'Lead Designer'},{l:'Location',v:'Punjab, India'},{l:'Email',v:'shagun8595.beaift25@chitkara.edu.in'},{l:'Languages',v:'English, Hindi'}],
+    skills:[{n:'UI/UX Design',p:92,cls:''},{n:'Figma',p:88,cls:''},{n:'HTML & CSS',p:85,cls:''},{n:'Motion Design',p:78,cls:''},{n:'Brand Identity',p:82,cls:''}],
+    tech:['Figma','Adobe XD','Canva','CSS Animations','Tailwind','GSAP'],techCls:'',
+    exp:[{y:'2025 — Present',t:'Lead Designer — Greetings',d:'Crafting the entire visual identity of the Greetings platform including UI, cards, and brand assets.'},{y:'2024',t:'UI Design — University Projects',d:'Designed multiple web and app interfaces for academic AI projects at Chitkara University.'},{y:'2023',t:'Freelance Design',d:'Created logos, posters, and social media graphics for local businesses and startups.'}],
+    dotCls:'',
+    projects:[{icon:'&#127912;',n:'Greetings UI',d:'Full design system for the Greetings platform.',tags:['Figma','Design System'],tc:''},{icon:'&#10024;',n:'3D Book About',d:'Interactive 3D animated About page concept.',tags:['CSS','Animation'],tc:''},{icon:'&#128140;',n:'Card Gallery',d:'Curated invitation gallery with 100+ templates.',tags:['UI Design'],tc:''},{icon:'&#127775;',n:'Neon Portfolio',d:'Personal portfolio with glassmorphism style.',tags:['HTML','CSS','JS'],tc:''}],
+    contacts:[{icon:'&#9993;',l:'Email',v:'shagun8595.beaift25@chitkara.edu.in',ic:''},{icon:'&#128279;',l:'LinkedIn',v:'linkedin.com/in/shagun-mankotia',ic:''},{icon:'&#128187;',l:'GitHub',v:'github.com/shagunmankotia22-art',ic:''},{icon:'&#127979;',l:'University',v:'Chitkara University, Punjab',ic:''}]
+  },
+  tanvee:{
+    photoClass:'t-photo',letter:'T',
+    greeting:"Hi there! I'm Tanvee",greetingClass:'t-greeting',
+    name:'Tanvee Goyal',role:'Lead Developer & Problem Solver',
+    bio:'A full-stack engineer who brings pixel-perfect designs to life. I love building scalable, efficient systems and turning complex problems into elegant solutions.',
+    sig:'Tanvee &#9825;',quoteClass:'t-quote',
+    quote:'"Logic today, solutions tomorrow."',
+    details:[{l:'Roll No',v:'2510998605'},{l:'Degree',v:'B.E. CSE (AI-FT)'},{l:'University',v:'Chitkara University'},{l:'Role',v:'Lead Developer'},{l:'Email',v:'tanvee8605.beaift25@chitkara.edu.in'},{l:'Languages',v:'English, Hindi'}],
+    skills:[{n:'JavaScript',p:90,cls:'t-fill'},{n:'Node.js / Express',p:85,cls:'t-fill'},{n:'React',p:80,cls:'t-fill'},{n:'HTML & CSS',p:92,cls:'t-fill'},{n:'AI Integration',p:75,cls:'t-fill'}],
+    tech:['Node.js','Express','React','MongoDB','Python','REST APIs'],techCls:'t-tag',
+    exp:[{y:'2025 — Present',t:'Lead Developer — Greetings',d:'Built the complete frontend and backend of the Greetings platform including AI chat integration.'},{y:'2024',t:'Full-Stack Dev — University Projects',d:'Developed multiple AI-powered web applications for academic projects at Chitkara University.'},{y:'2023',t:'Freelance Web Development',d:'Built responsive websites and landing pages for clients using modern web technologies.'}],
+    dotCls:'t-dot',
+    projects:[{icon:'&#129302;',n:'Greetings AI',d:'Gemini-powered AI chat for the card platform.',tags:['Node.js','Gemini API'],tc:'t-ptag'},{icon:'&#128274;',n:'Auth System',d:'Full signup/login with localStorage persistence.',tags:['JavaScript','Auth'],tc:'t-ptag'},{icon:'&#128230;',n:'Backend API',d:'REST API proxy server deployed on Render.',tags:['Express','Render'],tc:'t-ptag'},{icon:'&#127924;',n:'Card Search',d:'Real-time search and filter for the gallery.',tags:['JS','DOM'],tc:'t-ptag'}],
+    contacts:[{icon:'&#9993;',l:'Email',v:'tanvee8605.beaift25@chitkara.edu.in',ic:'t-icon'},{icon:'&#128279;',l:'LinkedIn',v:'linkedin.com/in/tanvee',ic:'t-icon'},{icon:'&#128187;',l:'GitHub',v:'github.com/TanveeGoyal',ic:'t-icon'},{icon:'&#127979;',l:'University',v:'Chitkara University, Punjab',ic:'t-icon'}]
+  }
+};
+>>>>>>> ec84b140a36f0c4d563a238eb98bbf714dabad73
 
       var profiles = {
         shagun: {

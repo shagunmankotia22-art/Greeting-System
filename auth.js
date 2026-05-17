@@ -1,139 +1,100 @@
-/* ================= GREETINGS - AUTH SYSTEM ================= */
+/* ═══════════════════════════════════════════════════
+   auth.js — Greetings Auth (API-integrated)
+   ═══════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  const USER_KEY   = 'greetings_user';
-  const USERS_KEY  = 'greetings_users_db'; // stores all registered users
-  const JOIN_KEY   = 'greetings_joined';
-
-  /* ── Helpers ── */
-  function getUsers() {
-    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); }
-    catch { return []; }
-  }
-
-  function saveUsers(arr) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(arr));
-  }
-
-  function setCurrentUser(user) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-    // Record join date if not already set
-    if (!localStorage.getItem(JOIN_KEY)) {
-      localStorage.setItem(JOIN_KEY, new Date().toISOString());
-    }
-  }
-
-  function showError(msg) {
-    // Remove any existing error
-    const old = document.querySelector('.auth-error-msg');
-    if (old) old.remove();
-
+  function showMsg(msg, isError) {
+    document.querySelector('.auth-error-msg')?.remove();
     const el = document.createElement('p');
     el.className = 'auth-error-msg';
-    el.style.cssText = `
-      color: #ff4d6d;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
-      margin: -8px 0 10px;
-      animation: fadeIn .25s ease;
-    `;
+    el.style.cssText = `color:${isError ? '#ff4d6d' : '#22c55e'};font-size:0.85rem;font-weight:600;text-align:center;margin:-8px 0 10px;`;
     el.textContent = msg;
-
-    const btn = document.querySelector('.auth-btn');
-    if (btn) btn.insertAdjacentElement('beforebegin', el);
+    document.querySelector('.auth-btn')?.insertAdjacentElement('beforebegin', el);
   }
 
-  function showSuccess(msg, redirect) {
-    const old = document.querySelector('.auth-error-msg');
-    if (old) old.remove();
-
-    const el = document.createElement('p');
-    el.className = 'auth-error-msg';
-    el.style.cssText = `
-      color: #22c55e;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
-      margin: -8px 0 10px;
-    `;
-    el.textContent = msg;
-
-    const btn = document.querySelector('.auth-btn');
-    if (btn) btn.insertAdjacentElement('beforebegin', el);
-
-    if (redirect) {
-      setTimeout(() => { window.location.href = redirect; }, 1000);
-    }
+  function setLoading(btn, loading) {
+    btn.disabled = loading;
+    btn.textContent = loading ? 'Please wait…' : btn.dataset.label;
   }
 
-  /* ─────────────────────────────────────────
-     SIGNUP PAGE
-  ───────────────────────────────────────── */
+  /* ── SIGNUP ── */
   const signupBtn = document.getElementById('signupBtn');
   if (signupBtn) {
-    signupBtn.addEventListener('click', () => {
-      const name     = (document.getElementById('signupName')?.value  || '').trim();
-      const email    = (document.getElementById('signupEmail')?.value || '').trim().toLowerCase();
-      const phone    = (document.getElementById('signupPhone')?.value || '').trim();
-      const password = (document.getElementById('signupPassword')?.value || '');
+    signupBtn.dataset.label = signupBtn.textContent;
+    signupBtn.addEventListener('click', async () => {
+      const name     = document.getElementById('signupName')?.value.trim() || '';
+      const email    = document.getElementById('signupEmail')?.value.trim().toLowerCase() || '';
+      const phone    = document.getElementById('signupPhone')?.value.trim() || '';
+      const password = document.getElementById('signupPassword')?.value || '';
 
-      // Validation
-      if (!name)                          return showError('Please enter your full name.');
-      if (!email || !email.includes('@')) return showError('Please enter a valid email address.');
-      if (phone && !/^\d{10}$/.test(phone)) return showError('Phone must be a 10-digit number.');
-      if (password.length < 6)            return showError('Password must be at least 6 characters.');
+      if (!name)                          return showMsg('Please enter your full name.', true);
+      if (!email || !email.includes('@')) return showMsg('Please enter a valid email.', true);
+      if (phone && !/^\d{10}$/.test(phone)) return showMsg('Phone must be 10 digits.', true);
+      if (password.length < 6)            return showMsg('Password must be at least 6 characters.', true);
 
-      // Check if email already exists
-      const users = getUsers();
-      if (users.find(u => u.email === email)) {
-        return showError('An account with this email already exists. Please log in.');
+      setLoading(signupBtn, true);
+      try {
+        await window.GreetingsAPI.signup(name, email, phone, password);
+        showMsg('Account created! Redirecting…', false);
+        setTimeout(() => window.location.href = 'index.html', 1000);
+      } catch(e) {
+        showMsg(e.message || 'Signup failed. Please try again.', true);
+        setLoading(signupBtn, false);
       }
-
-      // Save new user
-      const newUser = { name, email, phone, password };
-      users.push(newUser);
-      saveUsers(users);
-
-      // Auto-login
-      setCurrentUser({ name, email, phone });
-
-      if (window.updateNavAuth) window.updateNavAuth();
-      showSuccess('Account created! Redirecting…', 'index.html');
     });
   }
 
-  /* ─────────────────────────────────────────
-     LOGIN PAGE
-  ───────────────────────────────────────── */
+  /* ── LOGIN ── */
   const loginBtn = document.getElementById('loginBtn');
   if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
-      const email    = (document.getElementById('loginEmail')?.value    || '').trim().toLowerCase();
-      const password = (document.getElementById('loginPassword')?.value || '');
+    loginBtn.dataset.label = loginBtn.textContent;
 
-      if (!email || !email.includes('@')) return showError('Please enter a valid email address.');
-      if (!password)                       return showError('Please enter your password.');
+    async function doLogin() {
+      const email    = document.getElementById('loginEmail')?.value.trim().toLowerCase() || '';
+      const password = document.getElementById('loginPassword')?.value || '';
 
-      const users = getUsers();
-      const user  = users.find(u => u.email === email && u.password === password);
+      if (!email || !email.includes('@')) return showMsg('Please enter a valid email.', true);
+      if (!password)                       return showMsg('Please enter your password.', true);
 
-      if (!user) {
-        return showError('Invalid email or password. Please try again.');
+      // Remember me
+      const rememberCheck = document.getElementById('rememberMe');
+      const REMEMBER_KEY  = 'greetings_remember_email';
+      if (rememberCheck?.checked && email) {
+        localStorage.setItem(REMEMBER_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_KEY);
       }
 
-      // Set current user (never store password in session)
-      setCurrentUser({ name: user.name, email: user.email, phone: user.phone });
+      setLoading(loginBtn, true);
+      try {
+        await window.GreetingsAPI.login(email, password);
+        showMsg('Login successful! Redirecting…', false);
+        setTimeout(() => window.location.href = 'index.html', 1000);
+      } catch(e) {
+        showMsg(e.message || 'Login failed. Please try again.', true);
+        setLoading(loginBtn, false);
+      }
+    }
 
-      if (window.updateNavAuth) window.updateNavAuth();
-      showSuccess('Login successful! Redirecting…', 'index.html');
-    });
+    loginBtn.addEventListener('click', doLogin);
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-    // Also allow pressing Enter to login
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') loginBtn.click();
+    // Pre-fill remembered email
+    const saved = localStorage.getItem('greetings_remember_email');
+    if (saved) {
+      const emailInput = document.getElementById('loginEmail');
+      const rememberCheck = document.getElementById('rememberMe');
+      if (emailInput) emailInput.value = saved;
+      if (rememberCheck) rememberCheck.checked = true;
+    }
+
+    // Forgot password
+    document.querySelector('.forgot a')?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail')?.value.trim();
+      if (!email) return showMsg('Enter your email first, then click Forgot Password.', true);
+      showMsg(`Password reset link sent to: ${email}`, false);
     });
   }
-
 })();
