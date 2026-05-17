@@ -1,18 +1,82 @@
 /* ================= GREETINGS - MAIN SCRIPT ================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
+  /* ================= FAQ ================= */
+
+  const faqItems =
+    document.querySelectorAll('.faq-item');
+
+  if (faqItems.length) {
+
+    faqItems.forEach(item => {
+
+      item.addEventListener('click', () => {
+
+        item.classList.toggle('active');
+
+      });
+
+    });
+
+  }
+
+  /* ================= STAR RATING ================= */
+
+  const starContainer =
+    document.getElementById('starRating');
+
+  if (starContainer) {
+
+    const starSpans =
+      document.querySelectorAll('#starRating span');
+
+    const ratingMsg =
+      document.getElementById('ratingText');
+
+    const messages = {
+      1: '😞 Poor',
+      2: '😐 Fair',
+      3: '🙂 Good',
+      4: '😊 Great',
+      5: '🤩 Excellent!'
+    };
+
+    starSpans.forEach((star, i) => {
+
+      star.addEventListener('click', () => {
+
+        const val = i + 1;
+
+        localStorage.setItem(
+          'greetings_rating',
+          val
+        );
+
+        if (ratingMsg) {
+          ratingMsg.textContent =
+            `You rated: ${messages[val]}`;
+        }
+
+      });
+
+    });
+
+  }
+
+});
 
 
 /* ================= 1. FAQ ACCORDION ================= */
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const isActive = item.classList.contains('active');
-    // Close all
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-    // Open clicked one if it wasn't open
-    if (!isActive) item.classList.add('active');
-  });
-});
+// document.querySelectorAll('.faq-item').forEach(item => {
+//   item.addEventListener('click', () => {
+//     const isActive = item.classList.contains('active');
+//     // Close all
+//     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+//     // Open clicked one if it wasn't open
+//     if (!isActive) item.classList.add('active');
+//   });
+// });
 
 /* ================= 2. HELP WIDGET ================= */
 const helpBtn = document.getElementById('helpBtn');
@@ -72,54 +136,54 @@ if (liveChatOption) {
 
 /* ================= 3. STAR RATING ================= */
 /* === INTERACTIVE STAR RATING === */
-const starSpans = document.querySelectorAll('#starRating span');
-const ratingMsg = document.getElementById('ratingText');
+// const starSpans = document.querySelectorAll('#starRating span');
+// const ratingMsg = document.getElementById('ratingText');
 
-const messages = {
-  1: '😞 Poor',
-  2: '😐 Fair',
-  3: '🙂 Good',
-  4: '😊 Great',
-  5: '🤩 Excellent!'
-};
+// const messages = {
+//   1: '😞 Poor',
+//   2: '😐 Fair',
+//   3: '🙂 Good',
+//   4: '😊 Great',
+//   5: '🤩 Excellent!'
+// };
 
-starSpans.forEach((star, i) => {
-  // Hover
-  star.addEventListener('mouseover', () => {
-    starSpans.forEach((s, j) => {
-      s.style.color = j <= i ? 'gold' : '#555';
-      s.style.transform = j <= i ? 'scale(1.3)' : 'scale(1)';
-    });
-  });
+// starSpans.forEach((star, i) => {
+//   // Hover
+//   star.addEventListener('mouseover', () => {
+//     starSpans.forEach((s, j) => {
+//       s.style.color = j <= i ? 'gold' : '#555';
+//       s.style.transform = j <= i ? 'scale(1.3)' : 'scale(1)';
+//     });
+//   });
 
-  // Mouse out
-  star.addEventListener('mouseout', () => {
-    const saved = localStorage.getItem('greetings_rating');
-    starSpans.forEach((s, j) => {
-      s.style.color = saved && j < saved ? 'gold' : '#555';
-      s.style.transform = 'scale(1)';
-    });
-  });
+//   // Mouse out
+//   star.addEventListener('mouseout', () => {
+//     const saved = localStorage.getItem('greetings_rating');
+//     starSpans.forEach((s, j) => {
+//       s.style.color = saved && j < saved ? 'gold' : '#555';
+//       s.style.transform = 'scale(1)';
+//     });
+//   });
 
-  // Click
-  star.addEventListener('click', () => {
-    const val = i + 1;
-    localStorage.setItem('greetings_rating', val);
-    starSpans.forEach((s, j) => {
-      s.style.color = j < val ? 'gold' : '#555';
-    });
-    if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[val]}`;
-  });
-});
+//   // Click
+//   star.addEventListener('click', () => {
+//     const val = i + 1;
+//     localStorage.setItem('greetings_rating', val);
+//     starSpans.forEach((s, j) => {
+//       s.style.color = j < val ? 'gold' : '#555';
+//     });
+//     if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[val]}`;
+//   });
+// });
 
-// Load saved rating on page load
-const savedRating = localStorage.getItem('greetings_rating');
-if (savedRating) {
-  starSpans.forEach((s, j) => {
-    s.style.color = j < savedRating ? 'gold' : '#555';
-  });
-  if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[savedRating]}`;
-}
+// // Load saved rating on page load
+// const savedRating = localStorage.getItem('greetings_rating');
+// if (savedRating) {
+//   starSpans.forEach((s, j) => {
+//     s.style.color = j < savedRating ? 'gold' : '#555';
+//   });
+//   if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[savedRating]}`;
+// }
 /* ================= 4. MOBILE MENU TOGGLE ================= */
 const menuToggle = document.getElementById('menu-toggle');
 const navLeft = document.querySelector('.nav-left');
