@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,128 +10,131 @@
 
 <body class="auth-page">
 
-<div class="auth-container">
 
-  <div class="auth-card">
+  <div class="auth-container">
 
-    <!-- HEADER -->
-    <div class="auth-header">
-      <a href="index.html">
-  <img src="logo.svg" alt="Greetings Logo"
-   style="height:100px; width:auto;
+    <div class="auth-card">
+
+      <!-- HEADER -->
+      <div class="auth-header">
+        <a href="index.html">
+          <img src="logo.svg" alt="Greetings Logo" style="height:100px; width:auto;
    display:block; margin:0 auto 8px;">
-</a>
-      <h2>Welcome</h2>
-      <p>Login to continue</p>
-    </div>
+        </a>
+        <h2>Welcome</h2>
+        <p>Login to continue</p>
+      </div>
 
- <!-- EMAIL -->
-    <div class="input-group">
-      <label>Email <span style="color:#ff4d6d">*</span></label>
-      <input type="email" id="loginEmail" placeholder="name@example.com" required>
-    </div>
+      <!-- EMAIL -->
+      <div class="input-group">
+        <label>Email <span style="color:#ff4d6d">*</span></label>
+        <input type="email" id="loginEmail" placeholder="name@example.com" required>
+      </div>
 
-    <!-- PASSWORD -->
-    <div class="input-group" style="position:relative;">
-      <label>Password <span style="color:#ff4d6d">*</span></label>
-      <input type="password" id="loginPassword" placeholder="Enter your password" required style="padding-right:45px;">
-      <span id="toggleLoginPass" style="
+      <!-- PASSWORD -->
+      <div class="input-group" style="position:relative;">
+        <label>Password <span style="color:#ff4d6d">*</span></label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required
+          style="padding-right:45px;">
+        <span id="toggleLoginPass" style="
         position:absolute;
         right:14px;
         bottom:13px;
         cursor:pointer;
         font-size:1.2rem;
         color:#aaa;">👁️</span>
-    </div>
-
-    <!-- REMEMBER ME + FORGOT -->
-    <div class="remember-row">
-      <label class="remember-label">
-        <input type="checkbox" id="rememberMe">
-        <span class="remember-box">
-          <svg viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        Remember me
-      </label>
-      <div class="forgot" style="margin:0;">
-        <a href="#" style="color:#7c3aed; font-weight:600;">Forgot password?</a>
       </div>
+
+      <!-- REMEMBER ME + FORGOT -->
+      <div class="remember-row">
+        <label class="remember-label">
+          <input type="checkbox" id="rememberMe">
+          <span class="remember-box">
+            <svg viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          Remember me
+        </label>
+        <div class="forgot" style="margin:0;">
+          <a href="#" style="color:#7c3aed; font-weight:600;">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- LOGIN BUTTON -->
+      <button id="loginBtn" class="auth-btn">Log in</button>
+
+      <!-- SIGNUP LINK -->
+      <div class="auth-footer">
+        <p>Don't have an account?
+          <a href="signup.html" style="color:#7c3aed; font-weight:700;">Sign up</a>
+        </p>
+      </div>
+
+      <!-- TERMS -->
+      <div style="text-align:center; margin-top:15px; font-size:0.78rem; color:#666; line-height:1.6;">
+        By signing in, I accept Greetings'<br>
+        <a href="#" style="color:#aaa; text-decoration:underline;">Terms of Use</a>
+        &amp;
+        <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
+      </div>
+
+
     </div>
-
-    <!-- LOGIN BUTTON -->
-    <button id="loginBtn" class="auth-btn">Log in</button>
-
-    <!-- SIGNUP LINK -->
-    <div class="auth-footer">
-      <p>Don't have an account? 
-        <a href="signup.html" style="color:#7c3aed; font-weight:700;">Sign up</a>
-      </p>
-    </div>
-
-    <!-- TERMS -->
-    <div style="text-align:center; margin-top:15px; font-size:0.78rem; color:#666; line-height:1.6;">
-      By signing in, I accept Greetings'<br>
-      <a href="#" style="color:#aaa; text-decoration:underline;">Terms of Use</a>
-      &amp;
-      <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
-    </div>
-
 
   </div>
 
-</div>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+  <script>
+    /* ── Eye icon toggle ── */
+    const toggleLoginPass = document.getElementById('toggleLoginPass');
+    const loginPassword = document.getElementById('loginPassword');
 
-<script src="auth.js"></script>
-<script src="nav-auth.js"></script>
-<script>
-  /* ── Eye icon toggle ── */
-  const toggleLoginPass = document.getElementById('toggleLoginPass');
-  const loginPassword   = document.getElementById('loginPassword');
+    toggleLoginPass.addEventListener('click', () => {
+      if (loginPassword.type === 'password') {
+        loginPassword.type = 'text';
+        toggleLoginPass.textContent = '🙈';
+      } else {
+        loginPassword.type = 'password';
+        toggleLoginPass.textContent = '👁️';
+      }
+    });
 
-  toggleLoginPass.addEventListener('click', () => {
-    if (loginPassword.type === 'password') {
-      loginPassword.type = 'text';
-      toggleLoginPass.textContent = '🙈';
-    } else {
-      loginPassword.type = 'password';
-      toggleLoginPass.textContent = '👁️';
+    /* ── Remember Me — pre-fill on load ── */
+    const emailInput = document.getElementById('loginEmail');
+    const rememberCheck = document.getElementById('rememberMe');
+    const REMEMBER_KEY = 'greetings_remember_email';
+
+    const savedEmail = localStorage.getItem(REMEMBER_KEY);
+    if (savedEmail) {
+      emailInput.value = savedEmail;
+      rememberCheck.checked = true;
     }
-  });
 
-  /* ── Remember Me — pre-fill on load ── */
-  const emailInput    = document.getElementById('loginEmail');
-  const rememberCheck = document.getElementById('rememberMe');
-  const REMEMBER_KEY  = 'greetings_remember_email';
+    /* ── Login button — save/clear email ── */
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const email = emailInput.value.trim();
+      if (rememberCheck.checked && email) {
+        localStorage.setItem(REMEMBER_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_KEY);
+      }
+    });
 
-  const savedEmail = localStorage.getItem(REMEMBER_KEY);
-  if (savedEmail) {
-    emailInput.value      = savedEmail;
-    rememberCheck.checked = true;
-  }
-
-  /* ── Login button — save/clear email ── */
-  document.getElementById('loginBtn').addEventListener('click', () => {
-    const email = emailInput.value.trim();
-    if (rememberCheck.checked && email) {
-      localStorage.setItem(REMEMBER_KEY, email);
-    } else {
-      localStorage.removeItem(REMEMBER_KEY);
-    }
-  });
-
-  /* ── Forgot password ── */
-  document.querySelector('.forgot a').addEventListener('click', (e) => {
-    e.preventDefault();
-    const email = emailInput.value.trim();
-    if (!email) {
-      alert('📧 Please enter your email first, then click Forgot Password.');
-      return;
-    }
-    alert(`✅ Password reset link sent to: ${email}`);
-  });
-</script>
+    /* ── Forgot password ── */
+    document.querySelector('.forgot a').addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      if (!email) {
+        alert('📧 Please enter your email first, then click Forgot Password.');
+        return;
+      }
+      alert(`✅ Password reset link sent to: ${email}`);
+    });
+  </script>
 
 </body>
+
 </html>
