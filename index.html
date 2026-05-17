@@ -563,20 +563,82 @@
 
       </div>
 
-
-      <script src="js/help.js"></script>
-
-      <script src="js/faq.js"></script>
-      <script src="js/auth.js"></script>
-      <script src="js/protect.js"></script>
+      <script>
+        document.querySelectorAll('.cat-card').forEach(card => {
+          const canvas = document.createElement('canvas');
+          canvas.className = 'cat-fold-canvas';
+          card.appendChild(canvas);
+          const ctx = canvas.getContext('2d');
+          let foldSize = 0, targetSize = 0, animId = null;
+          function resize() { canvas.width = card.offsetWidth; canvas.height = card.offsetHeight; }
+          resize();
+          new ResizeObserver(resize).observe(card);
+          function draw(size) {
+            const w = canvas.width, h = canvas.height, s = size;
+            ctx.clearRect(0, 0, w, h);
+            if (s < 1) return;
+            const px = s, py = 0, qx = 0, qy = s, cx = 0, cy = 0;
+            // Cast shadow under flap
+            const shadowGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, s * 1.15);
+            shadowGrad.addColorStop(0, 'rgba(0,0,0,0.6)');
+            shadowGrad.addColorStop(0.5, 'rgba(0,0,0,0.2)');
+            shadowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.beginPath(); ctx.moveTo(px + 8, py); ctx.lineTo(qx, qy + 8); ctx.lineTo(cx, cy); ctx.closePath();
+            ctx.fillStyle = shadowGrad; ctx.fill();
+            // Dark hole where paper peeled
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(qx, qy); ctx.lineTo(cx, cy); ctx.closePath();
+            ctx.fillStyle = 'rgba(5,3,12,0.98)'; ctx.fill();
+            // Mirror corner across fold axis to get flap tip
+            const dx = qx - px, dy = qy - py, len2 = dx * dx + dy * dy;
+            const t2 = ((cx - px) * dx + (cy - py) * dy) / len2;
+            const fx = 2 * (px + t2 * dx) - cx, fy = 2 * (py + t2 * dy) - cy;
+            // Flap fill — paper back
+            const flapGrad = ctx.createLinearGradient(px, py, fx, fy);
+            flapGrad.addColorStop(0, 'rgba(90,72,130,0.92)');
+            flapGrad.addColorStop(0.5, 'rgba(58,46,90,0.94)');
+            flapGrad.addColorStop(1, 'rgba(28,22,48,0.97)');
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(qx, qy); ctx.lineTo(fx, fy); ctx.closePath();
+            ctx.fillStyle = flapGrad; ctx.fill();
+            // Sheen on flap
+            const sheenGrad = ctx.createLinearGradient(qx, qy, fx, fy);
+            sheenGrad.addColorStop(0, 'rgba(255,255,255,0.18)');
+            sheenGrad.addColorStop(0.6, 'rgba(255,255,255,0.05)');
+            sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(qx, qy); ctx.lineTo(fx, fy); ctx.closePath();
+            ctx.fillStyle = sheenGrad; ctx.fill();
+            // Crease highlight
+            const creaseGrad = ctx.createLinearGradient(px, py, qx, qy);
+            creaseGrad.addColorStop(0, 'rgba(255,255,255,0)');
+            creaseGrad.addColorStop(0.35, 'rgba(255,255,255,0.45)');
+            creaseGrad.addColorStop(0.65, 'rgba(210,190,255,0.3)');
+            creaseGrad.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(qx, qy);
+            ctx.strokeStyle = creaseGrad; ctx.lineWidth = 1.5; ctx.stroke();
+          }
+          function animate() {
+            const diff = targetSize - foldSize;
+            if (Math.abs(diff) < 0.4) { foldSize = targetSize; draw(foldSize); animId = null; return; }
+            foldSize += diff * 0.13;
+            draw(foldSize);
+            animId = requestAnimationFrame(animate);
+          }
+          function go() { if (!animId) animId = requestAnimationFrame(animate); }
+          card.addEventListener('mouseenter', () => { targetSize = 72; go(); });
+          card.addEventListener('mouseleave', () => { targetSize = 0; go(); });
+        });
+      </script>
       <script src="api.js"></script>
+      <script src="js/help.js"></script>
+      <script src="js/faq.js"></script>
+      <script src="auth.js"></script>
+      <script src="js/protect.js"></script>
       <script src="script.js"></script>
-
+      </SCRipt>
+      <script src="favorites.js"></script>
       <script src="back-to-top.js"></script>
       <script src="hamburger.js"></script>
       <script src="ai-assistant.js"></script>
       <script src="nav-auth.js"></script>
-      <script defer src="favorites.js"></script>
 </body>
 
 </html>
