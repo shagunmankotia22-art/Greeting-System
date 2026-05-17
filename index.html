@@ -113,7 +113,7 @@ header.g-navbar {
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-bottom: 1px solid rgba(124, 58, 237, 0.25) !important;
-  height: 88px !important;
+  height: 76px !important;
   width: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -122,7 +122,7 @@ header.g-navbar {
 header.g-navbar .g-nav-inner {
   max-width: 1400px !important;
   margin: 0 auto !important;
-  height: 88px !important;
+  height: 76px !important;
   display: grid !important;
   grid-template-columns: 220px 1fr 220px !important;
   align-items: center !important;
@@ -143,7 +143,7 @@ header.g-navbar .g-nav-logo a {
   background: none !important;
 }
 header.g-navbar .g-nav-logo img {
-  height: 100px !important;
+  height: 60px !important;
   width: auto !important;
   display: block !important;
   object-fit: contain !important;
@@ -177,8 +177,47 @@ header.g-navbar .g-nav-link {
 }
 header.g-navbar .g-nav-link:hover { color: #fff !important; }
 header.g-navbar .g-nav-link.active { color: #ff4d6d !important; font-weight: 600 !important; }
+/* Dropdown */
+header.g-navbar .g-nav-dropdown { position: relative !important; }
 header.g-navbar .g-nav-has-arrow svg { transition: transform 0.2s; vertical-align: middle; }
-
+header.g-navbar .g-nav-dropdown:hover .g-nav-has-arrow svg { transform: rotate(180deg); }
+header.g-navbar .g-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(10, 6, 28, 0.97) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(124,58,237,0.35) !important;
+  border-radius: 16px !important;
+  padding: 8px !important;
+  min-width: 175px !important;
+  display: none !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+  z-index: 99999 !important;
+}
+header.g-navbar .g-nav-dropdown:hover .g-dropdown-menu { display: flex !important; }
+header.g-navbar .g-dropdown-menu a {
+  color: rgba(255,255,255,0.85) !important;
+  text-decoration: none !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  transition: all 0.18s !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: none !important;
+}
+header.g-navbar .g-dropdown-menu a:hover {
+  background: rgba(124,58,237,0.2) !important;
+  color: #fff !important;
+  transform: translateX(3px) !important;
+}
+/* RIGHT actions */
 header.g-navbar .g-nav-actions {
   display: flex !important;
   align-items: center !important;
@@ -190,7 +229,6 @@ header.g-navbar #authButtons {
   align-items: center !important;
   gap: 10px !important;
 }
-header.g-navbar #authButtons.hidden { display: none !important; }
 header.g-navbar .g-btn-login {
   color: rgba(255,255,255,0.9) !important;
   text-decoration: none !important;
@@ -267,7 +305,7 @@ body { padding-top: 76px !important; }
 <body class="bg-home">
 
 <!-- NAVBAR -->
-
+<!-- ═══ GREETINGS NAVBAR ═══ -->
 <header class="g-navbar">
   <div class="g-nav-inner">
     <div class="g-nav-logo">
@@ -275,14 +313,19 @@ body { padding-top: 76px !important; }
     </div>
     <nav class="g-nav-links">
       <a href="index.html" class="g-nav-link active">Home</a>
-      <a href="wedding.html" class="g-nav-link">Wedding</a>
-      <a href="birthday.html" class="g-nav-link">Birthday</a>
-      <a href="party.html" class="g-nav-link">Party</a>
-      <a href="cards.html" class="g-nav-link">Cards</a>
-      <a href="events.html" class="g-nav-link">Events</a>
-      <a href="about.html" class="g-nav-link">About</a>
+      <div class="g-nav-dropdown">
+        <a href="#" class="g-nav-link g-nav-has-arrow ">Categories <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="g-dropdown-menu">
+          <a href="wedding.html">💍 Wedding</a>
+          <a href="birthday.html">🎂 Birthday</a>
+          <a href="party.html">🎉 Party</a>
+          <a href="cards.html">🃏 Cards</a>
+          <a href="events.html">📅 Events</a>
+        </div>
+      </div>
+      <a href="about.html" class="g-nav-link ">About</a>
     </nav>
-    <div class="g-nav-actions" id="navRight">
+    <div class="g-nav-actions">
       <div id="authButtons">
         <a href="login.html" class="g-btn-login">Login</a>
         <a href="signup.html" class="g-btn-signup">Sign Up</a>
@@ -295,6 +338,67 @@ body { padding-top: 76px !important; }
     <input type="checkbox" id="g-menu-toggle" class="g-menu-toggle">
   </div>
 </header>
+
+
+<style id="g-navbar-styles">
+
+/* ═══════════════════════ GREETINGS NAVBAR — BEATS TAILWIND ═══════════════════════ */
+<style id="g-navbar-styles">
+header.g-navbar{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:99999!important;background:rgba(8,6,20,0.92)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border-bottom:1px solid rgba(124,58,237,0.25)!important;height:82px!important;width:100%!important;padding:0!important;margin:0!important;display:block!important}
+header.g-navbar .g-nav-inner{max-width:1400px!important;margin:0 auto!important;height:82px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 40px!important;gap:0!important}
+header.g-navbar .g-nav-logo a{display:flex!important;align-items:center!important;text-decoration:none!important;border:none!important;background:none!important}
+header.g-navbar .g-nav-logo img{height:78px!important;width:auto!important;display:block!important;object-fit:contain!important}
+header.g-navbar nav.g-nav-links{display:flex!important;align-items:center!important;justify-content:center!important;gap:32px!important;list-style:none!important;margin:0!important;padding:0!important;flex:1!important}
+header.g-navbar .g-nav-link{color:rgba(255,255,255,0.8)!important;text-decoration:none!important;font-size:0.95rem!important;font-weight:500!important;display:flex!important;align-items:center!important;gap:5px!important;padding:0!important;background:none!important;border:none!important;cursor:pointer!important;transition:color 0.2s!important;white-space:nowrap!important}
+header.g-navbar .g-nav-link:hover{color:#fff!important}
+header.g-navbar .g-nav-link.active{color:#ff4d6d!important;font-weight:600!important}
+header.g-navbar .g-nav-actions{display:flex!important;align-items:center!important;gap:10px!important;flex-shrink:0!important}
+header.g-navbar #authButtons{display:flex!important;align-items:center!important;gap:10px!important}
+header.g-navbar #authButtons.hidden{display:none!important}
+header.g-navbar .g-btn-login{color:rgba(255,255,255,0.9)!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:600!important;padding:8px 20px!important;border-radius:100px!important;border:1.5px solid rgba(255,255,255,0.3)!important;background:transparent!important;transition:all 0.2s!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important}
+header.g-navbar .g-btn-login:hover{border-color:rgba(255,255,255,0.7)!important;color:#fff!important;background:rgba(255,255,255,0.07)!important}
+header.g-navbar .g-btn-signup{color:#fff!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:700!important;padding:8px 20px!important;border-radius:100px!important;background:linear-gradient(135deg,#9333ea,#ff4d6d)!important;border:none!important;transition:all 0.2s!important;white-space:nowrap!important;box-shadow:0 4px 15px rgba(147,51,234,0.4)!important;display:inline-flex!important;align-items:center!important}
+header.g-navbar .g-btn-signup:hover{transform:translateY(-2px)!important;box-shadow:0 8px 25px rgba(147,51,234,0.55)!important}
+header.g-navbar .g-hamburger{display:none!important}
+header.g-navbar .g-menu-toggle{display:none!important}
+body{padding-top:82px!important}
+.hidden{display:none!important}
+@media(max-width:900px){
+  header.g-navbar .g-nav-inner{padding:0 20px!important}
+  header.g-navbar nav.g-nav-links,header.g-navbar .g-nav-actions{display:none!important}
+  header.g-navbar .g-hamburger{display:flex!important;flex-direction:column!important;gap:5px!important;cursor:pointer!important;padding:4px!important}
+  header.g-navbar .g-hamburger span{display:block!important;width:24px!important;height:2px!important;background:#fff!important;border-radius:2px!important}
+}
+</style>
+<style id="g-navbar-styles">
+header.g-navbar{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:99999!important;background:rgba(8,6,20,0.92)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border-bottom:1px solid rgba(124,58,237,0.25)!important;height:82px!important;width:100%!important;padding:0!important;margin:0!important;display:block!important}
+header.g-navbar .g-nav-inner{max-width:1400px!important;margin:0 auto!important;height:82px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 40px!important;gap:0!important}
+header.g-navbar .g-nav-logo a{display:flex!important;align-items:center!important;text-decoration:none!important;border:none!important;background:none!important}
+header.g-navbar .g-nav-logo img{height:100px!important;width:auto!important;display:block!important;object-fit:contain!important}
+header.g-navbar nav.g-nav-links{display:flex!important;align-items:center!important;justify-content:center!important;gap:32px!important;list-style:none!important;margin:0!important;padding:0!important;flex:1!important}
+header.g-navbar .g-nav-link{color:rgba(255,255,255,0.8)!important;text-decoration:none!important;font-size:0.95rem!important;font-weight:500!important;display:flex!important;align-items:center!important;gap:5px!important;padding:0!important;background:none!important;border:none!important;cursor:pointer!important;transition:color 0.2s!important;white-space:nowrap!important}
+header.g-navbar .g-nav-link:hover{color:#fff!important}
+header.g-navbar .g-nav-link.active{color:#ff4d6d!important;font-weight:600!important}
+header.g-navbar .g-nav-actions{display:flex!important;align-items:center!important;gap:10px!important;flex-shrink:0!important}
+header.g-navbar #authButtons{display:flex!important;align-items:center!important;gap:10px!important}
+header.g-navbar #authButtons.hidden{display:none!important}
+header.g-navbar .g-btn-login{color:rgba(255,255,255,0.9)!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:600!important;padding:8px 20px!important;border-radius:100px!important;border:1.5px solid rgba(255,255,255,0.3)!important;background:transparent!important;transition:all 0.2s!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important}
+header.g-navbar .g-btn-login:hover{border-color:rgba(255,255,255,0.7)!important;color:#fff!important;background:rgba(255,255,255,0.07)!important}
+header.g-navbar .g-btn-signup{color:#fff!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:700!important;padding:8px 20px!important;border-radius:100px!important;background:linear-gradient(135deg,#9333ea,#ff4d6d)!important;border:none!important;transition:all 0.2s!important;white-space:nowrap!important;box-shadow:0 4px 15px rgba(147,51,234,0.4)!important;display:inline-flex!important;align-items:center!important}
+header.g-navbar .g-btn-signup:hover{transform:translateY(-2px)!important;box-shadow:0 8px 25px rgba(147,51,234,0.55)!important}
+header.g-navbar .g-hamburger{display:none!important}
+header.g-navbar .g-menu-toggle{display:none!important}
+body{padding-top:82px!important}
+.hidden{display:none!important}
+@media(max-width:900px){
+  header.g-navbar .g-nav-inner{padding:0 20px!important}
+  header.g-navbar nav.g-nav-links,header.g-navbar .g-nav-actions{display:none!important}
+  header.g-navbar .g-hamburger{display:flex!important;flex-direction:column!important;gap:5px!important;cursor:pointer!important;padding:4px!important}
+  header.g-navbar .g-hamburger span{display:block!important;width:24px!important;height:2px!important;background:#fff!important;border-radius:2px!important}
+}
+</style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30">
 
 <!-- Hero Section -->
 <section class="relative min-h-[921px] flex items-center justify-center overflow-hidden px-8">
@@ -634,10 +738,11 @@ body { padding-top: 76px !important; }
 
 </div>
 
-<script src="api.js"></script>
+
 <script src="js/help.js"></script>
+
 <script src="js/faq.js"></script>
-<script src="auth.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/protect.js"></script>
 <script src="script.js"></script></SCRipt>
 <script src="favorites.js"></script>
