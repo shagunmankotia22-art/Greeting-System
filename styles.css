@@ -5289,11 +5289,3 @@ section.py-32 .absolute {
   color: #aaa;
   font-size: 0.95rem;
 }
-
-
-.cat-card {
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
-
-  border: none;
-  /* outline:; */
-}
