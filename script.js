@@ -15,7 +15,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
 });
 
 /* ================= 2. HELP WIDGET ================= */
-const helpBtn   = document.getElementById('helpBtn');
+const helpBtn = document.getElementById('helpBtn');
 const helpPanel = document.getElementById('helpPanel');
 const closeHelp = document.getElementById('closeHelp');
 
@@ -32,9 +32,9 @@ if (closeHelp) {
 }
 
 // Help options click
-const faqOption      = document.getElementById('faqOption');
-const contactOption  = document.getElementById('contactOption');
-const reportOption   = document.getElementById('reportOption');
+const faqOption = document.getElementById('faqOption');
+const contactOption = document.getElementById('contactOption');
+const reportOption = document.getElementById('reportOption');
 const liveChatOption = document.getElementById('liveChatOption');
 
 if (faqOption) {
@@ -77,7 +77,7 @@ const ratingMsg = document.getElementById('ratingText');
 
 const messages = {
   1: '😞 Poor',
-  2: '😐 Fair', 
+  2: '😐 Fair',
   3: '🙂 Good',
   4: '😊 Great',
   5: '🤩 Excellent!'
@@ -122,16 +122,16 @@ if (savedRating) {
 }
 /* ================= 4. MOBILE MENU TOGGLE ================= */
 const menuToggle = document.getElementById('menu-toggle');
-const navLeft    = document.querySelector('.nav-left');
+const navLeft = document.querySelector('.nav-left');
 
 if (menuToggle && navLeft) {
   menuToggle.addEventListener('change', () => {
     if (menuToggle.checked) {
       navLeft.style.maxHeight = '500px';
-      navLeft.style.opacity   = '1';
+      navLeft.style.opacity = '1';
     } else {
       navLeft.style.maxHeight = '0';
-      navLeft.style.opacity   = '0';
+      navLeft.style.opacity = '0';
     }
   });
 }
@@ -147,17 +147,17 @@ document.querySelectorAll('.nav-left a, .menu a').forEach(link => {
 
 /* ================= 6. AUTH - SHOW/HIDE BASED ON LOGIN ================= */
 function updateNavAuth() {
-  const user        = JSON.parse(localStorage.getItem('greetings_user') || 'null');
+  const user = JSON.parse(localStorage.getItem('greetings_user') || 'null');
   const authButtons = document.getElementById('authButtons');
   const userProfile = document.getElementById('userProfile');
-  const avatar      = document.getElementById('avatar');
-  const userEmail   = document.getElementById('userEmail');
+  const avatar = document.getElementById('avatar');
+  const userEmail = document.getElementById('userEmail');
 
   if (user) {
     if (authButtons) authButtons.classList.add('hidden');
     if (userProfile) userProfile.classList.remove('hidden');
-    if (avatar)      avatar.textContent  = user.name ? user.name[0].toUpperCase() : '👤';
-    if (userEmail)   userEmail.textContent = user.email;
+    if (avatar) avatar.textContent = user.name ? user.name[0].toUpperCase() : '👤';
+    if (userEmail) userEmail.textContent = user.email;
   } else {
     if (authButtons) authButtons.classList.remove('hidden');
     if (userProfile) userProfile.classList.add('hidden');
@@ -165,8 +165,8 @@ function updateNavAuth() {
 }
 
 // Avatar click — toggle dropdown
-const avatarEl  = document.getElementById('avatar');
-const dropdown  = document.getElementById('dropdown');
+const avatarEl = document.getElementById('avatar');
+const dropdown = document.getElementById('dropdown');
 
 if (avatarEl && dropdown) {
   avatarEl.addEventListener('click', () => {
@@ -249,11 +249,25 @@ document.querySelectorAll('.card').forEach(card => {
 const dropdownLinks = document.querySelectorAll('.dropdown-content a');
 
 dropdownLinks.forEach(link => {
-  link.addEventListener('click', function() {
+  link.addEventListener('click', function () {
     // Remove the effect from all dropdown siblings
     dropdownLinks.forEach(el => el.classList.remove('active-category'));
-    
+
     // Add the effect to the clicked one
     this.classList.add('active-category');
   });
+});
+
+window.addEventListener('load', () => {
+  const favBtn = document.querySelector('.fav-nav-btn');
+  const badge = document.getElementById('favCountBadge');
+
+  if (favBtn && badge && !document.querySelector('.fav-text')) {
+
+    const text = document.createElement('span');
+    text.className = 'fav-text';
+    text.textContent = 'Saved';
+
+    favBtn.insertBefore(text, badge);
+  }
 });

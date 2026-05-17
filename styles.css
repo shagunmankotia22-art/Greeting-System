@@ -366,13 +366,13 @@ p {
 }
 
 .bg-party {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUTvmHGw_t3wflRzgjtj64QWx8FI3Jdl5ysQ&s');
   background-size: cover;
   background-attachment: fixed;
 }
 
 .bg-cards {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=2070');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6G1rrR8gH-TfbcEYxJg4NRq3FssQr4HakdntWamA8&s');
   background-size: cover;
   background-attachment: fixed;
 }
@@ -4601,4 +4601,16 @@ section.py-32 .absolute {
 
       0 0 20px rgba(156, 147, 229, .08);
   }
+}
+
+.fav-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fav-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
 }
