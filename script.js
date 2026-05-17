@@ -60,7 +60,6 @@ if (reportOption) {
 if (liveChatOption) {
   liveChatOption.addEventListener('click', () => {
     helpPanel.style.display = 'none';
-    // Open Greetings AI chat panel
     if (window.greetingsAI) {
       window.greetingsAI.open();
     } else {
@@ -70,12 +69,12 @@ if (liveChatOption) {
 }
 
 /* ================= 3. STAR RATING ================= */
-/* === INTERACTIVE STAR RATING === */
 const starSpans = document.querySelectorAll('#starRating span');
 const ratingMsg = document.getElementById('ratingText');
 
 const messages = {
   1: '😞 Poor',
+  2: '😐 Fair',
   2: '😐 Fair',
   3: '🙂 Good',
   4: '😊 Great',
@@ -83,7 +82,6 @@ const messages = {
 };
 
 starSpans.forEach((star, i) => {
-  // Hover
   star.addEventListener('mouseover', () => {
     starSpans.forEach((s, j) => {
       s.style.color = j <= i ? 'gold' : '#555';
@@ -91,7 +89,6 @@ starSpans.forEach((star, i) => {
     });
   });
 
-  // Mouse out
   star.addEventListener('mouseout', () => {
     const saved = localStorage.getItem('greetings_rating');
     starSpans.forEach((s, j) => {
@@ -100,7 +97,6 @@ starSpans.forEach((star, i) => {
     });
   });
 
-  // Click
   star.addEventListener('click', () => {
     const val = i + 1;
     localStorage.setItem('greetings_rating', val);
@@ -111,7 +107,6 @@ starSpans.forEach((star, i) => {
   });
 });
 
-// Load saved rating on page load
 const savedRating = localStorage.getItem('greetings_rating');
 if (savedRating) {
   starSpans.forEach((s, j) => {
@@ -119,6 +114,7 @@ if (savedRating) {
   });
   if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[savedRating]}`;
 }
+
 /* ================= 4. MOBILE MENU TOGGLE ================= */
 const menuToggle = document.getElementById('menu-toggle');
 const navLeft = document.querySelector('.nav-left');
@@ -201,7 +197,6 @@ if (subscribeForm) {
   });
 }
 
-// Also handle the Tailwind-style form (index.html)
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -236,17 +231,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* ================= 10. CARD HOVER SOUND EFFECT (subtle) ================= */
+/* ================= 10. CARD HOVER EFFECT ================= */
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('mouseenter', () => {
     card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
   });
 });
 
-
-// Target specifically the links inside the dropdown
+/* ================= 11. DROPDOWN CATEGORY LINKS ================= */
 const dropdownLinks = document.querySelectorAll('.dropdown-content a');
-
 dropdownLinks.forEach(link => {
   link.addEventListener('click', function () {
     // Remove the effect from all dropdown siblings

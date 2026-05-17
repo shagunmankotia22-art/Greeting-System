@@ -103,37 +103,44 @@
         toggleLoginPass.textContent = '👁️';
       }
     });
+    <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+  <script>
+  /* ── Eye icon toggle ── */
+  const toggleLoginPass = document.getElementById('toggleLoginPass');
+  const loginPassword   = document.getElementById('loginPassword');
 
-    /* ── Remember Me — pre-fill on load ── */
-    const emailInput = document.getElementById('loginEmail');
-    const rememberCheck = document.getElementById('rememberMe');
-    const REMEMBER_KEY = 'greetings_remember_email';
+  /* ── Remember Me — pre-fill on load ── */
+  const emailInput = document.getElementById('loginEmail');
+  const rememberCheck = document.getElementById('rememberMe');
+  const REMEMBER_KEY = 'greetings_remember_email';
 
-    const savedEmail = localStorage.getItem(REMEMBER_KEY);
-    if (savedEmail) {
-      emailInput.value = savedEmail;
-      rememberCheck.checked = true;
+  const savedEmail = localStorage.getItem(REMEMBER_KEY);
+  if (savedEmail) {
+    emailInput.value = savedEmail;
+  rememberCheck.checked = true;
     }
 
     /* ── Login button — save/clear email ── */
     document.getElementById('loginBtn').addEventListener('click', () => {
       const email = emailInput.value.trim();
-      if (rememberCheck.checked && email) {
-        localStorage.setItem(REMEMBER_KEY, email);
+  if (rememberCheck.checked && email) {
+    localStorage.setItem(REMEMBER_KEY, email);
       } else {
-        localStorage.removeItem(REMEMBER_KEY);
+    localStorage.removeItem(REMEMBER_KEY);
       }
     });
 
     /* ── Forgot password ── */
     document.querySelector('.forgot a').addEventListener('click', (e) => {
-      e.preventDefault();
-      const email = emailInput.value.trim();
-      if (!email) {
-        alert('📧 Please enter your email first, then click Forgot Password.');
-        return;
+    e.preventDefault();
+  const email = emailInput.value.trim();
+  if (!email) {
+    alert('📧 Please enter your email first, then click Forgot Password.');
+  return;
       }
-      alert(`✅ Password reset link sent to: ${email}`);
+  alert(`✅ Password reset link sent to: ${email}`);
     });
   </script>
 
