@@ -4633,3 +4633,107 @@ section.py-32 .absolute {
   position: relative !important;
   z-index: 1000000 !important;
 }
+
+/* VIDEO BACKGROUND */
+
+.auth-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Fullscreen video */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: -2;
+}
+
+/* Dark overlay */
+.auth-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: -1;
+}
+
+/* ================= SIGNUP VIDEO BACKGROUND ================= */
+
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #000;
+}
+
+/* FULLSCREEN VIDEO */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: -2;
+
+  filter:
+    brightness(0.65) contrast(1.05) saturate(1.15);
+}
+
+/* DARK OVERLAY */
+.auth-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55),
+      rgba(20, 0, 40, 0.65));
+
+  z-index: -1;
+}
+
+/* GLASS CARD */
+.auth-card {
+  background: rgba(15, 10, 25, 0.28);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 0 25px rgba(139, 92, 246, 0.22),
+    0 0 80px rgba(255, 77, 157, 0.08);
+}
+
+/* DARK OVERLAY */
+.auth-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.25),
+      rgba(20, 0, 40, 0.35));
+
+  z-index: -1;
+}
