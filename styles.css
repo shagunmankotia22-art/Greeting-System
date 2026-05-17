@@ -4614,3 +4614,22 @@ section.py-32 .absolute {
   font-size: 14px;
   font-weight: 500;
 }
+
+/* FAVORITES MODAL FIX */
+.fav-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.fav-modal {
+  position: relative !important;
+  z-index: 1000000 !important;
+}
