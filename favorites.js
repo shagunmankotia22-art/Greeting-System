@@ -139,7 +139,6 @@
                    a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
                    1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
-        Saved
         <span class="fav-count-badge" id="favCountBadge">0</span>`;
 
       btn.addEventListener('click', openModal);
