@@ -463,32 +463,7 @@ header.g-navbar .g-nav-link:hover{color:#fff!important}
 header.g-navbar .g-nav-link.active{color:#ff4d6d!important;font-weight:600!important}
 header.g-navbar .g-nav-actions{display:flex!important;align-items:center!important;gap:10px!important;flex-shrink:0!important}
 header.g-navbar #authButtons{display:flex!important;align-items:center!important;gap:10px!important}
-header.g-navbar .g-btn-login{color:rgba(255,255,255,0.9)!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:600!important;padding:8px 20px!important;border-radius:100px!important;border:1.5px solid rgba(255,255,255,0.3)!important;background:transparent!important;transition:all 0.2s!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important}
-header.g-navbar .g-btn-login:hover{border-color:rgba(255,255,255,0.7)!important;color:#fff!important;background:rgba(255,255,255,0.07)!important}
-header.g-navbar .g-btn-signup{color:#fff!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:700!important;padding:8px 20px!important;border-radius:100px!important;background:linear-gradient(135deg,#9333ea,#ff4d6d)!important;border:none!important;transition:all 0.2s!important;white-space:nowrap!important;box-shadow:0 4px 15px rgba(147,51,234,0.4)!important;display:inline-flex!important;align-items:center!important}
-header.g-navbar .g-btn-signup:hover{transform:translateY(-2px)!important;box-shadow:0 8px 25px rgba(147,51,234,0.55)!important}
-header.g-navbar .g-hamburger{display:none!important}
-header.g-navbar .g-menu-toggle{display:none!important}
-body{padding-top:82px!important}
-.hidden{display:none!important}
-@media(max-width:900px){
-  header.g-navbar .g-nav-inner{padding:0 20px!important}
-  header.g-navbar nav.g-nav-links,header.g-navbar .g-nav-actions{display:none!important}
-  header.g-navbar .g-hamburger{display:flex!important;flex-direction:column!important;gap:5px!important;cursor:pointer!important;padding:4px!important}
-  header.g-navbar .g-hamburger span{display:block!important;width:24px!important;height:2px!important;background:#fff!important;border-radius:2px!important}
-}
-</style>
-<style id="g-navbar-styles">
-header.g-navbar{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:99999!important;background:rgba(8,6,20,0.92)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;border-bottom:1px solid rgba(124,58,237,0.25)!important;height:82px!important;width:100%!important;padding:0!important;margin:0!important;display:block!important}
-header.g-navbar .g-nav-inner{max-width:1400px!important;margin:0 auto!important;height:82px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 40px!important;gap:0!important}
-header.g-navbar .g-nav-logo a{display:flex!important;align-items:center!important;text-decoration:none!important;border:none!important;background:none!important}
-header.g-navbar .g-nav-logo img{height:78px!important;width:auto!important;display:block!important;object-fit:contain!important}
-header.g-navbar nav.g-nav-links{display:flex!important;align-items:center!important;justify-content:center!important;gap:32px!important;list-style:none!important;margin:0!important;padding:0!important;flex:1!important}
-header.g-navbar .g-nav-link{color:rgba(255,255,255,0.8)!important;text-decoration:none!important;font-size:0.95rem!important;font-weight:500!important;display:flex!important;align-items:center!important;gap:5px!important;padding:0!important;background:none!important;border:none!important;cursor:pointer!important;transition:color 0.2s!important;white-space:nowrap!important}
-header.g-navbar .g-nav-link:hover{color:#fff!important}
-header.g-navbar .g-nav-link.active{color:#ff4d6d!important;font-weight:600!important}
-header.g-navbar .g-nav-actions{display:flex!important;align-items:center!important;gap:10px!important;flex-shrink:0!important}
-header.g-navbar #authButtons{display:flex!important;align-items:center!important;gap:10px!important}
+header.g-navbar #authButtons.hidden{display:none!important}
 header.g-navbar .g-btn-login{color:rgba(255,255,255,0.9)!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:600!important;padding:8px 20px!important;border-radius:100px!important;border:1.5px solid rgba(255,255,255,0.3)!important;background:transparent!important;transition:all 0.2s!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important}
 header.g-navbar .g-btn-login:hover{border-color:rgba(255,255,255,0.7)!important;color:#fff!important;background:rgba(255,255,255,0.07)!important}
 header.g-navbar .g-btn-signup{color:#fff!important;text-decoration:none!important;font-size:0.88rem!important;font-weight:700!important;padding:8px 20px!important;border-radius:100px!important;background:linear-gradient(135deg,#9333ea,#ff4d6d)!important;border:none!important;transition:all 0.2s!important;white-space:nowrap!important;box-shadow:0 4px 15px rgba(147,51,234,0.4)!important;display:inline-flex!important;align-items:center!important}
@@ -666,84 +641,60 @@ body{padding-top:82px!important}
 <script src="back-to-top.js"></script>
 <script src="hamburger.js"></script>
 <script>
-  const USER_KEY  = 'greetings_user';
-  const FAV_KEY   = 'greetings_favourites';
-  const JOIN_KEY  = 'greetings_joined';
+  /* ── Profile Page — API Integrated ── */
 
-  function getUser() {
-    try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); }
-    catch { return null; }
-  }
-
-  /* ── Navbar auth sync ── */
-  function updateNavAuth() {
-    const user        = getUser();
-    const authButtons = document.getElementById('authButtons');
-    const userProfile = document.getElementById('userProfile');
-    const avatar      = document.getElementById('avatar');
-    const userEmailEl = document.getElementById('userEmail');
-
-    if (user) {
-      authButtons?.classList.add('hidden');
-      userProfile?.classList.remove('hidden');
-      if (avatar)      avatar.textContent    = user.name ? user.name[0].toUpperCase() : '👤';
-      if (userEmailEl) userEmailEl.textContent = user.email;
-    } else {
-      authButtons?.classList.remove('hidden');
-      userProfile?.classList.add('hidden');
-    }
-  }
-
-  /* ── Avatar dropdown toggle ── */
-  const avatarEl = document.getElementById('avatar');
-  const dropdown = document.getElementById('dropdown');
-  if (avatarEl && dropdown) {
-    avatarEl.addEventListener('click', () => {
-      dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-    });
-  }
-
-  /* ── Populate profile ── */
-  function renderProfile() {
-    const user = getUser();
+  async function renderProfile() {
+    // Try API first, fall back to localStorage
+    let user = window.GreetingsAPI?.getUser();
 
     if (!user) {
-      document.getElementById('notLoggedIn').style.display  = 'block';
+      document.getElementById('notLoggedIn').style.display   = 'block';
       document.getElementById('profileContent').style.display = 'none';
       return;
     }
 
-    document.getElementById('notLoggedIn').style.display  = 'none';
+    document.getElementById('notLoggedIn').style.display   = 'none';
     document.getElementById('profileContent').style.display = 'flex';
 
+    // Try to get fresh profile from API
+    try {
+      if (window.GreetingsAPI?.isLoggedIn()) {
+        const fresh = await window.GreetingsAPI.getProfile();
+        if (fresh) {
+          user = { ...user, ...fresh };
+          window.GreetingsAPI.setUser(user);
+        }
+      }
+    } catch(e) { /* use cached user */ }
+
+    // Populate avatar & hero
     const initial = user.name ? user.name[0].toUpperCase() : '?';
-    document.getElementById('profileAvatar').textContent = initial;
-    document.getElementById('profileName').textContent   = user.name  || 'Anonymous';
-    document.getElementById('profileEmail').textContent  = user.email || '—';
-    document.getElementById('infoName').textContent      = user.name  || '—';
-    document.getElementById('infoEmail').textContent     = user.email || '—';
-    document.getElementById('infoPhone').textContent     = user.phone || '—';
+    const el = id => document.getElementById(id);
+    if (el('profileAvatar')) el('profileAvatar').textContent = initial;
+    if (el('profileName'))   el('profileName').textContent   = user.name  || 'Anonymous';
+    if (el('profileEmail'))  el('profileEmail').textContent  = user.email || '—';
+    if (el('infoName'))      el('infoName').textContent      = user.name  || '—';
+    if (el('infoEmail'))     el('infoEmail').textContent     = user.email || '—';
+    if (el('infoPhone'))     el('infoPhone').textContent     = user.phone || '—';
 
-    /* Favourites count */
-    const favs = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
-    document.getElementById('statFavs').textContent = favs.length;
+    // Member since
+    const joined = user.createdAt ? new Date(user.createdAt) : new Date();
+    if (el('infoSince')) el('infoSince').textContent = joined.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
 
-    /* Member since */
-    let joined = localStorage.getItem(JOIN_KEY);
-    if (!joined) {
-      joined = new Date().toISOString();
-      localStorage.setItem(JOIN_KEY, joined);
+    // Days active
+    const days = Math.max(1, Math.floor((Date.now() - joined) / 86400000));
+    if (el('statDays')) el('statDays').textContent = days;
+
+    // Favourites count from API
+    try {
+      const favs = await window.GreetingsAPI.getFavourites();
+      if (el('statFavs')) el('statFavs').textContent = favs.length;
+    } catch(e) {
+      if (el('statFavs')) el('statFavs').textContent = '0';
     }
-    const joinDate = new Date(joined);
-    document.getElementById('infoSince').textContent =
-      joinDate.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-
-    /* Days active */
-    const days = Math.max(1, Math.floor((Date.now() - joinDate) / 86400000));
-    document.getElementById('statDays').textContent = days;
   }
 
-  /* ── Edit profile modal ── */
+  /* ── Edit modal ── */
   const overlay      = document.getElementById('editModalOverlay');
   const editBtn      = document.getElementById('editProfileBtn');
   const cancelBtn    = document.getElementById('editCancelBtn');
@@ -751,45 +702,41 @@ body{padding-top:82px!important}
   const editNameInp  = document.getElementById('editName');
   const editPhoneInp = document.getElementById('editPhone');
 
-  editBtn.addEventListener('click', () => {
-    const user = getUser();
-    editNameInp.value  = user?.name  || '';
-    editPhoneInp.value = user?.phone || '';
-    overlay.classList.add('open');
+  editBtn?.addEventListener('click', () => {
+    const user = window.GreetingsAPI?.getUser();
+    if (editNameInp)  editNameInp.value  = user?.name  || '';
+    if (editPhoneInp) editPhoneInp.value = user?.phone || '';
+    overlay?.classList.add('open');
   });
 
-  function closeModal() { overlay.classList.remove('open'); }
-  cancelBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  function closeModal() { overlay?.classList.remove('open'); }
+  cancelBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  saveBtn.addEventListener('click', () => {
-    const user = getUser();
+  saveBtn?.addEventListener('click', () => {
+    const user = window.GreetingsAPI?.getUser();
     if (!user) return;
-    user.name  = editNameInp.value.trim()  || user.name;
-    user.phone = editPhoneInp.value.trim() || user.phone;
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    user.name  = editNameInp?.value.trim()  || user.name;
+    user.phone = editPhoneInp?.value.trim() || user.phone;
+    window.GreetingsAPI?.setUser(user);
     renderProfile();
-    updateNavAuth();
     closeModal();
   });
 
   /* ── Logout ── */
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    localStorage.removeItem(USER_KEY);
-    window.location.href = 'index.html';
+    window.GreetingsAPI?.logout();
   });
 
-  document.getElementById('logoutAllBtn').addEventListener('click', () => {
+  document.getElementById('logoutAllBtn')?.addEventListener('click', () => {
     if (confirm('Are you sure you want to log out?')) {
-      localStorage.removeItem(USER_KEY);
-      window.location.href = 'login.html';
+      window.GreetingsAPI?.logout();
     }
   });
 
   /* ── Init ── */
-  updateNavAuth();
-  renderProfile();
+  document.addEventListener('DOMContentLoaded', renderProfile);
 </script>
 
 <!-- FOOTER -->

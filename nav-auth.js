@@ -1,139 +1,291 @@
 /* ═══════════════════════════════════════════════════
-   nav-auth.js — Greetings Navbar Auth (API-integrated)
+   nav-auth.js — Greetings Navbar Auth
    ═══════════════════════════════════════════════════ */
 
-const PROFILE_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="38" height="38" style="display:block;">
-  <circle cx="100" cy="100" r="98" fill="#0d1129"/>
-  <polygon points="100,30 130,58 112,78" fill="#0a0c1a"/>
-  <polygon points="130,58 144,84 122,90" fill="#08091a"/>
-  <polygon points="70,58 88,78 56,90" fill="#070818"/>
-  <polygon points="100,30 70,58 88,78" fill="#0c0e22"/>
-  <polygon points="88,78 112,78 100,102" fill="#090b1c"/>
-  <polygon points="144,84 138,116 120,104" fill="#07091a"/>
-  <polygon points="56,90 62,122 80,110" fill="#080a1c"/>
-  <polygon points="100,30 130,58 144,30" fill="#0dd4d4" opacity="0.88"/>
-  <polygon points="130,58 144,84 144,30" fill="#0ab8cc" opacity="0.82"/>
-  <polygon points="120,104 144,84 138,116" fill="#09c4d4" opacity="0.8"/>
-  <polygon points="80,110 100,102 88,78" fill="#0dcce0" opacity="0.78"/>
-  <polygon points="100,102 120,104 112,130" fill="#08b8c8" opacity="0.74"/>
-  <polygon points="80,110 112,130 100,144" fill="#0ac0d0" opacity="0.68"/>
-  <polygon points="70,58 100,30 88,78" fill="#6a34c8" opacity="0.88"/>
-  <polygon points="56,90 88,78 62,122" fill="#7040d0" opacity="0.82"/>
-  <polygon points="112,78 130,58 122,90" fill="#5a28b8" opacity="0.8"/>
-  <polygon points="120,104 138,116 112,130" fill="#6030c0" opacity="0.78"/>
-  <polygon points="62,122 80,110 100,144" fill="#7038c8" opacity="0.74"/>
-  <polygon points="100,144 112,130 106,158" fill="#5828b0" opacity="0.72"/>
-  <polygon points="80,110 100,144 76,152" fill="#6830c0" opacity="0.68"/>
-  <polygon points="112,78 122,90 100,102" fill="#1890a8" opacity="0.92"/>
-  <polygon points="122,90 120,104 138,116" fill="#1070a0" opacity="0.88"/>
-  <polygon points="62,122 80,110 76,152" fill="#1878a8" opacity="0.82"/>
-  <polygon points="100,102 112,130 106,158" fill="#1060a0" opacity="0.85"/>
-  <line x1="100" y1="30" x2="144" y2="30" stroke="#30f0f0" stroke-width="0.7" opacity="0.6"/>
-  <line x1="100" y1="30" x2="130" y2="58" stroke="#20e0e8" stroke-width="0.5" opacity="0.5"/>
-  <line x1="144" y1="30" x2="144" y2="84" stroke="#20d8e8" stroke-width="0.6" opacity="0.55"/>
-</svg>`;
+(function () {
+  'use strict';
 
-function renderNav() {
-  const user       = window.GreetingsAPI?.getUser();
-  const isLoggedIn = window.GreetingsAPI?.isLoggedIn();
+  const USER_KEY = 'greetings_user';
 
-  const authButtons = document.getElementById('authButtons');
-  const userProfile = document.getElementById('userProfile');
-  const avatar      = document.getElementById('avatar');
-  const userEmail   = document.getElementById('userEmail');
-  const logoutBtn   = document.getElementById('logoutBtn');
+  function getUser() {
+    try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); }
+    catch { return null; }
+  }
 
-  // New navbar buttons
-  const gBtnLogin  = document.querySelector('.g-btn-login');
-  const gBtnSignup = document.querySelector('.g-btn-signup');
+  function isLoggedIn() { return !!getUser(); }
 
-  if (isLoggedIn && user) {
-    // Hide login/signup buttons
-    if (authButtons) authButtons.style.display = 'none';
-    if (gBtnLogin)  gBtnLogin.style.display  = 'none';
-    if (gBtnSignup) gBtnSignup.style.display = 'none';
+  function logout() {
+    localStorage.removeItem(USER_KEY);
+    window.location.href = 'index.html';
+  }
 
-    // Show avatar
-    if (userProfile) {
-      userProfile.classList.remove('hidden');
-      userProfile.style.display = 'flex';
-      userProfile.style.alignItems = 'center';
-      userProfile.style.gap = '8px';
-    }
-
-    if (avatar) {
-      avatar.innerHTML = PROFILE_ICON_SVG;
-      avatar.title     = user.name;
-      avatar.style.cssText = 'cursor:pointer;width:38px;height:38px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;flex-shrink:0;';
-
-      // Toggle dropdown on click
-      const dropdown = document.getElementById('dropdown');
-      if (dropdown) {
-        avatar.addEventListener('click', (e) => {
-          e.stopPropagation();
-          dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-        });
-        document.addEventListener('click', () => dropdown.style.display = 'none');
+  /* ── Inject CSS once ── */
+  function injectCSS() {
+    if (document.getElementById('nav-auth-css')) return;
+    const style = document.createElement('style');
+    style.id = 'nav-auth-css';
+    style.textContent = `
+      .g-user-pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 12px 5px 6px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 100px;
+        cursor: pointer;
+        position: relative;
+        transition: background 0.2s, border-color 0.2s;
+        user-select: none;
       }
-    }
+      .g-user-pill:hover {
+        background: rgba(255,255,255,0.11);
+        border-color: rgba(147,51,234,0.5);
+      }
+      .g-pill-avatar {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: linear-gradient(135deg,#9333ea,#ff4d6d);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
+      }
+      .g-pill-name {
+        color: rgba(255,255,255,0.88);
+        font-size: 0.88rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .g-pill-chevron {
+        width: 14px; height: 14px;
+        opacity: 0.5;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+        color: #fff;
+      }
+      .g-user-pill.open .g-pill-chevron { transform: rotate(180deg); }
 
-    if (userEmail && user.email) userEmail.textContent = user.email;
+      /* Dropdown */
+      .g-user-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 230px;
+        background: rgba(10,6,28,0.97);
+        border: 1px solid rgba(124,58,237,0.3);
+        border-radius: 16px;
+        padding: 6px;
+        z-index: 999999;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .g-user-dropdown.open { display: block; }
 
-    // Also show user name if element exists
-    const userName = document.getElementById('navUserName') || document.querySelector('.nav-user-name');
-    if (userName) { userName.textContent = user.name; userName.style.display = ''; }
+      .g-dd-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px 14px;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        margin-bottom: 4px;
+      }
+      .g-dd-big-avatar {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: linear-gradient(135deg,#9333ea,#ff4d6d);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
+      }
+      .g-dd-name {
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.95rem;
+        line-height: 1.3;
+      }
+      .g-dd-email {
+        color: rgba(255,255,255,0.4);
+        font-size: 0.75rem;
+        margin-top: 2px;
+        word-break: break-all;
+      }
 
-    // Show in navbar actions as crystal icon + name
-    const navActions = document.querySelector('.g-nav-actions');
-    if (navActions && !navActions.querySelector('.g-user-pill')) {
-      const pill = document.createElement('div');
-      pill.className = 'g-user-pill';
-      pill.style.cssText = 'display:flex;align-items:center;gap:8px;cursor:pointer;position:relative;';
-      pill.innerHTML = `
-        ${PROFILE_ICON_SVG}
-        <span style="color:rgba(255,255,255,0.85);font-size:0.88rem;font-weight:600;">${user.name.split(' ')[0]}</span>
-        <div id="g-user-dropdown" style="display:none;position:absolute;top:calc(100% + 12px);right:0;background:rgba(10,6,28,0.97);border:1px solid rgba(124,58,237,0.35);border-radius:14px;padding:8px;min-width:180px;z-index:99999;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
-          <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:6px;">
-            <div style="color:#fff;font-weight:700;font-size:0.9rem;">${user.name}</div>
-            <div style="color:rgba(255,255,255,0.5);font-size:0.78rem;">${user.email}</div>
+      .g-dd-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.15s;
+        text-decoration: none;
+        color: rgba(255,255,255,0.8);
+        font-size: 0.88rem;
+        font-weight: 500;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        box-sizing: border-box;
+      }
+      .g-dd-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+      .g-dd-item.danger { color: #ff4d6d; }
+      .g-dd-item.danger:hover { background: rgba(255,77,109,0.1); }
+
+      .g-dd-icon {
+        width: 32px; height: 32px; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px; flex-shrink: 0;
+      }
+      .g-dd-icon.ic-purple { background: rgba(147,51,234,0.2); }
+      .g-dd-icon.ic-pink   { background: rgba(255,77,109,0.15); }
+      .g-dd-icon.ic-red    { background: rgba(255,77,109,0.12); }
+
+      .g-dd-divider {
+        height: 1px;
+        background: rgba(255,255,255,0.07);
+        margin: 4px 6px;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  /* ── Build pill HTML ── */
+  function buildPill(user) {
+    const firstName = (user.name || 'User').split(' ')[0];
+    const initial   = firstName[0].toUpperCase();
+
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;display:flex;align-items:center;';
+
+    wrap.innerHTML = `
+      <div class="g-user-pill" id="gUserPill">
+        <div class="g-pill-avatar">${initial}</div>
+        <span class="g-pill-name">${firstName}</span>
+        <svg class="g-pill-chevron" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+
+      <div class="g-user-dropdown" id="gUserDropdown">
+        <div class="g-dd-header">
+          <div class="g-dd-big-avatar">${initial}</div>
+          <div>
+            <div class="g-dd-name">${user.name || 'User'}</div>
+            <div class="g-dd-email">${user.email || ''}</div>
           </div>
-          <a href="profile.html" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.8);text-decoration:none;padding:9px 14px;border-radius:10px;font-size:0.88rem;transition:all 0.18s;" onmouseover="this.style.background='rgba(124,58,237,0.2)'" onmouseout="this.style.background=''">👤 My Profile</a>
-          <button id="g-logout-btn" style="display:flex;align-items:center;gap:8px;color:#ff4d6d;background:none;border:none;padding:9px 14px;border-radius:10px;font-size:0.88rem;cursor:pointer;width:100%;text-align:left;transition:all 0.18s;" onmouseover="this.style.background='rgba(255,77,109,0.1)'" onmouseout="this.style.background=''">🚪 Logout</button>
-        </div>`;
+        </div>
 
-      pill.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const dd = document.getElementById('g-user-dropdown');
-        if (dd) dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
-      });
-      document.addEventListener('click', () => {
-        const dd = document.getElementById('g-user-dropdown');
-        if (dd) dd.style.display = 'none';
-      });
+        <a href="profile.html" class="g-dd-item">
+          <div class="g-dd-icon ic-purple">&#128100;</div>
+          My Profile
+        </a>
 
-      navActions.innerHTML = '';
-      navActions.appendChild(pill);
+        <button class="g-dd-item" id="gDdSaved">
+          <div class="g-dd-icon ic-pink">&#10084;</div>
+          Saved Cards
+        </button>
 
-      document.getElementById('g-logout-btn')?.addEventListener('click', () => {
-        window.GreetingsAPI.logout();
-      });
+        <div class="g-dd-divider"></div>
+
+        <button class="g-dd-item danger" id="gDdLogout">
+          <div class="g-dd-icon ic-red">&#128682;</div>
+          Logout
+        </button>
+      </div>
+    `;
+
+    return wrap;
+  }
+
+  /* ── Main render ── */
+  function renderNav() {
+    injectCSS();
+
+    const user     = getUser();
+    const loggedIn = isLoggedIn();
+
+    const authButtons = document.getElementById('authButtons');
+    const userProfile = document.getElementById('userProfile');
+    const gBtnLogin   = document.querySelector('.g-btn-login');
+    const gBtnSignup  = document.querySelector('.g-btn-signup');
+    const navActions  = document.querySelector('.g-nav-actions') ||
+                        document.getElementById('navRight');
+
+    if (loggedIn && user) {
+      /* Hide login/signup */
+      if (authButtons) { authButtons.style.display = 'none'; authButtons.classList.add('hidden'); }
+      if (gBtnLogin)   gBtnLogin.style.display  = 'none';
+      if (gBtnSignup)  gBtnSignup.style.display = 'none';
+      if (userProfile) { userProfile.style.display = 'none'; userProfile.classList.add('hidden'); }
+
+      /* Inject pill once */
+      if (navActions && !document.getElementById('gUserPill')) {
+        const pillWrap = buildPill(user);
+        navActions.appendChild(pillWrap);
+
+        const pillEl     = document.getElementById('gUserPill');
+        const dropdownEl = document.getElementById('gUserDropdown');
+
+        /* Toggle */
+        pillEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = dropdownEl.classList.contains('open');
+          dropdownEl.classList.toggle('open', !open);
+          pillEl.classList.toggle('open', !open);
+        });
+
+        /* Close outside */
+        document.addEventListener('click', () => {
+          dropdownEl.classList.remove('open');
+          pillEl.classList.remove('open');
+        });
+        dropdownEl.addEventListener('click', (e) => e.stopPropagation());
+
+        /* Saved Cards */
+        document.getElementById('gDdSaved')?.addEventListener('click', () => {
+          dropdownEl.classList.remove('open');
+          pillEl.classList.remove('open');
+          const favBtn = document.querySelector('.fav-nav-btn');
+          if (favBtn) favBtn.click();
+          else alert('Heart any card to save it here! ❤️');
+        });
+
+        /* Logout */
+        document.getElementById('gDdLogout')?.addEventListener('click', logout);
+      }
+
+    } else {
+      /* Logged out */
+      if (authButtons) { authButtons.style.display = ''; authButtons.classList.remove('hidden'); }
+      if (gBtnLogin)   gBtnLogin.style.display  = '';
+      if (gBtnSignup)  gBtnSignup.style.display = '';
+      if (userProfile) { userProfile.style.display = 'none'; userProfile.classList.add('hidden'); }
+
+      /* Remove pill */
+      const existingPill = document.getElementById('gUserPill');
+      if (existingPill) existingPill.closest('div[style*="position"]')?.remove();
     }
 
+    /* Old-style logout button fallback */
+    document.getElementById('logoutBtn')?.addEventListener('click', logout);
+  }
+
+  /* ── Expose ── */
+  window.updateNavAuth = renderNav;
+  // Extend GreetingsAPI if api.js already set it up; don't overwrite the full object
+  if (window.GreetingsAPI) {
+    window.GreetingsAPI.getUser    = window.GreetingsAPI.getUser    || getUser;
+    window.GreetingsAPI.isLoggedIn = window.GreetingsAPI.isLoggedIn || isLoggedIn;
+    window.GreetingsAPI.logout     = window.GreetingsAPI.logout     || logout;
   } else {
-    // Not logged in — show login/signup
-    if (authButtons) { authButtons.style.display = ''; authButtons.classList.remove('hidden'); }
-    if (gBtnLogin)  gBtnLogin.style.display  = '';
-    if (gBtnSignup) gBtnSignup.style.display = '';
-    if (userProfile) { userProfile.classList.add('hidden'); userProfile.style.display = 'none'; }
+    window.GreetingsAPI = { getUser, isLoggedIn, logout };
   }
 
-  // Old-style logout button
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => window.GreetingsAPI.logout());
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderNav);
+  } else {
+    renderNav();
   }
-}
 
-// Expose globally so auth.js can call it after login
-window.updateNavAuth = renderNav;
-
-document.addEventListener('DOMContentLoaded', renderNav);
+})();

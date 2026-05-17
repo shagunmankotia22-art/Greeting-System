@@ -61,7 +61,6 @@ if (reportOption) {
 if (liveChatOption) {
   liveChatOption.addEventListener('click', () => {
     helpPanel.style.display = 'none';
-    // Open Greetings AI chat panel
     if (window.greetingsAI) {
       window.greetingsAI.open();
     } else {
@@ -71,20 +70,18 @@ if (liveChatOption) {
 }
 
 /* ================= 3. STAR RATING ================= */
-/* === INTERACTIVE STAR RATING === */
 const starSpans = document.querySelectorAll('#starRating span');
 const ratingMsg = document.getElementById('ratingText');
 
 const messages = {
   1: '😞 Poor',
-  2: '😐 Fair', 
+  2: '😐 Fair',
   3: '🙂 Good',
   4: '😊 Great',
   5: '🤩 Excellent!'
 };
 
 starSpans.forEach((star, i) => {
-  // Hover
   star.addEventListener('mouseover', () => {
     starSpans.forEach((s, j) => {
       s.style.color = j <= i ? 'gold' : '#555';
@@ -92,7 +89,6 @@ starSpans.forEach((star, i) => {
     });
   });
 
-  // Mouse out
   star.addEventListener('mouseout', () => {
     const saved = localStorage.getItem('greetings_rating');
     starSpans.forEach((s, j) => {
@@ -101,7 +97,6 @@ starSpans.forEach((star, i) => {
     });
   });
 
-  // Click
   star.addEventListener('click', () => {
     const val = i + 1;
     localStorage.setItem('greetings_rating', val);
@@ -112,7 +107,6 @@ starSpans.forEach((star, i) => {
   });
 });
 
-// Load saved rating on page load
 const savedRating = localStorage.getItem('greetings_rating');
 if (savedRating) {
   starSpans.forEach((s, j) => {
@@ -120,6 +114,7 @@ if (savedRating) {
   });
   if (ratingMsg) ratingMsg.textContent = `You rated: ${messages[savedRating]}`;
 }
+
 /* ================= 4. MOBILE MENU TOGGLE ================= */
 const menuToggle = document.getElementById('menu-toggle');
 const navLeft    = document.querySelector('.nav-left');
@@ -145,47 +140,10 @@ document.querySelectorAll('.nav-left a, .menu a').forEach(link => {
   }
 });
 
-/* ================= 6. AUTH - SHOW/HIDE BASED ON LOGIN ================= */
-function updateNavAuth() {
-  const user        = JSON.parse(localStorage.getItem('greetings_user') || 'null');
-  const authButtons = document.getElementById('authButtons');
-  const userProfile = document.getElementById('userProfile');
-  const avatar      = document.getElementById('avatar');
-  const userEmail   = document.getElementById('userEmail');
-
-  if (user) {
-    if (authButtons) authButtons.classList.add('hidden');
-    if (userProfile) userProfile.classList.remove('hidden');
-    if (avatar)      avatar.textContent  = user.name ? user.name[0].toUpperCase() : '👤';
-    if (userEmail)   userEmail.textContent = user.email;
-  } else {
-    if (authButtons) authButtons.classList.remove('hidden');
-    if (userProfile) userProfile.classList.add('hidden');
-  }
-}
-
-// Avatar click — toggle dropdown
-const avatarEl  = document.getElementById('avatar');
-const dropdown  = document.getElementById('dropdown');
-
-if (avatarEl && dropdown) {
-  avatarEl.addEventListener('click', () => {
-    dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-  });
-}
-
-// Logout
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('greetings_user');
-    updateNavAuth();
-    window.location.href = 'index.html';
-  });
-}
-
-// Run on load
-updateNavAuth();
+/* ================= 6. AUTH - handled by nav-auth.js ================= */
+// nav-auth.js + api.js manage all auth, pill rendering, and logout.
+// Trigger a re-render here in case script.js loads after nav-auth.js.
+if (typeof window.updateNavAuth === 'function') window.updateNavAuth();
 
 /* ================= 7. SUBSCRIBE FORM ================= */
 const subscribeForm = document.querySelector('.subscribe-form');
@@ -202,7 +160,6 @@ if (subscribeForm) {
   });
 }
 
-// Also handle the Tailwind-style form (index.html)
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -237,23 +194,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-/* ================= 10. CARD HOVER SOUND EFFECT (subtle) ================= */
+/* ================= 10. CARD HOVER EFFECT ================= */
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('mouseenter', () => {
     card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
   });
 });
 
-
-// Target specifically the links inside the dropdown
+/* ================= 11. DROPDOWN CATEGORY LINKS ================= */
 const dropdownLinks = document.querySelectorAll('.dropdown-content a');
-
 dropdownLinks.forEach(link => {
   link.addEventListener('click', function() {
-    // Remove the effect from all dropdown siblings
     dropdownLinks.forEach(el => el.classList.remove('active-category'));
-    
-    // Add the effect to the clicked one
     this.classList.add('active-category');
   });
 });
