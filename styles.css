@@ -50,7 +50,7 @@ body {
 }
 
 p {
-  color: #374151;
+  color: #bbb;
   line-height: 1.7;
   font-size: 1.05rem;
 }
@@ -3215,7 +3215,7 @@ section.py-32 .absolute {
   flex: 1;
   height: 5px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #ff4d6d;
   opacity: 0.15;
   transform: scaleY(0.5);
   transform-origin: center;
@@ -3244,7 +3244,7 @@ section.py-32 .absolute {
 
 .pwd-rules li {
   font-size: 0.78rem;
-  color: #555;
+  color: #ff4d6d;
   padding-left: 22px;
   position: relative;
   transition: color 0.25s;
@@ -5288,4 +5288,12 @@ section.py-32 .absolute {
   margin-top: 16px;
   color: #aaa;
   font-size: 0.95rem;
+}
+
+
+.cat-card {
+  background: linear-gradient(45deg, #00dbde, #fc00ff);
+
+  border: none;
+  /* outline:; */
 }
