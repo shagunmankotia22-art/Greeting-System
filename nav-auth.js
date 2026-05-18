@@ -181,11 +181,6 @@
           My Profile
         </a>
 
-        <button class="g-dd-item" id="gDdSaved">
-          <div class="g-dd-icon ic-pink">&#10084;</div>
-          Saved Cards
-        </button>
-
         <div class="g-dd-divider"></div>
 
         <button class="g-dd-item danger" id="gDdLogout">
@@ -213,11 +208,17 @@
                         document.getElementById('navRight');
 
     if (loggedIn && user) {
-      /* Hide login/signup */
-      if (authButtons) { authButtons.style.display = 'none'; authButtons.classList.add('hidden'); }
-      if (gBtnLogin)   gBtnLogin.style.display  = 'none';
-      if (gBtnSignup)  gBtnSignup.style.display = 'none';
-      if (userProfile) { userProfile.style.display = 'none'; userProfile.classList.add('hidden'); }
+      /* Hide login/signup — aggressive, use !important via inline style */
+      if (authButtons) {
+        authButtons.setAttribute('style','display:none!important');
+        authButtons.classList.add('hidden');
+      }
+      if (gBtnLogin)  gBtnLogin.setAttribute('style','display:none!important');
+      if (gBtnSignup) gBtnSignup.setAttribute('style','display:none!important');
+      if (userProfile) {
+        userProfile.setAttribute('style','display:none!important');
+        userProfile.classList.add('hidden');
+      }
 
       /* Inject pill once */
       if (navActions && !document.getElementById('gUserPill')) {
@@ -242,25 +243,23 @@
         });
         dropdownEl.addEventListener('click', (e) => e.stopPropagation());
 
-        /* Saved Cards */
-        document.getElementById('gDdSaved')?.addEventListener('click', () => {
-          dropdownEl.classList.remove('open');
-          pillEl.classList.remove('open');
-          const favBtn = document.querySelector('.fav-nav-btn');
-          if (favBtn) favBtn.click();
-          else alert('Heart any card to save it here! ❤️');
-        });
-
         /* Logout */
         document.getElementById('gDdLogout')?.addEventListener('click', logout);
       }
 
     } else {
-      /* Logged out */
-      if (authButtons) { authButtons.style.display = ''; authButtons.classList.remove('hidden'); }
-      if (gBtnLogin)   gBtnLogin.style.display  = '';
-      if (gBtnSignup)  gBtnSignup.style.display = '';
-      if (userProfile) { userProfile.style.display = 'none'; userProfile.classList.add('hidden'); }
+      /* Logged out — restore buttons */
+      if (authButtons) {
+        authButtons.removeAttribute('style');
+        authButtons.style.display = 'flex';
+        authButtons.classList.remove('hidden');
+      }
+      if (gBtnLogin)  { gBtnLogin.removeAttribute('style');  gBtnLogin.style.display  = 'inline-flex'; }
+      if (gBtnSignup) { gBtnSignup.removeAttribute('style'); gBtnSignup.style.display = 'inline-flex'; }
+      if (userProfile) {
+        userProfile.setAttribute('style','display:none!important');
+        userProfile.classList.add('hidden');
+      }
 
       /* Remove pill */
       const existingPill = document.getElementById('gUserPill');
@@ -270,6 +269,26 @@
     /* Old-style logout button fallback */
     document.getElementById('logoutBtn')?.addEventListener('click', logout);
   }
+
+  /* ── Re-hide buttons after DOM changes (e.g. favorites.js runs) ── */
+  function enforceHideOnLogin() {
+    if (!isLoggedIn()) return;
+    const ab = document.getElementById('authButtons');
+    const gl = document.querySelector('.g-btn-login');
+    const gs = document.querySelector('.g-btn-signup');
+    if (ab && ab.style.display !== 'none') ab.setAttribute('style','display:none!important');
+    if (gl && gl.style.display !== 'none') gl.setAttribute('style','display:none!important');
+    if (gs && gs.style.display !== 'none') gs.setAttribute('style','display:none!important');
+  }
+
+  /* Watch for any DOM mutation that might re-show the buttons */
+  const _observer = new MutationObserver(enforceHideOnLogin);
+  document.addEventListener('DOMContentLoaded', () => {
+    const navArea = document.querySelector('.g-nav-actions') || document.getElementById('navRight');
+    if (navArea) {
+      _observer.observe(navArea, { childList: true, subtree: true, attributes: true, attributeFilter: ['style','class'] });
+    }
+  });
 
   /* ── Expose ── */
   window.updateNavAuth = renderNav;

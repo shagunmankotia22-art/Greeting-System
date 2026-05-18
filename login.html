@@ -8,10 +8,6 @@
 </head>
 
 <body class="auth-page">
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 <div class="auth-container">
 
@@ -20,15 +16,14 @@
     <!-- HEADER -->
     <div class="auth-header">
       <a href="index.html">
-  <img src="logo.svg" alt="Greetings Logo"
-   style="height:100px; width:auto;
-   display:block; margin:0 auto 8px;">
-</a>
+        <img src="logo.svg" alt="Greetings Logo"
+          style="height:100px; width:auto; display:block; margin:0 auto 8px;">
+      </a>
       <h2>Welcome</h2>
       <p>Login to continue</p>
     </div>
 
- <!-- EMAIL -->
+    <!-- EMAIL -->
     <div class="input-group">
       <label>Email <span style="color:#ff4d6d">*</span></label>
       <input type="email" id="loginEmail" placeholder="name@example.com" required>
@@ -44,7 +39,7 @@
         bottom:13px;
         cursor:pointer;
         font-size:1.2rem;
-        color:#aaa;">👁️</span>
+        color:#aaa;">&#128065;&#65039;</span>
     </div>
 
     <!-- REMEMBER ME + FORGOT -->
@@ -68,7 +63,7 @@
 
     <!-- SIGNUP LINK -->
     <div class="auth-footer">
-      <p>Don't have an account? 
+      <p>Don't have an account?
         <a href="signup.html" style="color:#7c3aed; font-weight:700;">Sign up</a>
       </p>
     </div>
@@ -81,36 +76,27 @@
       <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
     </div>
 
-
   </div>
 
-<<<<<<< Updated upstream
 </div>
 
 <script src="api.js"></script>
 <script src="auth.js"></script>
 <script src="nav-auth.js"></script>
 <script>
-  /* ── Eye icon toggle ── */
   const toggleLoginPass = document.getElementById('toggleLoginPass');
   const loginPassword   = document.getElementById('loginPassword');
 
   toggleLoginPass.addEventListener('click', () => {
     if (loginPassword.type === 'password') {
       loginPassword.type = 'text';
-      toggleLoginPass.textContent = '🙈';
+      toggleLoginPass.textContent = '&#128584;';
     } else {
       loginPassword.type = 'password';
-      toggleLoginPass.textContent = '👁️';
+      toggleLoginPass.textContent = '&#128065;&#65039;';
     }
   });
 
-=======
-  <script src="auth.js"></script>
-  <script src="nav-auth.js"></script>
-  <script>
->>>>>>> Stashed changes
-  /* ── Remember Me — pre-fill on load ── */
   const emailInput    = document.getElementById('loginEmail');
   const rememberCheck = document.getElementById('rememberMe');
   const REMEMBER_KEY  = 'greetings_remember_email';
@@ -121,7 +107,6 @@
     rememberCheck.checked = true;
   }
 
-  /* ── Login button — save/clear email ── */
   document.getElementById('loginBtn').addEventListener('click', () => {
     const email = emailInput.value.trim();
     if (rememberCheck.checked && email) {
@@ -131,15 +116,14 @@
     }
   });
 
-  /* ── Forgot password ── */
   document.querySelector('.forgot a').addEventListener('click', (e) => {
     e.preventDefault();
     const email = emailInput.value.trim();
     if (!email) {
-      alert('📧 Please enter your email first, then click Forgot Password.');
+      alert('Please enter your email first, then click Forgot Password.');
       return;
     }
-    alert(`✅ Password reset link sent to: ${email}`);
+    alert('Password reset link sent to: ' + email);
   });
 </script>
 
