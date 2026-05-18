@@ -20,8 +20,7 @@
       <!-- HEADER -->
       <div class="auth-header">
         <a href="index.html">
-          <img src="logo.svg" alt="Greetings Logo" style="height:100px; width:auto;
-   display:block; margin:0 auto 8px;">
+          <img src="logo.svg" alt="Greetings Logo" style="height:100px; width:auto; display:block; margin:0 auto 8px;">
         </a>
         <h2>Welcome</h2>
         <p>Login to continue</p>
@@ -44,7 +43,7 @@
         bottom:13px;
         cursor:pointer;
         font-size:1.2rem;
-        color:#aaa;">👁️</span>
+        color:#aaa;">&#128065;&#65039;</span>
       </div>
 
       <!-- REMEMBER ME + FORGOT -->
@@ -62,6 +61,43 @@
         <div class="forgot" style="margin:0;">
           <a href="#" style="color:#7c3aed; font-weight:600;">Forgot password?</a>
         </div>
+
+        <!-- REMEMBER ME + FORGOT -->
+        <div class="remember-row">
+          <label class="remember-label">
+            <input type="checkbox" id="rememberMe">
+            <span class="remember-box">
+              <svg viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+            Remember me
+          </label>
+          <div class="forgot" style="margin:0;">
+            <a href="#" style="color:#7c3aed; font-weight:600;">Forgot password?</a>
+          </div>
+        </div>
+
+        <!-- LOGIN BUTTON -->
+        <button id="loginBtn" class="auth-btn">Log in</button>
+
+        <!-- SIGNUP LINK -->
+        <div class="auth-footer">
+          <p>Don't have an account?
+            <a href="signup.html" style="color:#7c3aed; font-weight:700;">Sign up</a>
+          </p>
+        </div>
+
+        <!-- TERMS -->
+        <div style="text-align:center; margin-top:15px; font-size:0.78rem; color:#666; line-height:1.6;">
+          By signing in, I accept Greetings'<br>
+          <a href="#" style="color:#aaa; text-decoration:underline;">Terms of Use</a>
+          &amp;
+          <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
+        </div>
+
+
       </div>
 
       <!-- LOGIN BUTTON -->
@@ -82,37 +118,33 @@
         <a href="#" style="color:#aaa; text-decoration:underline;">Privacy Policy</a>
       </div>
 
-
     </div>
 
-  </div>
+    <script src="auth.js"></script>
+    <script src="nav-auth.js"></script>
+    <script>
+      /* ── Eye icon toggle ── */
+      const toggleLoginPass = document.getElementById('toggleLoginPass');
+      const loginPassword = document.getElementById('loginPassword');
 
-  <script src="auth.js"></script>
-  <script src="nav-auth.js"></script>
-  <script>
-    /* ── Eye icon toggle ── */
-    const toggleLoginPass = document.getElementById('toggleLoginPass');
-    const loginPassword = document.getElementById('loginPassword');
-
-    toggleLoginPass.addEventListener('click', () => {
-      if (loginPassword.type === 'password') {
-        loginPassword.type = 'text';
-        toggleLoginPass.textContent = '🙈';
-      } else {
-        loginPassword.type = 'password';
-        toggleLoginPass.textContent = '👁️';
-      }
-    });
-    <script src="api.js"></script>
-  <script src="auth.js"></script>
-  <script src="nav-auth.js"></script>
-  <script>
-  /* ── Eye icon toggle ── */
+      <script src="api.js"></script>
+    <script src="auth.js"></script>
+    <script src="nav-auth.js"></script>
+    <script>
   const toggleLoginPass = document.getElementById('toggleLoginPass');
   const loginPassword   = document.getElementById('loginPassword');
 
-  /* ── Remember Me — pre-fill on load ── */
-  const emailInput = document.getElementById('loginEmail');
+  toggleLoginPass.addEventListener('click', () => {
+    if (loginPassword.type === 'password') {
+    loginPassword.type = 'text';
+  toggleLoginPass.textContent = '&#128584;';
+    } else {
+    loginPassword.type = 'password';
+  toggleLoginPass.textContent = '&#128065;&#65039;';
+    }
+  });
+
+  const emailInput    = document.getElementById('loginEmail');
   const rememberCheck = document.getElementById('rememberMe');
   const REMEMBER_KEY = 'greetings_remember_email';
 
@@ -120,29 +152,26 @@
   if (savedEmail) {
     emailInput.value = savedEmail;
   rememberCheck.checked = true;
-    }
+  }
 
-    /* ── Login button — save/clear email ── */
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      const email = emailInput.value.trim();
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = emailInput.value.trim();
   if (rememberCheck.checked && email) {
     localStorage.setItem(REMEMBER_KEY, email);
-      } else {
+    } else {
     localStorage.removeItem(REMEMBER_KEY);
-      }
-    });
+    }
 
-    /* ── Forgot password ── */
-    document.querySelector('.forgot a').addEventListener('click', (e) => {
+  document.querySelector('.forgot a').addEventListener('click', (e) => {
     e.preventDefault();
   const email = emailInput.value.trim();
   if (!email) {
-    alert('📧 Please enter your email first, then click Forgot Password.');
+    alert('Please enter your email first, then click Forgot Password.');
   return;
-      }
-  alert(`✅ Password reset link sent to: ${email}`);
-    });
-  </script>
+    }
+  alert('Password reset link sent to: ' + email);
+  });
+    </script>
 
 </body>
 
