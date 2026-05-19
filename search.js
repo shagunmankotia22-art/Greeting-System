@@ -22,10 +22,7 @@
           <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
           <button class="search-clear" id="searchClear" aria-label="Clear">&times;</button>
         </div>
-        <button class="ai-search-btn" id="aiSearchBtn" aria-label="Smart Search">
-            <span class="ai-btn-tooltip">Smart Search</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>
-          </button>
+        <button class="ai-search-btn" id="aiSearchBtn" aria-label="Smart Search">🪄</button>
       </div>
       <div class="search-result-count" id="searchResultCount"></div>
       <div class="ai-search-suggestion" id="aiSuggestion" style="display:none;"></div>`);
@@ -62,7 +59,7 @@
     const aiSuggestion = document.getElementById('aiSuggestion');
     if (!aiBtn || !aiSuggestion) return;
 
-    aiBtn.textContent = '✦ Searching…';
+    aiBtn.textContent = '🪄';
     aiBtn.disabled    = true;
 
     try {
@@ -95,7 +92,7 @@
       aiSuggestion.innerHTML      = `<div style="color:rgba(255,255,255,0.5);font-size:0.85rem;padding:8px;">AI search unavailable — showing text results</div>`;
     }
 
-    aiBtn.textContent = '✦ AI Search';
+    aiBtn.textContent = '🪄';
     aiBtn.disabled    = false;
   }
 

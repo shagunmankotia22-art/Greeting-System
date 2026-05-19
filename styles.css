@@ -378,8 +378,10 @@ p {
 }
 
 .bg-party {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUTvmHGw_t3wflRzgjtj64QWx8FI3Jdl5ysQ&s');
+  background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url('https://i.pinimg.com/1200x/5c/2c/74/5c2c741025cab6603d43c52247e5415f.jpg');
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
@@ -2697,6 +2699,8 @@ section.py-32 .absolute {
 .search-wrap {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 40px;
   padding: 0 10px;
 }
@@ -2850,6 +2854,54 @@ section.py-32 .absolute {
   }
 }
 
+
+/* ================= AI SEARCH BUTTON ================= */
+.ai-search-btn {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.ai-search-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.ai-search-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-btn-tooltip {
+  display: none;
+}
+
+/* ================= AI SUGGESTION BOX ================= */
+#aiSuggestion {
+  background: transparent !important;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+#aiSuggestion > div {
+  background: rgba(124, 58, 237, 0.12) !important;
+  border: 1px solid rgba(124, 58, 237, 0.3) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
 
 /* ================= TAILWIND FORMS ISOLATION FIX ================= */
 /* Prevents Tailwind's forms plugin (loaded on index.html) from
