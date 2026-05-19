@@ -1,0 +1,66 @@
+[33m488cbbc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m cards duplicay remove
+[33m53ae6bc[m index page formatting
+[33md0f4a00[m formatting
+[33mb367ae1[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m55c114f[m Initialize README with project details and setup
+[33m2ce92be[m Fix: About SEction
+[33mc0834ef[m Fix: Final
+[33mc0f16d9[m Fix: navbar
+[33m0dec379[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33md91fb87[m Fix: Trending now
+[33m68f6979[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33md587a9f[m Fix: Hower-effect
+[33ma503d87[m style.css updation
+[33mf127b8e[m styling
+[33m501f4ee[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m9c3da42[m colour changes
+[33md93aedf[m colour changes
+[33m1a3bc60[m Update gitignore
+[33m871556b[m Clean up repo- remove old files
+[33md08d753[m Final Touch
+[33mc5d28d8[m subscribe section updation
+[33m6649088[m script formatting
+[33m5a042a0[m little formatted
+[33m30abe67[m login and sign-in background
+[33mbf96144[m formatted
+[33m4629d1c[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33mc3e46f3[m saved button
+[33mec84b14[m Add full API integration - auth, favorites, search, tracking
+[33m765cb26[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m0579d9c[m changes
+[33m0d2f424[m Fix: How-it-works section and heart icon
+[33med0e1b9[m about fixing
+[33m48a0be2[m added
+[33mbbd617f[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m7334aff[m Fix: About section
+[33m45472d9[m navbar final hover and active effects
+[33me306c93[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33mc6bbd7e[m nav active item updation
+[33me290e01[m Fix: Explore Designs button scrolls to categories section
+[33m9eba68a[m about page changes
+[33m610be81[m formating of navbar
+[33mbd8ce94[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m2da447d[m Randomly
+[33ma2ffe04[m Fix color theme for download and share button
+[33m3460042[m Fix Download and Share Button
+[33mc53737c[m Fix login signup auth
+[33mbb03ed8[m Fix persistant login across all pages
+[33maf9c268[m Fix Gemini model - AI working
+[33m4fced0b[m Connect AI to Render banckend
+[33m8c2fef7[m Add Gemini Backend
+[33m4477eb9[m Fix: download and share buttons fully working
+[33med7f9a9[m random
+[33m8e7af6e[m comman changes
+[33m5e67b01[m Merge branch 'main' of https://github.com/shagunmankotia22-art/Greeting-System
+[33m871351a[m local updates
+[33m1d964c2[m Updated HTML files for birthday, wedding, party, cards and events
+[33me558623[m Add 3D book About page
+[33m5a3c157[m Redesign: about page matches screenshot design
+[33m9a3c2d3[m Fix: about page card layout - no more text overlap
+[33mb110b77[m Fix: encode & in image URLs so download and share work
+[33mb9606fc[m Save local changes to ai-assistant and styles
+[33mc02b7a1[m Fix: all cards now open view page with download/share buttons
+[33mf5f0e4d[m navbar categories dropdown
+[33md0f7a66[m the hovering elements of the cards
+[33me40fcab[m update API URL to Render
+[33mba8cadf[m first commit
