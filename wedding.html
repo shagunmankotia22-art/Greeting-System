@@ -7,11 +7,209 @@
   <title>Wedding Invitations</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js"></script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* ═══════════════════════ GREETINGS NAVBAR — BEATS TAILWIND ═══════════════════════ */
+    header.g-navbar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 99999 !important;
+      background: rgba(8, 6, 20, 0.92) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.25) !important;
+      height: 88px !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: block !important;
+    }
+
+    header.g-navbar .g-nav-inner {
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      height: 88px !important;
+      display: grid !important;
+      grid-template-columns: 220px 1fr 220px !important;
+      align-items: center !important;
+      padding: 0 40px !important;
+      gap: 0 !important;
+    }
+
+    /* LEFT logo */
+    header.g-navbar .g-nav-logo {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }
+
+    header.g-navbar .g-nav-logo a {
+      display: flex !important;
+      align-items: center !important;
+      text-decoration: none !important;
+      border: none !important;
+      background: none !important;
+    }
+
+    header.g-navbar .g-nav-logo img {
+      height: 100px !important;
+      width: auto !important;
+      display: block !important;
+      object-fit: contain !important;
+      max-width: none !important;
+    }
+
+    /* CENTER nav links */
+    header.g-navbar nav.g-nav-links {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 36px !important;
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      height: 100% !important;
+    }
+
+    header.g-navbar .g-nav-link {
+      color: rgba(255, 255, 255, 0.8) !important;
+      text-decoration: none !important;
+      font-size: 0.95rem !important;
+      font-weight: 500 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      padding: 0 !important;
+      background: none !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: color 0.2s !important;
+      white-space: nowrap !important;
+    }
+
+    header.g-navbar .g-nav-link:hover {
+      color: #fff !important;
+    }
+
+    header.g-navbar .g-nav-link.active {
+      color: #ff4d6d !important;
+      font-weight: 600 !important;
+    }
+
+    /* RIGHT actions */
+    header.g-navbar .g-nav-actions {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      gap: 10px !important;
+    }
+
+    header.g-navbar #authButtons {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+
+    header.g-navbar .g-btn-login {
+      color: rgba(255, 255, 255, 0.9) !important;
+      text-decoration: none !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      padding: 8px 20px !important;
+      border-radius: 100px !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+      background: transparent !important;
+      transition: all 0.2s !important;
+      white-space: nowrap !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+
+    header.g-navbar .g-btn-login:hover {
+      border-color: rgba(255, 255, 255, 0.7) !important;
+      color: #fff !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+    }
+
+    header.g-navbar .g-btn-signup {
+      color: #fff !important;
+      text-decoration: none !important;
+      font-size: 0.88rem !important;
+      font-weight: 700 !important;
+      padding: 8px 20px !important;
+      border-radius: 100px !important;
+      background: linear-gradient(135deg, #9333ea, #ff4d6d) !important;
+      border: none !important;
+      transition: all 0.2s !important;
+      white-space: nowrap !important;
+      box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+
+    header.g-navbar .g-btn-signup:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 25px rgba(147, 51, 234, 0.55) !important;
+    }
+
+    /* Hamburger hidden on desktop */
+    header.g-navbar .g-hamburger {
+      display: none !important;
+    }
+
+    header.g-navbar .g-menu-toggle {
+      display: none !important;
+    }
+
+    /* Push content below fixed navbar */
+    body {
+      padding-top: 76px !important;
+    }
+
+    @media (max-width: 900px) {
+      header.g-navbar .g-nav-inner {
+        grid-template-columns: auto 1fr auto !important;
+        padding: 0 20px !important;
+      }
+
+      header.g-navbar nav.g-nav-links,
+      header.g-navbar .g-nav-actions {
+        display: none !important;
+      }
+
+      header.g-navbar .g-hamburger {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+        cursor: pointer !important;
+        padding: 4px !important;
+      }
+
+      header.g-navbar .g-hamburger span {
+        display: block !important;
+        width: 24px !important;
+        height: 2px !important;
+        background: #fff !important;
+        border-radius: 2px !important;
+      }
+    }
+
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
 
 <body class="bg-wedding">
 
-  <header class="navbar">
+  <!-- <header class="navbar">
     <div class="container nav">
       <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;"></a>
       <input type="checkbox" id="menu-toggle"
@@ -53,8 +251,34 @@
         </div>
       </nav>
     </div>
+  </header> -->
+  <header class="g-navbar">
+    <div class="g-nav-inner">
+      <div class="g-nav-logo">
+        <a href="index.html"><img src="logo.svg" alt="Greetings Logo"></a>
+      </div>
+      <nav class="g-nav-links">
+        <a href="index.html" class="g-nav-link active">Home</a>
+        <a href="wedding.html" class="g-nav-link">Wedding</a>
+        <a href="birthday.html" class="g-nav-link">Birthday</a>
+        <a href="party.html" class="g-nav-link">Party</a>
+        <a href="cards.html" class="g-nav-link">Cards</a>
+        <a href="events.html" class="g-nav-link">Events</a>
+        <a href="about.html" class="g-nav-link ">About</a>
+      </nav>
+      <div class="g-nav-actions">
+        <div id="authButtons">
+          <a href="login.html" class="g-btn-login">Login</a>
+          <a href="signup.html" class="g-btn-signup">Sign Up</a>
+        </div>
+        <div id="userProfile" class="hidden"></div>
+      </div>
+      <label for="g-menu-toggle" class="g-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </label>
+      <input type="checkbox" id="g-menu-toggle" class="g-menu-toggle">
+    </div>
   </header>
-
   <section class="section">
     <div class="container">
       <div class="page-title-wrap">
