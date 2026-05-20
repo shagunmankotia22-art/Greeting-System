@@ -88,6 +88,30 @@
     }
   </script>
   <style>
+    /* ── Theme toggle button ── */
+    #theme-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.85);
+      line-height: 0;
+    }
+    #theme-toggle:hover { transform: scale(1.12); background: rgba(255,255,255,0.14); }
+    #theme-toggle svg { display: block; pointer-events: none; }
+    body.light-mode #theme-toggle {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(124,58,237,0.3);
+      color: #7c3aed;
+    }
+
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
@@ -513,6 +537,10 @@
         <a href="about.html" class="g-nav-link ">About</a>
       </nav>
       <div class="g-nav-actions">
+        <button id="theme-toggle" aria-label="Switch to light mode" title="Toggle light/dark mode">
+  <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
         <div id="authButtons">
           <a href="login.html" class="g-btn-login">Login</a>
           <a href="signup.html" class="g-btn-signup">Sign Up</a>
@@ -636,46 +664,117 @@
     <section class="section trending-section">
       <div class="container">
         <div class="trending-header">
-          <h2 class="section-title trending-title"><span class="plain">Trending </span><span
-              class="trending-now">Now</span></h2>
+          <h2 class="section-title trending-title"><span class="plain">Trending </span><span class="trending-now">Now</span></h2>
           <div class="live-indicator">
             <span class="dot"></span> LIVE UPDATES
           </div>
         </div>
 
         <div class="card-grid">
-          <a href="view.html?img=https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326"
+
+          <!-- 1 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326&category=birthday&title=Glitter+Balloon+Birthday"
             class="card trending-card">
-            <div class="trending-tag">#1 Popular</div>
-            <img
-              src="https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326">
+            <div class="trending-tag">🔥 #1 Trending</div>
+            <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/glitter-balloon-19519.gif?auto=format,compress&w=326"
+              alt="Glitter Balloon Birthday" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-purple">🎂 Birthday</span>
+              <p class="trending-card-title">Glitter Balloon Birthday</p>
+            </div>
             <div class="card-footer"></div>
           </a>
 
-          <a href="view.html?img=https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326"
+          <!-- 2 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699&category=wedding&title=Together+in+Tradition"
             class="card trending-card">
-            <div class="trending-tag">Most Shared</div>
-            <img
-              src="https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326">
+            <div class="trending-tag">💍 Most Saved</div>
+            <img src="https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699"
+              alt="Together in Tradition Wedding" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-pink">💍 Wedding</span>
+              <p class="trending-card-title">Together in Tradition</p>
+            </div>
             <div class="card-footer"></div>
           </a>
 
-          <a href="view.html?img=https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326"
+          <!-- 3 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699&category=birthday&title=Whimsical+Wings"
             class="card trending-card">
-            <div class="trending-tag">Editors Choice</div>
-            <img
-              src="https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699">
+            <div class="trending-tag">⭐ Editor's Pick</div>
+            <img src="https://images.greetingsisland.com/images/invitations/birthday/previews/whimsical-wings-47256.gif?auto=format,compress&w=699"
+              alt="Whimsical Wings Birthday" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-purple">🎂 Birthday</span>
+              <p class="trending-card-title">Whimsical Wings</p>
+            </div>
             <div class="card-footer"></div>
           </a>
 
-          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/wedding/previews/together-in-tradition-53056.jpeg?auto=format,compress&w=699"
+          <!-- 4 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326&category=party&title=Happy+Hats+Graduation"
             class="card trending-card">
-            <div class="trending-tag">Featured</div>
-            <img
-              src="https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326">
+            <div class="trending-tag">🎓 Most Shared</div>
+            <img src="https://images.greetingsisland.com/images/invitations/party%20theme/graduation/previews/happy-hats-31468.gif?auto=format,compress&w=326"
+              alt="Happy Hats Graduation Party" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-amber">🎉 Party</span>
+              <p class="trending-card-title">Happy Hats Graduation</p>
+            </div>
             <div class="card-footer"></div>
           </a>
 
+          <!-- 5 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326&category=party&title=Morning+Toast+Brunch"
+            class="card trending-card">
+            <div class="trending-tag">☕ Featured</div>
+            <img src="https://images.greetingsisland.com/images/invitations/party%20theme/brunch/previews/dark-roast,-morning-toast-48058.gif?auto=format,compress&w=326"
+              alt="Morning Toast Brunch Party" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-amber">🎉 Party</span>
+              <p class="trending-card-title">Morning Toast Brunch</p>
+            </div>
+            <div class="card-footer"></div>
+          </a>
+
+          <!-- 6 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326&category=cards&title=Nature+Vibes+Get+Well"
+            class="card trending-card">
+            <div class="trending-tag">💌 Top Rated</div>
+            <img src="https://images.greetingsisland.com/images/cards/get-well/previews/nature-vibes-27085.jpeg?auto=format,compress&w=326"
+              alt="Nature Vibes Get Well Card" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-teal">💌 Cards</span>
+              <p class="trending-card-title">Nature Vibes Get Well</p>
+            </div>
+            <div class="card-footer"></div>
+          </a>
+
+          <!-- 7 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326&category=cards&title=Best+of+Luck"
+            class="card trending-card">
+            <div class="trending-tag">🍀 New Arrival</div>
+            <img src="https://images.greetingsisland.com/images/cards/good-luck/previews/best-of-luck-26358.jpeg?auto=format,compress&w=326"
+              alt="Best of Luck Card" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-teal">💌 Cards</span>
+              <p class="trending-card-title">Best of Luck</p>
+            </div>
+            <div class="card-footer"></div>
+          </a>
+
+          <!-- 8 -->
+          <a href="view.html?img=https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326&category=events&title=Spring+Fairy+Flower"
+            class="card trending-card">
+            <div class="trending-tag">🌸 Rising Fast</div>
+            <img src="https://images.greetingsisland.com/images/announcements/memorial/previews/spring-fairy-flower-33502.jpeg?auto=format,compress&w=326"
+              alt="Spring Fairy Flower Event" loading="lazy">
+            <div class="trending-card-info">
+              <span class="trending-category-badge badge-blue">🎟️ Events</span>
+              <p class="trending-card-title">Spring Fairy Flower</p>
+            </div>
+            <div class="card-footer"></div>
+          </a>
 
         </div>
       </div>
@@ -900,8 +999,9 @@
 
         <!-- BUTTON -->
         <div class="help-widget" id="helpBtn">
-          Need Help?
+          <span class="help-label">Need Help?</span>
           <span class="help-dot"></span>
+          <span class="help-close-icon">✕</span>
         </div>
 
         <!-- PANEL -->
@@ -988,7 +1088,6 @@
           });
         </script>
         <script src="api.js"></script>
-        <script src="js/help.js"></script>
         <script src="js/faq.js"></script>
         <script src="auth.js"></script>
         <script src="js/protect.js"></script>
@@ -999,6 +1098,144 @@
         <script src="hamburger.js"></script>
         <script src="ai-assistant.js"></script>
         <script src="nav-auth.js"></script>
-  </body>
+
+  <script>
+    /* ── Help Widget — definitive override (runs after script.js) ── */
+    (function () {
+      var btn   = document.getElementById('helpBtn');
+      var panel = document.getElementById('helpPanel');
+      var closeX = document.getElementById('closeHelp');
+      if (!btn || !panel) return;
+
+      /* 1. Clone button & panel header to strip ALL old listeners */
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      btn = newBtn;
+
+      if (closeX) {
+        var newClose = closeX.cloneNode(true);
+        closeX.parentNode.replaceChild(newClose, closeX);
+        closeX = newClose;
+      }
+
+      /* 2. Toggle helpers */
+      function openHelp() {
+        panel.classList.add('open');
+        btn.classList.add('active');
+        panel.style.removeProperty('display'); // undo any display:none from script.js
+      }
+      function closeHelp() {
+        panel.classList.remove('open');
+        btn.classList.remove('active');
+        panel.style.removeProperty('display');
+      }
+
+      /* 3. Watch for script.js setting inline display style and undo it */
+      var obs = new MutationObserver(function () {
+        var d = panel.style.display;
+        if (d === 'none' && panel.classList.contains('open')) {
+          panel.style.removeProperty('display'); // keep open
+        } else if (d === 'flex' && !panel.classList.contains('open')) {
+          panel.style.removeProperty('display'); // keep closed
+        }
+      });
+      obs.observe(panel, { attributes: true, attributeFilter: ['style'] });
+
+      /* 4. Attach fresh listeners */
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        panel.classList.contains('open') ? closeHelp() : openHelp();
+      });
+      if (closeX) closeX.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeHelp();
+      });
+
+      /* Help option buttons */
+      var opts = {
+        faqOption:     function() { document.querySelector('.faq-section')?.scrollIntoView({behavior:'smooth'}); },
+        contactOption: function() { alert('📧 Contact us at: support@greetings.com'); },
+        reportOption:  function() { alert('🐛 Issue reported! We will fix it shortly.'); },
+        liveChatOption:function() { window.greetingsAI ? window.greetingsAI.open() : document.getElementById('gai-btn')?.click(); }
+      };
+      Object.keys(opts).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        var fresh = el.cloneNode(true);
+        el.parentNode.replaceChild(fresh, el);
+        fresh.addEventListener('click', function() { closeHelp(); opts[id](); });
+      });
+
+      /* Close on outside click */
+      document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !panel.contains(e.target)) closeHelp();
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── AI Assistant button — show ✕ icon when panel is open ── */
+    (function () {
+      function initAIToggle() {
+        var btn   = document.getElementById('gai-btn');
+        var panel = document.getElementById('gai-panel');
+        if (!btn || !panel) return;
+
+        var iconHTML  = btn.innerHTML;
+        var closeHTML = '<span style="font-size:1.35rem;font-weight:800;line-height:1;pointer-events:none;">✕</span>';
+
+        function syncIcon() {
+          if (panel.classList.contains('open')) {
+            btn.innerHTML = closeHTML;
+            btn.style.background = 'linear-gradient(135deg, #ff4d6d, #7c3aed)';
+          } else {
+            btn.innerHTML = iconHTML;
+            btn.style.background = '';
+          }
+        }
+
+        new MutationObserver(syncIcon).observe(panel, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      // ai-assistant.js runs before this, but just in case, defer slightly
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAIToggle);
+      } else {
+        initAIToggle();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Dark / Light mode toggle ── */
+    (function () {
+      var btn  = document.getElementById('theme-toggle');
+      var body = document.body;
+      var PREF_KEY = 'greetings_theme';
+      function applyTheme(theme) {
+        var moon = document.getElementById('icon-moon');
+        var sun  = document.getElementById('icon-sun');
+        if (theme === 'light') {
+          body.classList.add('light-mode');
+          if (moon) moon.style.display = 'none';
+          if (sun)  sun.style.display  = '';
+          btn.setAttribute('aria-label', 'Switch to dark mode');
+        } else {
+          body.classList.remove('light-mode');
+          if (moon) moon.style.display = '';
+          if (sun)  sun.style.display  = 'none';
+          btn.setAttribute('aria-label', 'Switch to light mode');
+        }
+      }
+      var saved = localStorage.getItem(PREF_KEY) || 'dark';
+      applyTheme(saved);
+      btn.addEventListener('click', function () {
+        var next = body.classList.contains('light-mode') ? 'dark' : 'light';
+        localStorage.setItem(PREF_KEY, next);
+        applyTheme(next);
+      });
+    })();
+  </script>
+</body>
 
 </html>
