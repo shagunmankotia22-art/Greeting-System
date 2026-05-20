@@ -249,17 +249,3 @@ dropdownLinks.forEach(link => {
     this.classList.add('active-category');
   });
 });
-
-window.addEventListener('load', () => {
-  const favBtn = document.querySelector('.fav-nav-btn');
-  const badge = document.getElementById('favCountBadge');
-
-  if (favBtn && badge && !document.querySelector('.fav-text')) {
-
-    const text = document.createElement('span');
-    text.className = 'fav-text';
-    text.textContent = 'Saved';
-
-    favBtn.insertBefore(text, badge);
-  }
-});

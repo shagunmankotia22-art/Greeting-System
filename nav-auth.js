@@ -139,6 +139,17 @@
       .g-dd-icon.ic-pink   { background: rgba(255,77,109,0.15); }
       .g-dd-icon.ic-red    { background: rgba(255,77,109,0.12); }
 
+      .g-dd-fav-count {
+        margin-left: auto;
+        background: linear-gradient(135deg, #ff4d6d, #8b5cf6);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 999px;
+        display: none;
+      }
+      .g-dd-fav-count.has-favs { display: inline-flex; }
       .g-dd-divider {
         height: 1px;
         background: rgba(255,255,255,0.07);
@@ -180,6 +191,12 @@
           <div class="g-dd-icon ic-purple">&#128100;</div>
           My Profile
         </a>
+
+        <button class="g-dd-item" id="gDdFavourites">
+          <div class="g-dd-icon ic-pink">&#10084;</div>
+          Saved
+          <span class="g-dd-fav-count" id="gDdFavCount"></span>
+        </button>
 
         <div class="g-dd-divider"></div>
 
@@ -242,6 +259,14 @@
           pillEl.classList.remove('open');
         });
         dropdownEl.addEventListener('click', (e) => e.stopPropagation());
+
+        /* Saved Favourites */
+        document.getElementById('gDdFavourites')?.addEventListener('click', () => {
+          dropdownEl.classList.remove('open');
+          pillEl.classList.remove('open');
+          if (window._favOpenModal) window._favOpenModal();
+          else document.dispatchEvent(new CustomEvent('fav:open'));
+        });
 
         /* Logout */
         document.getElementById('gDdLogout')?.addEventListener('click', logout);

@@ -124,30 +124,11 @@
     cards.forEach(injectHeart);
   }
 
-  /* ── Navbar favourites button ── */
+  /* ── No navbar heart button — Saved is in profile dropdown ── */
   function injectNavButton() {
-    // Inject into every nav-right or g-nav-actions found on the page
-    document.querySelectorAll('#navRight, .nav-right, .g-nav-actions').forEach(navRight => {
-      if (navRight.querySelector('.fav-nav-btn')) return;
-
-      const btn = document.createElement('button');
-      btn.className = 'fav-nav-btn';
-      btn.setAttribute('aria-label', 'View favourites');
-      btn.innerHTML = `
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
-                   a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
-                   1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        <span class="fav-count-badge" id="favCountBadge">0</span>`;
-
-      btn.addEventListener('click', openModal);
-      navRight.prepend(btn);
-    });
-
     updateAllBadges();
-
-    /* Re-enforce auth state after favorites injects into navbar */
+    window._favOpenModal = openModal;
+    document.addEventListener('fav:open', openModal);
     if (window.updateNavAuth) window.updateNavAuth();
   }
 
@@ -158,6 +139,12 @@
       badge.textContent = count;
       badge.classList.toggle('has-favs', count > 0);
     });
+    // Update dropdown Saved count
+    const ddCount = document.getElementById('gDdFavCount');
+    if (ddCount) {
+      ddCount.textContent = count || '';
+      ddCount.classList.toggle('has-favs', count > 0);
+    }
     // Also re-sync heart buttons on page (in case modal removed one)
     document.querySelectorAll('.fav-btn').forEach(btn => {
       const card = btn.closest('.card');
