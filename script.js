@@ -16,19 +16,37 @@ document.querySelectorAll('.faq-item').forEach(item => {
 /* ================= 2. HELP WIDGET ================= */
 const helpBtn = document.getElementById('helpBtn');
 const helpPanel = document.getElementById('helpPanel');
-const closeHelp = document.getElementById('closeHelp');
+const closeHelpBtn = document.getElementById('closeHelp');
+
+function openHelpPanel() {
+  if (!helpPanel || !helpBtn) return;
+  helpPanel.classList.add('open');
+  helpBtn.classList.add('active');
+}
+
+function closeHelpPanel() {
+  if (!helpPanel || !helpBtn) return;
+  helpPanel.classList.remove('open');
+  helpBtn.classList.remove('active');
+}
 
 if (helpBtn && helpPanel) {
   helpBtn.addEventListener('click', () => {
-    helpPanel.style.display = helpPanel.style.display === 'flex' ? 'none' : 'flex';
+    helpPanel.classList.contains('open') ? closeHelpPanel() : openHelpPanel();
   });
 }
 
-if (closeHelp) {
-  closeHelp.addEventListener('click', () => {
-    helpPanel.style.display = 'none';
-  });
+if (closeHelpBtn) {
+  closeHelpBtn.addEventListener('click', closeHelpPanel);
 }
+
+// Close when clicking outside
+document.addEventListener('click', function (e) {
+  if (helpPanel && helpBtn &&
+      !helpBtn.contains(e.target) && !helpPanel.contains(e.target)) {
+    closeHelpPanel();
+  }
+});
 
 // Help options click
 const faqOption = document.getElementById('faqOption');
@@ -38,7 +56,7 @@ const liveChatOption = document.getElementById('liveChatOption');
 
 if (faqOption) {
   faqOption.addEventListener('click', () => {
-    helpPanel.style.display = 'none';
+    closeHelpPanel();
     document.querySelector('.faq-section')?.scrollIntoView({ behavior: 'smooth' });
   });
 }
@@ -46,20 +64,20 @@ if (faqOption) {
 if (contactOption) {
   contactOption.addEventListener('click', () => {
     alert('📧 Contact us at: support@greetings.com');
-    helpPanel.style.display = 'none';
+    closeHelpPanel();
   });
 }
 
 if (reportOption) {
   reportOption.addEventListener('click', () => {
     alert('🐛 Issue reported! We will fix it shortly.');
-    helpPanel.style.display = 'none';
+    closeHelpPanel();
   });
 }
 
 if (liveChatOption) {
   liveChatOption.addEventListener('click', () => {
-    helpPanel.style.display = 'none';
+    closeHelpPanel();
     if (window.greetingsAI) {
       window.greetingsAI.open();
     } else {

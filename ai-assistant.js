@@ -241,6 +241,70 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
         border-radius: 22px 22px 0 0;
       }
     }
+
+    /* ── Light Mode ── */
+    body.light-mode #gai-btn {
+      box-shadow: 0 6px 20px rgba(124,58,237,0.3) !important;
+    }
+    body.light-mode #gai-btn .gai-badge {
+      border-color: #f5f3ff !important;
+    }
+    body.light-mode #gai-panel {
+      background: #ffffff !important;
+      border: 1px solid rgba(124,58,237,0.15) !important;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12) !important;
+    }
+    body.light-mode .gai-header {
+      background: rgba(124,58,237,0.04) !important;
+      border-bottom: 1px solid rgba(124,58,237,0.1) !important;
+    }
+    body.light-mode .gai-title { color: #111827 !important; }
+    body.light-mode .gai-sub   { color: #6b7280 !important; }
+    body.light-mode .gai-close { color: #9ca3af !important; }
+    body.light-mode .gai-close:hover {
+      background: rgba(124,58,237,0.08) !important;
+      color: #7c3aed !important;
+    }
+    body.light-mode .gai-msg.ai .gai-bub {
+      background: rgba(124,58,237,0.06) !important;
+      border-color: rgba(124,58,237,0.12) !important;
+      color: #1f2937 !important;
+    }
+    body.light-mode .gai-msg.user .gai-bub {
+      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(255,77,109,0.08)) !important;
+      border-color: rgba(124,58,237,0.2) !important;
+      color: #3b0764 !important;
+    }
+    body.light-mode .gai-av.user {
+      background: rgba(124,58,237,0.1) !important;
+      color: #7c3aed !important;
+    }
+    body.light-mode .gai-chip {
+      background: rgba(124,58,237,0.06) !important;
+      border-color: rgba(124,58,237,0.15) !important;
+      color: #4b5563 !important;
+    }
+    body.light-mode .gai-chip:hover {
+      background: rgba(124,58,237,0.12) !important;
+      border-color: rgba(124,58,237,0.35) !important;
+      color: #7c3aed !important;
+    }
+    body.light-mode .gai-input-wrap {
+      border-top: 1px solid rgba(124,58,237,0.1) !important;
+      background: #fafafa !important;
+    }
+    body.light-mode .gai-char-count { color: #9ca3af !important; }
+    body.light-mode .gai-input {
+      background: #ffffff !important;
+      border-color: rgba(124,58,237,0.2) !important;
+      color: #111827 !important;
+    }
+    body.light-mode .gai-input::placeholder { color: #9ca3af !important; }
+    body.light-mode .gai-input:focus {
+      border-color: rgba(124,58,237,0.45) !important;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.08) !important;
+    }
+    body.light-mode .gai-typing span { background: #7c3aed !important; }
   `;
 
   const style = document.createElement('style');
@@ -313,6 +377,7 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
   let isLoading = false;
   let history   = [];   // [{role:'user'|'assistant', content:'...'}]
   let welcomed  = false;
+  let firstMsg  = true; // track if this is the first real user message
 
   /* ──────────────────────────────────────────────
      OPEN / CLOSE
@@ -340,6 +405,21 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
   btnEl.addEventListener('click',  () => isOpen ? closePanel() : openPanel());
   closeEl.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closePanel(); });
+
+  /* ──────────────────────────────────────────────
+     KEEP-ALIVE — ping backend every 4 min so
+     Render free tier never spins down mid-session
+  ────────────────────────────────────────────── */
+  function keepAlive() {
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: 'ping', messages: [{ role: 'user', content: 'ping' }] }),
+    }).catch(() => {}); // silent — we don't care about the response
+  }
+  // Warm up immediately on page load, then every 4 minutes
+  keepAlive();
+  setInterval(keepAlive, 4 * 60 * 1000);
 
   /* ──────────────────────────────────────────────
      MESSAGES
@@ -398,6 +478,22 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
     history.push({ role: 'user', content: text });
     addMsg('ai', '', true); // typing indicator
 
+    // On first message, show a subtle hint that server may be waking up
+    let wakeHint = null;
+    if (firstMsg) {
+      firstMsg = false;
+      wakeHint = setTimeout(() => {
+        const hintRow = document.getElementById('gai-typing-row');
+        if (hintRow) {
+          const hint = document.createElement('div');
+          hint.id = 'gai-wake-hint';
+          hint.style.cssText = 'font-size:0.68rem;color:#64748b;text-align:center;padding:4px 0;animation:gaiMsgIn 0.3s ease;';
+          hint.textContent = '⚡ Server waking up, almost ready…';
+          hintRow.after(hint);
+        }
+      }, 4000); // show hint only if takes longer than 4s
+    }
+
     try {
       const res = await fetch(API_URL, {
         method:  'POST',
@@ -409,6 +505,8 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
       });
 
       // Remove typing indicator
+      clearTimeout(wakeHint);
+      document.getElementById('gai-wake-hint')?.remove();
       document.getElementById('gai-typing-row')?.remove();
 
       if (!res.ok) {
@@ -427,7 +525,9 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
       if (history.length > 20) history = history.slice(-20);
 
     } catch (err) {
+      clearTimeout(wakeHint);
       document.getElementById('gai-typing-row')?.remove();
+      document.getElementById('gai-wake-hint')?.remove();
       console.error('[Greetings AI] Error:', err.message);
 
       const isNetwork = err.message.includes('fetch') || err.message.includes('Failed');

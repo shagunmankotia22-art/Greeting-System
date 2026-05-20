@@ -8,6 +8,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    /* ── Theme toggle button ── */
+    #theme-toggle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.85);
+      line-height: 0;
+    }
+    #theme-toggle:hover { transform: scale(1.12); background: rgba(255,255,255,0.14); }
+    #theme-toggle svg { display: block; pointer-events: none; }
+    body.light-mode #theme-toggle {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(124,58,237,0.3);
+      color: #7c3aed;
+    }
+
     /* ── Profile page layout ── */
     .profile-page {
       min-height: 100vh;
@@ -494,6 +518,10 @@ body{padding-top:82px!important}
       <a href="about.html" class="g-nav-link">About</a>
     </nav>
     <div class="g-nav-actions">
+        <button id="theme-toggle" aria-label="Switch to light mode" title="Toggle light/dark mode">
+  <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
       <div id="authButtons">
         <a href="login.html" class="g-btn-login">Login</a>
         <a href="signup.html" class="g-btn-signup">Sign Up</a>
@@ -788,5 +816,35 @@ body{padding-top:82px!important}
   </div>
 </footer>
 
+  <script>
+    /* ── Dark / Light mode toggle ── */
+    (function () {
+      var btn  = document.getElementById('theme-toggle');
+      var body = document.body;
+      var PREF_KEY = 'greetings_theme';
+      function applyTheme(theme) {
+        var moon = document.getElementById('icon-moon');
+        var sun  = document.getElementById('icon-sun');
+        if (theme === 'light') {
+          body.classList.add('light-mode');
+          if (moon) moon.style.display = 'none';
+          if (sun)  sun.style.display  = '';
+          btn.setAttribute('aria-label', 'Switch to dark mode');
+        } else {
+          body.classList.remove('light-mode');
+          if (moon) moon.style.display = '';
+          if (sun)  sun.style.display  = 'none';
+          btn.setAttribute('aria-label', 'Switch to light mode');
+        }
+      }
+      var saved = localStorage.getItem(PREF_KEY) || 'dark';
+      applyTheme(saved);
+      btn.addEventListener('click', function () {
+        var next = body.classList.contains('light-mode') ? 'dark' : 'light';
+        localStorage.setItem(PREF_KEY, next);
+        applyTheme(next);
+      });
+    })();
+  </script>
 </body>
 </html>
