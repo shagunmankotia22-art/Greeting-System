@@ -149,12 +149,92 @@ p {
 
 .nav-left a,
 .menu a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-weight: 500;
   position: relative;
-  transition: 0.3s;
+  overflow: hidden;
+  display: inline-block;
+  padding: 6px 2px;
   margin-left: 0;
+  letter-spacing: 0.01em;
+  transition: color 0.35s ease, letter-spacing 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Golden shimmer sweep */
+.nav-left a::before,
+.menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 200, 130, 0.15) 40%,
+    rgba(255, 170, 100, 0.25) 50%,
+    rgba(255, 200, 130, 0.15) 60%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Gradient underline blooms from center */
+.nav-left a::after,
+.menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 1.5px;
+  background: linear-gradient(to right, #ff4d6d, #c89b3c, #8b5cf6);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.nav-left a:hover,
+.menu a:hover {
+  color: #ffffff;
+  letter-spacing: 0.06em;
+}
+
+.nav-left a:hover::before,
+.menu a:hover::before {
+  left: 140%;
+}
+
+.nav-left a:hover::after,
+.menu a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Active link — logo gradient (pink to purple) */
+.nav-left a.active,
+.menu a.active {
+  background: linear-gradient(to right, #ff4d6d, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  opacity: 1;
+}
+
+.nav-left a.active::after,
+.menu a.active::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 0.75;
+}
+
+.nav-left:hover a.active,
+.menu:hover a.active {
+  opacity: 1;
 }
 
 .nav-left a::after,
@@ -340,7 +420,7 @@ p {
 /* ================= PAGE BACKGROUNDS ================= */
 .bg-home {
   background:
-    radial-gradient(circle at 20% 30%, rgba(255, 0, 150, 0.2), transparent 40%),
+    radial-gradient(circle at 20% 55%, rgba(255, 0, 150, 0.2), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(238, 146, 238, 0.226), transparent 40%),
     #0a0a0f !important;
   color: white;
@@ -3002,50 +3082,63 @@ section.py-32 .absolute {
 /* ================= FAVORITES NAVBAR BADGE ================= */
 .fav-nav-btn {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 77, 109, 0.35);
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 77, 109, 0.35);
   background: rgba(255, 77, 109, 0.08);
   color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  white-space: nowrap;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  padding: 0;
 }
 
 .fav-nav-btn:hover {
   background: rgba(255, 77, 109, 0.2);
-  border-color: rgba(255, 77, 109, 0.7);
-  color: #fff;
+  border-color: rgba(255, 77, 109, 0.75);
+  color: #ff4d6d;
+  transform: scale(1.1);
 }
 
 .fav-nav-btn svg {
-  width: 15px;
-  height: 15px;
-  fill: #ff4d6d;
-  stroke: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   flex-shrink: 0;
+  transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
+}
+
+.fav-nav-btn:hover svg {
+  fill: rgba(255, 77, 109, 0.3);
+  stroke: #ff4d6d;
+  transform: scale(1.15);
 }
 
 .fav-count-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
   min-width: 18px;
   height: 18px;
-  padding: 0 5px;
-  border-radius: 9px;
-  background: #ff4d6d;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff4d6d, #8b5cf6);
   color: #fff;
-  font-size: 0.7rem;
-  font-weight: 900;
+  font-size: 10px;
+  font-weight: 700;
   display: none;
   align-items: center;
   justify-content: center;
   line-height: 1;
+  pointer-events: none;
 }
 
 .fav-count-badge.has-favs {
@@ -4799,16 +4892,12 @@ section.py-32 .absolute {
 }
 
 .fav-nav-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
 }
 
-.fav-text {
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-}
+/* fav-text removed — icon only */
 
 /* FAVORITES MODAL FIX */
 .fav-modal-overlay {

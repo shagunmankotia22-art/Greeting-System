@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0,user-scalable=no">
   <title>About | Greetings</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
     rel="stylesheet">
@@ -79,29 +79,86 @@
       height: 100% !important;
     }
 
-    header.g-navbar .g-nav-link {
-      color: rgba(255, 255, 255, 0.8) !important;
+        header.g-navbar .g-nav-link {
+      color: rgba(255, 255, 255, 0.7) !important;
       text-decoration: none !important;
       font-size: 0.95rem !important;
       font-weight: 500 !important;
-      display: flex !important;
+      display: inline-flex !important;
       align-items: center !important;
       gap: 5px !important;
-      padding: 0 !important;
+      padding: 6px 2px !important;
       background: none !important;
       border: none !important;
       cursor: pointer !important;
-      transition: color 0.2s !important;
+      position: relative !important;
+      overflow: hidden !important;
       white-space: nowrap !important;
+      letter-spacing: 0.01em !important;
+      transition: color 0.35s ease, letter-spacing 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+    }
+
+    /* Golden shimmer sweep */
+    header.g-navbar .g-nav-link::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: -100% !important;
+      width: 60% !important;
+      height: 100% !important;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,200,130,0.15) 40%,
+        rgba(255,170,100,0.25) 50%,
+        rgba(255,200,130,0.15) 60%,
+        transparent 100%
+      ) !important;
+      transform: skewX(-20deg) !important;
+      transition: left 0.55s cubic-bezier(0.4,0,0.2,1) !important;
+      pointer-events: none !important;
+    }
+
+    /* Gradient underline blooms from center */
+    header.g-navbar .g-nav-link::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 50% !important;
+      transform: translateX(-50%) scaleX(0) !important;
+      width: 80% !important;
+      height: 1.5px !important;
+      background: linear-gradient(to right, #ff4d6d, #c89b3c, #8b5cf6) !important;
+      transform-origin: center !important;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1) !important;
+      border-radius: 1px !important;
     }
 
     header.g-navbar .g-nav-link:hover {
-      color: #fff !important;
+      color: #ffffff !important;
+      letter-spacing: 0.06em !important;
     }
 
+    header.g-navbar .g-nav-link:hover::before {
+      left: 140% !important;
+    }
+
+    header.g-navbar .g-nav-link:hover::after {
+      transform: translateX(-50%) scaleX(1) !important;
+    }
+
+    /* Active link — logo gradient (pink → purple) */
     header.g-navbar .g-nav-link.active {
-      color: #ff4d6d !important;
+      background: linear-gradient(to right, #ff4d6d, #8b5cf6) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
       font-weight: 600 !important;
+    }
+
+    header.g-navbar .g-nav-link.active::after {
+      transform: translateX(-50%) scaleX(1) !important;
+      opacity: 0.75 !important;
     }
 
     /* RIGHT actions */
@@ -207,7 +264,122 @@
       color: #ffffff;
       font-family: 'Inter', sans-serif;
     }
-  </style>
+
+    /* ===== FAVOURITES NAV HEART BUTTON (favorites.js) ===== */
+    header.g-navbar .fav-nav-btn {
+      display: inline-flex !important; align-items: center !important;
+      justify-content: center !important; position: relative !important;
+      width: 40px !important; height: 40px !important;
+      border-radius: 50% !important;
+      border: 1.5px solid rgba(255, 77, 109, 0.35) !important;
+      background: rgba(255, 77, 109, 0.08) !important;
+      color: rgba(255, 255, 255, 0.75) !important;
+      cursor: pointer !important; transition: all 0.3s ease !important;
+      margin-right: 8px !important; flex-shrink: 0 !important;
+    }
+    header.g-navbar .fav-nav-btn:hover {
+      background: rgba(255, 77, 109, 0.2) !important;
+      border-color: rgba(255, 77, 109, 0.75) !important;
+      color: #ff4d6d !important; transform: scale(1.1) !important;
+    }
+    header.g-navbar .fav-nav-btn svg {
+      width: 20px !important; height: 20px !important;
+      fill: none !important; stroke: currentColor !important;
+      stroke-width: 2 !important; stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+      transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease !important;
+    }
+    header.g-navbar .fav-nav-btn:hover svg {
+      fill: rgba(255, 77, 109, 0.3) !important;
+      stroke: #ff4d6d !important; transform: scale(1.15) !important;
+    }
+    header.g-navbar .fav-count-badge {
+      position: absolute !important; top: -5px !important; right: -5px !important;
+      min-width: 18px !important; height: 18px !important; padding: 0 4px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(135deg, #ff4d6d, #8b5cf6) !important;
+      color: #fff !important; font-size: 10px !important; font-weight: 700 !important;
+      display: none !important; align-items: center !important;
+      justify-content: center !important; line-height: 1 !important;
+      pointer-events: none !important;
+    }
+    header.g-navbar .fav-count-badge.has-favs { display: flex !important; }
+  
+    /* ===== FORCE: heart icon only, no text, no pill ===== */
+    .fav-nav-btn {
+      position: relative !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      border-radius: 50% !important;
+      border: 1.5px solid rgba(255,77,109,0.4) !important;
+      background: rgba(255,77,109,0.08) !important;
+      color: rgba(255,255,255,0.8) !important;
+      cursor: pointer !important;
+      padding: 0 !important;
+      gap: 0 !important;
+      font-size: 0 !important;
+      letter-spacing: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      transition: all 0.3s ease !important;
+      flex-shrink: 0 !important;
+      margin-right: 8px !important;
+    }
+    .fav-nav-btn:hover {
+      background: rgba(255,77,109,0.2) !important;
+      border-color: rgba(255,77,109,0.8) !important;
+      color: #ff4d6d !important;
+      transform: scale(1.1) !important;
+    }
+    .fav-nav-btn svg {
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      fill: none !important;
+      stroke: currentColor !important;
+      stroke-width: 2 !important;
+      stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+      transition: fill 0.3s ease, stroke 0.3s ease !important;
+      flex-shrink: 0 !important;
+    }
+    .fav-nav-btn:hover svg {
+      fill: rgba(255,77,109,0.3) !important;
+      stroke: #ff4d6d !important;
+    }
+    .fav-nav-btn .fav-text,
+    .fav-nav-btn span:not(.fav-count-badge) {
+      display: none !important;
+      width: 0 !important;
+      overflow: hidden !important;
+    }
+    .fav-count-badge {
+      position: absolute !important;
+      top: -5px !important;
+      right: -5px !important;
+      min-width: 18px !important;
+      width: auto !important;
+      height: 18px !important;
+      padding: 0 4px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(135deg,#ff4d6d,#8b5cf6) !important;
+      color: #fff !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: none !important;
+    }
+    .fav-count-badge.has-favs {
+      display: flex !important;
+    }
+    </style>
   <style>
     #about-section {
       min-height: calc(100vh - 120px);
