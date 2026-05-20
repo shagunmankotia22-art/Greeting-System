@@ -203,11 +203,11 @@ This project demonstrates:
 
 ---
 
-# 👨‍💻 Author
+# 👨‍💻 Authors
 
-## Shagun
+## Shagun & Tanvee
 
-Frontend Developer & UI Designer
+Frontend Developers & UI Designers
 
 ---
 
