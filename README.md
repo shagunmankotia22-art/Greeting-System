@@ -9,45 +9,45 @@ The project includes multiple invitation categories such as weddings, birthdays,
 
 ✨ Features
 🎨 Modern UI/UX
-Glassmorphism-inspired interface
-Neon gradient effects
-Interactive hover animations
-Smooth transitions
-Premium dark theme design
+• Glassmorphism-inspired interface
+• Neon gradient effects
+• Interactive hover animations
+• Smooth transitions
+• Premium dark theme design
 📱 Responsive Design
-Mobile-friendly layouts
-Tablet optimized interface
-Desktop responsive sections
-Adaptive navigation system
+• Mobile-friendly layouts
+• Tablet optimized interface
+• Desktop responsive sections
+• Adaptive navigation system
 💌 Invitation Categories
-Wedding Invitations
-Birthday Invitations
-Party Invitations
-Greeting Cards
-Event Invitations
+• Wedding Invitations
+• Birthday Invitations
+• Party Invitations
+• Greeting Cards
+• Event Invitations
 ❤️ Favourites System
-Save favourite cards
-Dynamic heart animations
-LocalStorage integration
+• Save favourite cards
+• Dynamic heart animations
+• LocalStorage integration
 🔐 Authentication Pages
-Login page
-Signup page
-Password visibility toggle
-Animated visual backgrounds
+• Login page
+• Signup page
+• Password visibility toggle
+• Animated visual backgrounds
 ⚡ Interactive Components
-FAQ accordion
-Help widget
-Star rating system
-Smooth scrolling
-Dynamic navbar interactions
+• FAQ accordion
+• Help widget
+• Star rating system
+• Smooth scrolling
+• Dynamic navbar interactions
 🛠️ Tech Stack
-Technology	Purpose
-HTML5	Structure & Layout
-CSS3	Styling & Animations
-JavaScript	Interactivity & Logic
-Tailwind CSS	Utility Styling
-Font Awesome	Icons
-Google Fonts	Typography
+• Technology	Purpose
+• HTML5	Structure & Layout
+• CSS3	Styling & Animations
+• JavaScript	Interactivity & Logic
+• Tailwind CSS	Utility Styling
+• Font Awesome	Icons
+• Google Fonts	Typography
 📂 Project Structure
 Greetings/
 │
@@ -116,29 +116,29 @@ Dark modern aesthetics
 
 Optimized for:
 
-Mobile Devices
-Tablets
-Laptops
-Desktop Screens
+• Mobile Devices
+• Tablets
+• Laptops
+• Desktop Screens
 📖 Learning Outcomes
 
 This project demonstrates:
 
-Responsive Web Design
-DOM Manipulation
-Modern CSS Animations
-Interactive UI Development
-LocalStorage Integration
-Frontend Project Structuring
-User Experience Design
+• Responsive Web Design
+• DOM Manipulation
+• Modern CSS Animations
+• Interactive UI Development
+• LocalStorage Integration
+• Frontend Project Structuring
+• User Experience Design
 🔮 Future Enhancements
-AI-powered invitation suggestions
-Backend integration
-User authentication system
-Database connectivity
-Invitation sharing features
-Cloud deployment
-Music integration
+• AI-powered invitation suggestions
+• Backend integration
+• User authentication system
+• Database connectivity
+• Invitation sharing features
+• Cloud deployment
+• Music integration
 👨‍💻 Author
 Shagun
 
@@ -152,10 +152,10 @@ This project is developed for educational and learning purposes.
 
 Inspired by:
 
-Modern SaaS UI trends
-Glassmorphism design systems
-Interactive frontend experiences
-Contemporary invitation platforms
+• Modern SaaS UI trends
+• Glassmorphism design systems
+• Interactive frontend experiences
+• Contemporary invitation platforms
 <div align="center">
 ✨ Thank You for Visiting ✨
 </div>
