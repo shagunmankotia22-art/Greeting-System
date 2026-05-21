@@ -469,6 +469,103 @@
       .profile-stats { grid-template-columns: 1fr; }
       .profile-hero { padding: 24px 18px; }
     }
+
+    /* ══════════════════════════════════════
+       LIGHT MODE OVERRIDES — profile page
+       ══════════════════════════════════════ */
+    body.light-mode.profile-page {
+      background:
+        radial-gradient(circle at 15% 25%, rgba(124,58,237,0.07), transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(255,77,109,0.06), transparent 45%),
+        #f3f4f8;
+      color: #111;
+    }
+
+    /* Hero card */
+    body.light-mode .profile-hero {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    body.light-mode .profile-hero-info h1 { color: #111111; }
+    body.light-mode .profile-hero-info .profile-email { color: rgba(0,0,0,0.45); }
+    body.light-mode .profile-hero-info .profile-email i { color: #7c3aed; }
+
+    /* Badges */
+    body.light-mode .badge-member {
+      background: rgba(124,58,237,0.1);
+      color: #6d28d9;
+      border-color: rgba(124,58,237,0.25);
+    }
+    body.light-mode .badge-free {
+      background: rgba(0,0,0,0.05);
+      color: rgba(0,0,0,0.45);
+      border-color: rgba(0,0,0,0.1);
+    }
+
+    /* Edit button */
+    body.light-mode .profile-edit-btn {
+      border-color: rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.04);
+      color: rgba(0,0,0,0.55);
+    }
+    body.light-mode .profile-edit-btn:hover {
+      background: rgba(124,58,237,0.1);
+      color: #6d28d9;
+      border-color: rgba(124,58,237,0.35);
+    }
+
+    /* Stat tiles */
+    body.light-mode .stat-tile {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.07);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    body.light-mode .stat-tile:hover { border-color: rgba(124,58,237,0.3); }
+    body.light-mode .stat-tile-value { color: #111111; }
+    body.light-mode .stat-tile-label { color: rgba(0,0,0,0.4); }
+
+    /* Profile cards */
+    body.light-mode .profile-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.07);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    body.light-mode .profile-card h3 { color: rgba(0,0,0,0.35); }
+
+    /* Info rows */
+    body.light-mode .info-row .info-label { color: rgba(0,0,0,0.4); }
+    body.light-mode .info-row .info-value { color: #111111; }
+    body.light-mode .info-row .info-value.muted {
+      color: rgba(0,0,0,0.3);
+    }
+
+    /* Danger zone */
+    body.light-mode .danger-zone {
+      background: rgba(239,68,68,0.03);
+      border-color: rgba(239,68,68,0.18);
+    }
+    body.light-mode .danger-zone h3 { color: rgba(239,68,68,0.6); }
+
+    /* Edit modal */
+    body.light-mode .edit-modal {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.1);
+      color: #111111;
+    }
+    body.light-mode .edit-modal h2 { color: #111111; }
+    body.light-mode .edit-cancel-btn {
+      border-color: rgba(0,0,0,0.12);
+      color: rgba(0,0,0,0.5);
+    }
+    body.light-mode .edit-cancel-btn:hover { background: rgba(0,0,0,0.05); }
+
+    /* Not-logged-in state */
+    body.light-mode .not-logged-in h2 { color: #111111; }
+    body.light-mode .not-logged-in p { color: rgba(0,0,0,0.45); }
+
+    /* Online dot border matches light bg */
+    body.light-mode .profile-online-dot { border-color: #ffffff; }
   </style>
 
 </head>
