@@ -49,7 +49,7 @@
         color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
       }
       .g-pill-name {
-        color: #111111;
+        color: #ffffff;
         font-size: 0.88rem;
         font-weight: 600;
         white-space: nowrap;
@@ -87,6 +87,9 @@
         background: #ffffff !important;
         border: 1px solid rgba(124,58,237,0.2);
         box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+        color: #111111;
+      }
+      body.light-mode .g-pill-name {
         color: #111111;
       }
       body.light-mode .g-dd-name {

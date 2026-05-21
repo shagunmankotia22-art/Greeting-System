@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
   <title>Greetings Clone</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -659,6 +660,143 @@
         </div>
       </div>
     </section>
+
+    <!-- ✦ TRY IT YOURSELF SECTION — START -->
+    <section class="tiy-section">
+      <div class="tiy-intro">
+        <div class="tiy-badge">✦ New Feature</div>
+        <h2 class="tiy-heading">Design your own greeting card</h2>
+        <p class="tiy-sub">Pick a style, write your message, and make it truly personal — in seconds.</p>
+        <button class="tiy-open-btn" onclick="openCardCustomizer()">
+          <span>Try it yourself</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="tiy-preview-cards">
+        <div class="tiy-mini-card" style="background:#1a1a2e;color:#e0d7ff;">
+          <div class="tmc-icon">💍</div>
+          <div class="tmc-title">Wedding Invite</div>
+          <div class="tmc-body">Join us to celebrate our union of love and joy.</div>
+          <span class="tmc-btn" style="background:#7c6af7;color:#fff;">Send card</span>
+        </div>
+        <div class="tiy-mini-card" style="background:#fff0f7;color:#7a0044;border:1px solid #f9c0da;">
+          <div class="tmc-icon">🎂</div>
+          <div class="tmc-title">Happy Birthday!</div>
+          <div class="tmc-body">Wishing you all the joy on your special day.</div>
+          <span class="tmc-btn" style="background:#e84393;color:#fff;">Send card</span>
+        </div>
+        <div class="tiy-mini-card" style="background:#fffbf0;color:#5c2e00;border:1px solid #f5deb3;">
+          <div class="tmc-icon">🎉</div>
+          <div class="tmc-title">Party Time!</div>
+          <div class="tmc-body">You're invited to the celebration of the year!</div>
+          <span class="tmc-btn" style="background:#e07b00;color:#fff;">Send card</span>
+        </div>
+      </div>
+
+      <!-- CARD CUSTOMIZER MODAL -->
+      <div class="tiy-overlay" id="tiyOverlay">
+        <div class="tiy-modal">
+          <button class="tiy-close" onclick="closeCardCustomizer()" aria-label="Close">&#x2715;</button>
+          <div class="tiy-modal-title">Design your card</div>
+
+          <div class="tiy-layout">
+            <!-- LEFT: Preview -->
+            <div class="tiy-preview-col">
+              <div class="tiy-stage-label">Live preview</div>
+              <div class="tiy-stage">
+                <div class="user-card" id="tiyCard"></div>
+              </div>
+              <button class="tiy-copy-btn" onclick="tiyDownload()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download card HTML
+              </button>
+            </div>
+
+            <!-- RIGHT: Controls -->
+            <div class="tiy-controls-col">
+
+              <div class="tiy-section-block">
+                <div class="tiy-sec-title">Content</div>
+                <label class="tiy-label">Occasion</label>
+                <select id="tiy-occasion" onchange="tiyOccasionChange()">
+                  <option value="custom">Custom</option>
+                  <option value="birthday">Birthday</option>
+                  <option value="wedding">Wedding</option>
+                  <option value="party">Party</option>
+                  <option value="anniversary">Anniversary</option>
+                  <option value="graduation">Graduation</option>
+                </select>
+                <label class="tiy-label">Title</label>
+                <input type="text" id="tiy-title" value="Happy Birthday!" oninput="tiyRender()">
+                <label class="tiy-label">Message</label>
+                <textarea id="tiy-body" oninput="tiyRender()">Wishing you all the joy, laughter, and love on your special day!</textarea>
+                <label class="tiy-label">Button text</label>
+                <input type="text" id="tiy-cta" value="Send wishes" oninput="tiyRender()">
+              </div>
+
+              <div class="tiy-section-block">
+                <div class="tiy-sec-title">Features</div>
+                <div class="tiy-checks">
+                  <label class="tiy-toggle-label"><span class="tiy-toggle-text">Icon / emoji</span><span class="tiy-toggle-wrap"><input type="checkbox" id="f-icon" checked onchange="tiyRender()"><span class="tiy-toggle-track"><span class="tiy-toggle-thumb"></span></span></span></label>
+                  <label class="tiy-toggle-label"><span class="tiy-toggle-text">Badge</span><span class="tiy-toggle-wrap"><input type="checkbox" id="f-badge" checked onchange="tiyRender()"><span class="tiy-toggle-track"><span class="tiy-toggle-thumb"></span></span></span></label>
+                  <label class="tiy-toggle-label"><span class="tiy-toggle-text">Tags</span><span class="tiy-toggle-wrap"><input type="checkbox" id="f-tags" onchange="tiyRender()"><span class="tiy-toggle-track"><span class="tiy-toggle-thumb"></span></span></span></label>
+                  <label class="tiy-toggle-label"><span class="tiy-toggle-text">Divider</span><span class="tiy-toggle-wrap"><input type="checkbox" id="f-divider" onchange="tiyRender()"><span class="tiy-toggle-track"><span class="tiy-toggle-thumb"></span></span></span></label>
+                  <label class="tiy-toggle-label"><span class="tiy-toggle-text">Footer note</span><span class="tiy-toggle-wrap"><input type="checkbox" id="f-footer" onchange="tiyRender()"><span class="tiy-toggle-track"><span class="tiy-toggle-thumb"></span></span></span></label>
+                </div>
+                <label class="tiy-label" style="margin-top:8px;">Badge text</label>
+                <input type="text" id="tiy-badge" value="Special Day" oninput="tiyRender()">
+                <label class="tiy-label">Footer note</label>
+                <input type="text" id="tiy-footer" value="With love ♥" oninput="tiyRender()">
+              </div>
+
+              <div class="tiy-section-block">
+                <div class="tiy-sec-title">Style</div>
+                <label class="tiy-label">Color theme</label>
+                <div class="tiy-swatches" id="tiySwatches"></div>
+
+                <label class="tiy-label">Icon</label>
+                <div class="tiy-icons" id="tiyIcons">
+                  <button class="tiy-icon-btn active" data-icon="🌸" onclick="setTiyIcon(this)">🌸</button>
+                  <button class="tiy-icon-btn" data-icon="💍" onclick="setTiyIcon(this)">💍</button>
+                  <button class="tiy-icon-btn" data-icon="🎂" onclick="setTiyIcon(this)">🎂</button>
+                  <button class="tiy-icon-btn" data-icon="🎉" onclick="setTiyIcon(this)">🎉</button>
+                  <button class="tiy-icon-btn" data-icon="❤️" onclick="setTiyIcon(this)">❤️</button>
+                  <button class="tiy-icon-btn" data-icon="✨" onclick="setTiyIcon(this)">✨</button>
+                  <button class="tiy-icon-btn" data-icon="🎓" onclick="setTiyIcon(this)">🎓</button>
+                  <button class="tiy-icon-btn" data-icon="🥂" onclick="setTiyIcon(this)">🥂</button>
+                </div>
+
+                <label class="tiy-label">Layout</label>
+                <div class="tiy-toggle-row">
+                  <button class="tiy-tog active" onclick="setTiyLayout('left',this)">Left</button>
+                  <button class="tiy-tog" onclick="setTiyLayout('center',this)">Center</button>
+                </div>
+
+                <label class="tiy-label">Card style</label>
+                <div class="tiy-toggle-row">
+                  <button class="tiy-tog active" onclick="setTiyVariant('filled',this)">Filled</button>
+                  <button class="tiy-tog" onclick="setTiyVariant('outlined',this)">Outlined</button>
+                  <button class="tiy-tog" onclick="setTiyVariant('soft',this)">Soft</button>
+                </div>
+
+                <label class="tiy-label">Border radius — <span id="tiy-radius-val">14px</span></label>
+                <input type="range" id="tiy-radius" min="0" max="28" step="2" value="14" oninput="document.getElementById('tiy-radius-val').textContent=this.value+'px';tiyRender()">
+
+                <label class="tiy-label">Shadow</label>
+                <div class="tiy-toggle-row">
+                  <button class="tiy-tog active" onclick="setTiyShadow('none',this)">None</button>
+                  <button class="tiy-tog" onclick="setTiyShadow('sm',this)">Soft</button>
+                  <button class="tiy-tog" onclick="setTiyShadow('lg',this)">Bold</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ✦ TRY IT YOURSELF SECTION — END -->
 
     <!-- Trending Section -->
     <section class="section trending-section">

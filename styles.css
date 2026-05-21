@@ -6214,3 +6214,532 @@ body.light-mode .gai-send {
 body.light-mode .trending-card-info {
   background: linear-gradient(to top, rgba(15,10,40,0.88) 60%, transparent) !important;
 }
+
+/* ================= TRY IT YOURSELF — CARD CUSTOMIZER ================= */
+
+/* ---------- SECTION (dark-first) ---------- */
+.tiy-section {
+  background: linear-gradient(135deg, rgba(255,77,109,0.08) 0%, rgba(124,58,237,0.1) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  margin: 32px auto;
+  max-width: 1200px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.tiy-intro { flex: 1; min-width: 220px; }
+
+.tiy-badge {
+  display: inline-block;
+  background: rgba(232,67,147,0.18);
+  color: #ff8ec8;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  letter-spacing: .04em;
+  border: 1px solid rgba(232,67,147,0.3);
+}
+
+.tiy-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.tiy-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.tiy-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #e84393, #9333ea);
+  color: white;
+  border: none;
+  border-radius: 28px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity .2s, transform .15s;
+  box-shadow: 0 4px 20px rgba(232,67,147,.4);
+}
+.tiy-open-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.tiy-open-btn:active { transform: scale(.97); }
+
+/* ---------- Mini preview cards ---------- */
+.tiy-preview-cards {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.tiy-mini-card {
+  border-radius: 12px;
+  padding: 14px;
+  width: 140px;
+  transition: transform .2s;
+  cursor: default;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+}
+.tiy-mini-card:hover { transform: translateY(-4px); }
+.tmc-icon { font-size: 20px; margin-bottom: 6px; }
+.tmc-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; font-family: 'Playfair Display', serif; }
+.tmc-body { font-size: 10px; line-height: 1.5; opacity: .8; margin-bottom: 10px; }
+.tmc-btn { font-size: 10px; padding: 4px 10px; border-radius: 20px; display: inline-block; }
+
+/* ---------- Overlay & Modal ---------- */
+.tiy-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5,3,15,.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.tiy-overlay.open { display: flex; }
+
+.tiy-modal {
+  background: #18141f;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  position: relative;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+}
+
+.tiy-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.tiy-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.tiy-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.tiy-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 20px;
+}
+
+/* ---------- Preview col ---------- */
+.tiy-preview-col { display: flex; flex-direction: column; gap: 12px; }
+.tiy-stage-label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: .07em; }
+.tiy-stage {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  flex: 1;
+}
+
+.tiy-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(232,67,147,0.15);
+  color: #ff8ec8;
+  border: 1px solid rgba(232,67,147,0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .15s;
+}
+.tiy-copy-btn:hover { background: rgba(232,67,147,0.25); }
+
+/* ---------- Controls col ---------- */
+.tiy-controls-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.tiy-section-block {
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tiy-sec-title {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+.tiy-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+.tiy-section-block input[type=text],
+.tiy-section-block textarea,
+.tiy-section-block select {
+  width: 100%;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-family: 'DM Sans', sans-serif;
+  color: #fff;
+  background: rgba(255,255,255,0.07);
+  outline: none;
+  transition: border-color .2s;
+}
+.tiy-section-block textarea { resize: vertical; min-height: 56px; }
+.tiy-section-block input[type=text]:focus,
+.tiy-section-block textarea:focus,
+.tiy-section-block select:focus { border-color: #e84393; }
+.tiy-section-block select option { background: #1e1a2e; color: #fff; }
+
+.tiy-section-block input[type=range] {
+  width: 100%;
+  accent-color: #e84393;
+}
+
+/* ---------- Feature toggles ---------- */
+.tiy-checks { display: flex; flex-direction: column; gap: 8px; }
+
+.tiy-toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+.tiy-toggle-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s;
+}
+
+.tiy-toggle-label:hover .tiy-toggle-text { color: #ff8ec8; }
+
+.tiy-toggle-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.tiy-toggle-wrap input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiy-toggle-track {
+  display: inline-flex;
+  align-items: center;
+  width: 34px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.25s, box-shadow 0.25s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tiy-toggle-thumb {
+  position: absolute;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  transition: left 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, box-shadow 0.2s;
+}
+
+.tiy-toggle-wrap input[type=checkbox]:checked + .tiy-toggle-track {
+  background: #e84393;
+  box-shadow: 0 0 0 3px rgba(232,67,147,0.2);
+}
+.tiy-toggle-wrap input[type=checkbox]:checked + .tiy-toggle-track .tiy-toggle-thumb {
+  left: 18px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(232,67,147,0.5);
+}
+.tiy-toggle-label:hover .tiy-toggle-wrap input[type=checkbox]:not(:checked) + .tiy-toggle-track {
+  background: rgba(232,67,147,0.3);
+}
+.tiy-toggle-wrap input[type=checkbox]:focus-visible + .tiy-toggle-track {
+  outline: 2px solid #e84393;
+  outline-offset: 2px;
+}
+
+/* ---------- Swatches ---------- */
+.tiy-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+.tiy-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform .15s, border-color .15s;
+}
+.tiy-swatch:hover { transform: scale(1.2); }
+.tiy-swatch.active { border-color: #fff; }
+
+/* ---------- Icon buttons ---------- */
+.tiy-icons { display: flex; gap: 5px; flex-wrap: wrap; }
+.tiy-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.tiy-icon-btn.active,
+.tiy-icon-btn:hover {
+  border-color: #e84393;
+  background: rgba(232,67,147,0.18);
+}
+
+/* ---------- Pill toggle buttons ---------- */
+.tiy-toggle-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.tiy-tog {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.tiy-tog.active,
+.tiy-tog:hover {
+  background: rgba(232,67,147,0.2);
+  color: #ff8ec8;
+  border-color: rgba(232,67,147,0.5);
+}
+
+/* ---------- Rendered card wrapper ---------- */
+.user-card {
+  border-radius: 14px;
+  padding: 22px;
+  width: 100%;
+  max-width: 300px;
+  transition: all .2s;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .tiy-section { flex-direction: column; padding: 28px 20px; }
+  .tiy-preview-cards { width: 100%; }
+  .tiy-layout { grid-template-columns: 1fr; }
+  .tiy-mini-card { flex: 1; width: auto; }
+}
+
+/* ===== LIGHT MODE OVERRIDES for TIY ===== */
+body.light-mode .tiy-section {
+  background: linear-gradient(135deg, #fdf0f7 0%, #f3eeff 100%);
+  border-color: rgba(124,58,237,0.1);
+}
+body.light-mode .tiy-badge {
+  background: #fce4f0;
+  color: #c0186b;
+  border-color: transparent;
+}
+body.light-mode .tiy-heading { color: #1a1a2e; }
+body.light-mode .tiy-sub { color: #666; }
+body.light-mode .tiy-open-btn { background: #e84393; }
+
+body.light-mode .tiy-overlay { background: rgba(26,10,40,.55); backdrop-filter: none; }
+body.light-mode .tiy-modal {
+  background: #fff;
+  border-color: rgba(0,0,0,0.08);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+}
+body.light-mode .tiy-close {
+  background: #f5f5f5;
+  border-color: transparent;
+  color: #555;
+}
+body.light-mode .tiy-close:hover { background: #ececec; }
+body.light-mode .tiy-modal-title { color: #1a1a2e; }
+body.light-mode .tiy-stage-label { color: #aaa; }
+body.light-mode .tiy-stage {
+  background: #f7f0fb;
+  border-color: transparent;
+}
+body.light-mode .tiy-copy-btn {
+  background: #fce4f0;
+  color: #c0186b;
+  border-color: transparent;
+}
+body.light-mode .tiy-copy-btn:hover { background: #f9c0da; }
+body.light-mode .tiy-section-block {
+  background: #fafafa;
+  border-color: #ede8f5;
+}
+body.light-mode .tiy-sec-title {
+  color: #aaa;
+  border-bottom-color: #ede8f5;
+}
+body.light-mode .tiy-label { color: #666; }
+body.light-mode .tiy-section-block input[type=text],
+body.light-mode .tiy-section-block textarea,
+body.light-mode .tiy-section-block select {
+  border-color: #ddd;
+  color: #222;
+  background: #fff;
+}
+body.light-mode .tiy-section-block select option { background: #fff; color: #222; }
+body.light-mode .tiy-toggle-text { color: #555; }
+body.light-mode .tiy-toggle-label:hover .tiy-toggle-text { color: #e84393; }
+body.light-mode .tiy-toggle-track { background: #ddd; }
+body.light-mode .tiy-toggle-thumb { background: #fff; }
+body.light-mode .tiy-toggle-label:hover .tiy-toggle-wrap input[type=checkbox]:not(:checked) + .tiy-toggle-track { background: #f9c0da; }
+body.light-mode .tiy-swatch.active { border-color: #333; }
+body.light-mode .tiy-icon-btn {
+  border-color: #ede8f5;
+  background: white;
+}
+body.light-mode .tiy-icon-btn.active,
+body.light-mode .tiy-icon-btn:hover { border-color: #e84393; background: #fce4f0; }
+body.light-mode .tiy-tog {
+  border-color: #ddd;
+  background: white;
+  color: #666;
+}
+body.light-mode .tiy-tog.active,
+body.light-mode .tiy-tog:hover { background: #fce4f0; color: #c0186b; border-color: #f9c0da; }
+
+/* ================= NAV USER PROFILE PILL ================= */
+
+/* The injected pill wrapper */
+#userProfile {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Pill container (nav-auth.js injects a button/div with user info) */
+#userProfile > * {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255,255,255,0.07) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 999px !important;
+  padding: 5px 14px 5px 5px !important;
+  cursor: pointer !important;
+  transition: background 0.2s, border-color 0.2s !important;
+  color: rgba(255,255,255,0.9) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+#userProfile > *:hover {
+  background: rgba(255,255,255,0.13) !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Any plain text / name span inside the pill */
+#userProfile span,
+#userProfile p,
+#userProfile .user-name,
+#userProfile .nav-user-name {
+  color: rgba(255,255,255,0.9) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+/* Caret / chevron icon inside the pill */
+#userProfile svg,
+#userProfile i {
+  color: rgba(255,255,255,0.6) !important;
+  flex-shrink: 0 !important;
+}
+
+/* ---- Light mode pill ---- */
+body.light-mode #userProfile > * {
+  background: rgba(124,58,237,0.06) !important;
+  border-color: rgba(124,58,237,0.2) !important;
+  color: #1f2937 !important;
+}
+
+body.light-mode #userProfile > *:hover {
+  background: rgba(124,58,237,0.12) !important;
+  border-color: rgba(124,58,237,0.4) !important;
+}
+
+body.light-mode #userProfile span,
+body.light-mode #userProfile p,
+body.light-mode #userProfile .user-name,
+body.light-mode #userProfile .nav-user-name {
+  color: #1f2937 !important;
+}
+
+body.light-mode #userProfile svg,
+body.light-mode #userProfile i {
+  color: #7c3aed !important;
+}
