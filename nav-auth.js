@@ -49,7 +49,7 @@
         color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
       }
       .g-pill-name {
-        color: rgba(255,255,255,0.88);
+        color: #111111;
         font-size: 0.88rem;
         font-weight: 600;
         white-space: nowrap;
@@ -63,7 +63,7 @@
       }
       .g-user-pill.open .g-pill-chevron { transform: rotate(180deg); }
 
-      /* Dropdown */
+      /* Dropdown — dark mode (default) */
       .g-user-dropdown {
         display: none;
         position: absolute;
@@ -78,8 +78,39 @@
         box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        color: #ffffff;
       }
       .g-user-dropdown.open { display: block; }
+
+      /* Dropdown — light mode */
+      body.light-mode .g-user-dropdown {
+        background: #ffffff !important;
+        border: 1px solid rgba(124,58,237,0.2);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+        color: #111111;
+      }
+      body.light-mode .g-dd-name {
+        color: #111111 !important;
+      }
+      body.light-mode .g-dd-email {
+        color: rgba(0,0,0,0.45) !important;
+      }
+      body.light-mode .g-dd-header {
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+      }
+      body.light-mode .g-dd-item {
+        color: #222222;
+      }
+      body.light-mode .g-dd-item:hover {
+        background: rgba(0,0,0,0.05);
+        color: #111111;
+      }
+      body.light-mode .g-dd-item.danger { color: #e11d48; }
+      body.light-mode .g-dd-item.danger:hover { background: rgba(225,29,72,0.08); }
+      body.light-mode .g-dd-divider { background: rgba(0,0,0,0.08); }
+      body.light-mode .g-dd-icon.ic-purple { background: rgba(124,58,237,0.1); }
+      body.light-mode .g-dd-icon.ic-pink   { background: rgba(255,77,109,0.1); }
+      body.light-mode .g-dd-icon.ic-red    { background: rgba(225,29,72,0.08); }
 
       .g-dd-header {
         display: flex;
@@ -96,13 +127,13 @@
         color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
       }
       .g-dd-name {
-        color: #fff;
+        color: #ffffff;
         font-weight: 700;
         font-size: 0.95rem;
         line-height: 1.3;
       }
       .g-dd-email {
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.5);
         font-size: 0.75rem;
         margin-top: 2px;
         word-break: break-all;
