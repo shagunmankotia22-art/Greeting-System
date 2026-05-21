@@ -1094,6 +1094,13 @@ async function sendMessage(text) {
       body: JSON.stringify({ system: systemPrompt, messages: chatHistory })
     });
     var data  = await res.json();
+    if (res.status === 429) {
+      removeTyping();
+      addMsg('ai', '⚠️ AI is a little busy right now — please try again in a few seconds. 🙏');
+      isLoading = false;
+      if (sendBtn) sendBtn.disabled = false;
+      return;
+    }
     var reply = (data.content && data.content[0] && data.content[0].text) || 'Sorry, I could not generate a response.';
     removeTyping();
     addMsg('ai', reply);
@@ -1101,7 +1108,7 @@ async function sendMessage(text) {
     if (text.toLowerCase().includes('descri') && el('infoDesc')) el('infoDesc').textContent = reply;
   } catch(err) {
     removeTyping();
-    addMsg('ai', 'Connection error. Please check your internet and try again.');
+    addMsg('ai', '⚠️ Connection error. Please check your internet and try again.');
     console.error('Greetings AI error:', err);
   }
 
@@ -1162,6 +1169,11 @@ if (genBtn && genOutput) {
         body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
       });
       var data  = await res.json();
+      if (res.status === 429) {
+        genOutput.textContent = '⚠️ AI is a little busy right now — please try again in a few seconds. 🙏';
+        genBtn.disabled = false;
+        return;
+      }
       var reply = (data.content && data.content[0] && data.content[0].text && data.content[0].text.trim()) || 'Could not generate. Please try again.';
 
       genOutput.innerHTML = '<button class="copy-btn" id="copyGenBtn">Copy</button><span id="genText"></span>';
@@ -1176,7 +1188,7 @@ if (genBtn && genOutput) {
         });
       }
     } catch(err) {
-      genOutput.textContent = 'Error generating message. Please try again.';
+      genOutput.textContent = '⚠️ Error generating message. Please try again.';
     }
 
     genBtn.disabled = false;
