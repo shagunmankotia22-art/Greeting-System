@@ -413,54 +413,32 @@
     .fav-count-badge.has-favs {
       display: flex !important;
     }
+
+    /* ══ LIGHT MODE — Cards title fix ══ */
+    body.light-mode .page-title {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.4);
+    }
+    body.light-mode .page-title span {
+      background: linear-gradient(to right, #e11d74, #7c3aed) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: none !important;
+    }
+    body.light-mode .page-subtitle {
+      color: #374151 !important;
+      -webkit-text-fill-color: #374151 !important;
+      font-weight: 600;
+    }
+    body.light-mode .page-tag {
+      color: #be185d !important;
+    }
     </style>
 </head>
 
 <body>
 
-  <!-- <header class="navbar">
-    <div class="container nav">
-      <a href="index.html"><img src="logo.svg" alt="Greetings Logo" style="height: 100px; width: auto;"></a>
-      <input type="checkbox" id="menu-toggle"
-        style="all:unset;position:absolute;opacity:0;pointer-events:none;width:0;height:0;">
-      <label for="menu-toggle" class="menu-icon" aria-label="Toggle menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </label>
-      <nav class="menu">
-        <div class="nav-left nav-inner">
-          <a href="index.html" class="nav-item">Home</a>
-
-          <div class="nav-dropdown">
-            <a href="#" class="active nav-item">Categories <i class="fas fa-chevron-down"
-                style="font-size: 0.7rem; margin-left: 4px;"></i></a>
-            <div class="dropdown-content glass-dropdown">
-              <a href="wedding.html">Wedding</a>
-              <a href="birthday.html">Birthday</a>
-              <a href="party.html">Party</a>
-              <a href="cards.html">Cards</a>
-              <a href="events.html">Events</a>
-            </div>
-          </div>
-
-          <a href="about.html" class="nav-item">About</a>
-        </div>
-
-        <div class="nav-right">
-
-          <a href="login.html" class="login-btn">
-            Login
-          </a>
-
-          <a href="signup.html" class="signup-btn">
-            Sign Up
-          </a>
-
-        </div>
-      </nav>
-    </div>
-  </header> -->
   <header class="g-navbar">
     <div class="g-nav-inner">
       <div class="g-nav-logo">
@@ -498,7 +476,7 @@
     <div class="container">
       <div class="page-title-wrap">
         <div class="page-tag">✦ Browse Collection</div>
-        <h2 class="page-title">Greeting <span>Cards</span></h2>
+        <h2 class="page-title">Cards <span>Invitations</span></h2>
         <p class="page-subtitle">Share your feelings with a heartfelt card</p>
       </div>
 
