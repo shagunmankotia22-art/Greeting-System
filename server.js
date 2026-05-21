@@ -325,6 +325,15 @@ Respond with ONLY valid JSON, no markdown.`;
       })
     });
 
+    if (response.status === 429) {
+      return res.status(429).json({
+        error: 'AI search is busy right now, please try again in a few seconds.',
+        category: 'cards',
+        suggestion: 'Try browsing our categories while we catch our breath! 😊',
+        keywords: []
+      });
+    }
+
     const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
     const clean = text.replace(/```json|```/g, '').trim();
@@ -370,6 +379,12 @@ app.post('/api/chat', async (req, res) => {
         generationConfig: { maxOutputTokens: 600, temperature: 0.8 }
       })
     });
+
+    if (response.status === 429) {
+      return res.status(429).json({
+        error: 'AI is a little busy right now — please try again in a few seconds. 🙏'
+      });
+    }
 
     if (!response.ok) {
       const errText = await response.text();
