@@ -411,11 +411,8 @@ Keep replies warm, concise (2-4 sentences), and use light emojis. Never mention 
      Render free tier never spins down mid-session
   ────────────────────────────────────────────── */
   function keepAlive() {
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ system: 'ping', messages: [{ role: 'user', content: 'ping' }] }),
-    }).catch(() => {}); // silent — we don't care about the response
+    fetch('https://greetings-system-ai.onrender.com/')
+      .catch(() => {});
   }
   // Warm up immediately on page load, then every 4 minutes
   keepAlive();
