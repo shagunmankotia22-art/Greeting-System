@@ -341,7 +341,40 @@
 
       header.g-navbar nav.g-nav-links,
       header.g-navbar .g-nav-actions {
-        display: none !important;
+        display: none;
+      }
+
+      /* Show when hamburger opens the menu */
+      header.g-navbar nav.g-nav-links.g-menu-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #0a0c10 !important;
+        border-top: 1px solid rgba(255,255,255,0.08) !important;
+        padding: 16px 0 20px !important;
+        gap: 4px !important;
+        z-index: 999 !important;
+      }
+
+      header.g-navbar nav.g-nav-links.g-menu-open a {
+        padding: 12px 28px !important;
+        font-size: 1rem !important;
+      }
+
+      header.g-navbar .g-nav-actions.g-menu-open {
+        display: flex !important;
+        flex-direction: row !important;
+        position: absolute !important;
+        top: calc(100% + 220px) !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #0a0c10 !important;
+        padding: 0 28px 20px !important;
+        gap: 10px !important;
+        z-index: 998 !important;
       }
 
       header.g-navbar .g-hamburger {
